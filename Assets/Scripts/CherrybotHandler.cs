@@ -39,7 +39,7 @@ public class CherrybotHandler : MonoBehaviour
                 switch (this.method)
                 {
                     case "PUT":
-                        StartCoroutine(networkHandler.PutRequest(thing, uri, json));
+                        StartCoroutine(networkHandler.PutRequest(thing, uri, json, true));
                         requestToSend = false;
                         tokenRequested = false;
                         break;
@@ -73,5 +73,14 @@ public class CherrybotHandler : MonoBehaviour
         json = "{\"none\": \"none\"}";
 
         requestToSend = true;
+    }
+
+    public void changeGripper(string value) {
+        uri = "/gripper";
+        method = "PUT";
+        json = value;
+        
+        requestToSend = true;
+
     }
 }

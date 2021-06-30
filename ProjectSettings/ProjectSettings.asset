@@ -607,7 +607,8 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    14: 
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}
@@ -631,7 +632,7 @@ PlayerSettings:
   metroCertificateNotAfter: 804c8bedfb75d801
   metroApplicationDescription: Template_3D
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: DigitalCompanion
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0

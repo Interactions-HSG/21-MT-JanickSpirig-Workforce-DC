@@ -7,7 +7,7 @@ using System;
 
 public class NetworkHandler : MonoBehaviour
 {
-    public Token token = new Token();
+    public string token;
     public long responseCode { get; set; }
     public string responseJson { get; set; }
     public string baseUrl;
@@ -26,45 +26,72 @@ public class NetworkHandler : MonoBehaviour
     }
 
     public IEnumerator setToken(string thing) {
-        var uri = baseUrl + thing + "/operator";
-        UnityWebRequest uwr = UnityWebRequest.Get(uri);
-        yield return uwr.SendWebRequest();
+        string json = "{\"name\": \"Janick Spirig\",\"email\": \"janick.spirig@student.unisg.ch\"}";
+        if (thing == "/cherrybot")
+        {
+        
+            var uri = baseUrl + thing + "/operator";
+            UnityWebRequest uwr = UnityWebRequest.Get(uri);
+            yield return uwr.SendWebRequest();
 
-        yield return new WaitForSeconds(waitForSeconds);
+            yield return new WaitForSeconds(waitForSeconds);
 
-        if (uwr.responseCode == System.Convert.ToInt64(204)) {
-            // log in here
-            
-            Debug.Log("Let's do login....");
-            
-            string json = "{\"name\": \"Janick Spirig\",\"email\": \"janick.spirig@student.unisg.ch\"}";
-            UnityWebRequest uwr2 = new UnityWebRequest(uri, "POST");
-            //UnityWebRequest uwr2 = UnityWebRequest.Post(uri, json);
-            
+            if (uwr.responseCode == System.Convert.ToInt64(204)) {
+                // log in here
+                
+                Debug.Log("Let's do login....");
+                
+                UnityWebRequest uwr2 = new UnityWebRequest(uri, "POST");
+                
+                byte[] encodedPayload = new System.Text.UTF8Encoding().GetBytes(json);
+                uwr2.uploadHandler = (UploadHandler) new UploadHandlerRaw(encodedPayload);
+                uwr2.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
+                
+                uwr2.SetRequestHeader("Content-Type", "application/json");
+                
+                yield return uwr2.SendWebRequest();
+                yield return new WaitForSeconds(waitForSeconds);
+                
+                UnityWebRequest uwr3 = UnityWebRequest.Get(uri);
+                yield return uwr3.SendWebRequest();
+                yield return new WaitForSeconds(waitForSeconds);
+
+                Debug.Log("Login done successfully!");
+
+                token = JsonUtility.FromJson<Token>(uwr3.downloadHandler.text).token;
+                tokenSet = true;
+                currentThing = thing;
+            }
+            else {
+                token = JsonUtility.FromJson<Token>(uwr.downloadHandler.text).token;
+                tokenSet = true;
+                currentThing = thing;
+            }
+        }
+        else if (thing == "/leubot1/v1.2")
+        {
+            // do Login for Leubot
+            var uri = baseUrl + thing + "/user";
+
+            // set token with POST request
+                
+            UnityWebRequest uwr = new UnityWebRequest(uri, "POST");
+                
             byte[] encodedPayload = new System.Text.UTF8Encoding().GetBytes(json);
-            uwr2.uploadHandler = (UploadHandler) new UploadHandlerRaw(encodedPayload);
-            uwr2.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
-            
-            uwr2.SetRequestHeader("Content-Type", "application/json");
-            
-            yield return uwr2.SendWebRequest();
+            uwr.uploadHandler = (UploadHandler) new UploadHandlerRaw(encodedPayload);
+            uwr.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
+                
+            uwr.SetRequestHeader("Content-Type", "application/json");
+            yield return uwr.SendWebRequest();
             yield return new WaitForSeconds(waitForSeconds);
             
-            UnityWebRequest uwr3 = UnityWebRequest.Get(uri);
-            yield return uwr3.SendWebRequest();
-            yield return new WaitForSeconds(waitForSeconds);
-
-            Debug.Log("Login done successfully!");
-
-            token = JsonUtility.FromJson<Token>(uwr3.downloadHandler.text);
+            var location = (string)uwr.GetResponseHeader("Location");
+            var split_string = location.Split('/');
+            token = split_string[split_string.Length-1];
             tokenSet = true;
             currentThing = thing;
-        }
-        else {
-            token = JsonUtility.FromJson<Token>(uwr.downloadHandler.text);
-            tokenSet = true;
-            currentThing = thing;
-        }
+            Debug.Log(token);
+        }  
     }
 
     /*
@@ -92,18 +119,32 @@ public class NetworkHandler : MonoBehaviour
     }
 
     */
-    public IEnumerator PutRequest(string thing, string uri, string json)
+    public IEnumerator PutRequest(string thing, string uri, string json, bool tokenRequired)
     {       
 
         byte[] dataToPut = System.Text.Encoding.UTF8.GetBytes(json);
         UnityWebRequest uwr = UnityWebRequest.Put(baseUrl + thing + uri, dataToPut);
-        uwr.SetRequestHeader("Authentication", this.token.token); 
+        if (tokenRequired)
+        {
+            switch (thing)
+            {
+                case "/cherrybot":
+                    uwr.SetRequestHeader("Authentication", this.token);
+                    break;
+                case "/leubot1/v1.2":
+                    uwr.SetRequestHeader("X-API-KEY", this.token);
+                    break;
+            }
+        }
+
         uwr.SetRequestHeader ("Content-Type", "application/json");
 
         yield return uwr.SendWebRequest();
         yield return new WaitForSeconds(waitForSeconds);
 
-        if (uwr.responseCode != System.Convert.ToInt64(200))
+        Debug.Log(uwr.responseCode);    
+
+        if (uwr.responseCode != System.Convert.ToInt64(200) && uwr.responseCode != System.Convert.ToInt64(202))
         {
             Debug.Log("Error While Sending: " + uwr.error);
         }
@@ -113,33 +154,6 @@ public class NetworkHandler : MonoBehaviour
         }
 
     }
-
-    /*
-    public IEnumerator PutRequest(string thing, string uri, string json)
-    {
-        yield return StartCoroutine(setToken(thing, (token) => {
-            // here we have now the token to execute our request 
-            
-            Debug.Log("We have the token here: ");
-            Debug.Log(token);
-
-
-            byte[] dataToPut = System.Text.Encoding.UTF8.GetBytes("Hello, This is a test");
-            UnityWebRequest uwr = UnityWebRequest.Put(baseUrl + thing + uri, dataToPut);
-            uwr.SendWebRequest();
-            if (uwr.isNetworkError)
-            {
-                Debug.Log("Error While Sending: " + uwr.error);
-            }
-            else
-            {
-                Debug.Log("Request sent successfully!");
-                // var data = JSON.Parse(uwr.downloadHandler.text);
-                
-            }  
-        }));
-    }
-    */
     
     public IEnumerator PostRequest(string url, string json, string token="")
         {
@@ -156,6 +170,7 @@ public class NetworkHandler : MonoBehaviour
 
             //Send the request then wait here until it returns
             yield return uwr.SendWebRequest();
+            yield return new WaitForSeconds(waitForSeconds);
 
             if (uwr.isNetworkError) {
                 Debug.Log("Error While Sending: " + uwr.error);

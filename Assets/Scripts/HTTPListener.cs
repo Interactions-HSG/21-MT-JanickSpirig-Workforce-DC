@@ -16,6 +16,7 @@ public class HTTPListener : MonoBehaviour
 		listener = new HttpListener ();
 		listener.Prefixes.Add ("http://localhost:5050/");
 		listener.Prefixes.Add ("http://127.0.0.1:5050/");
+		// listener.Prefixes.Add("http://192.168.43.54:5050/");
 		listener.AuthenticationSchemes = AuthenticationSchemes.Anonymous;
 		listener.Start ();
 
@@ -42,38 +43,62 @@ public class HTTPListener : MonoBehaviour
 		
 		Debug.Log ("Method: " + context.Request.HttpMethod);
 		Debug.Log ("LocalUrl: " + context.Request.Url.LocalPath);
+		Debug.Log (context.Request.QueryString.AllKeys);
 
 		if (context.Request.QueryString.AllKeys.Length > 0)
 		{
 			foreach (var key in context.Request.QueryString.AllKeys) {
-		
 				var value = context.Request.QueryString.GetValues(key)[0];
-
+				
 				switch (key)
 				{	
-					case "toggleSwitch":
+					case "Cherrybot":
 						// 1 is equal to show and 0 is equal to hide
 						if (value == "1")
 						{
-							sceneController.showToggleSwitch = true;
+							Debug.Log("We are here! ");
+							sceneController.showCherrybot = true;
 						}
 						else if (value == "0")
 						{
-							sceneController.showToggleSwitch = false;
+							sceneController.showCherrybot = false;
+						}
+						break;
+					case "Leubot":
+						if (value == "1")
+						{
+							sceneController.showLeubot = true;
+						}
+						else if (value == "0")
+						{
+							sceneController.showLeubot = false;
+						}
+						break;
+					case "Lab":
+						if (value == "1")
+						{
+							sceneController.showLabWelcomeBox = true;
+						}
+						else if (value == "0")
+						{
+							sceneController.showLabWelcomeBox = false;
+						}
+						break;
+					case "Office":
+						if (value == "1")
+						{
+							sceneController.showOfficeWelcomeBox = true;
+							// check if user has turned off light in Lab
+							
+						}
+						else if (value == "0")
+						{
+							sceneController.showOfficeWelcomeBox = false;
 						}
 						break;
 				}
 			}
 		}
-
-		/*
-		if (context.Request.HttpMethod == "POST") {	
-			Thread.Sleep (1000);
-			var data_text = new StreamReader (context.Request.InputStream, 
-				                context.Request.ContentEncoding).ReadToEnd ();
-			Debug.Log (data_text);
-		}
-		*/
 		context.Response.Close ();
 	}
 }
