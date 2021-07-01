@@ -41,9 +41,7 @@ public class HTTPListener : MonoBehaviour
 	{				
 		var context = listener.EndGetContext (result);		
 		
-		Debug.Log ("Method: " + context.Request.HttpMethod);
-		Debug.Log ("LocalUrl: " + context.Request.Url.LocalPath);
-		Debug.Log (context.Request.QueryString.AllKeys);
+		Debug.Log ("Request received");
 
 		if (context.Request.QueryString.AllKeys.Length > 0)
 		{
@@ -94,6 +92,26 @@ public class HTTPListener : MonoBehaviour
 						else if (value == "0")
 						{
 							sceneController.showOfficeWelcomeBox = false;
+						}
+						break;
+					case "Window":
+						if (value == "1")
+						{
+							sceneController.showCurtainsControl = true;
+						}
+						else if (value == "0")
+						{
+							sceneController.showCurtainsControl = false;
+						}
+						break;
+					case "Ceiling-light":
+						if (value == "1")
+						{
+							sceneController.showCeilingLightControl = true;
+						}
+						else if (value == "0")
+						{
+							sceneController.showCeilingLightControl = false;
 						}
 						break;
 				}

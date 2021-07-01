@@ -94,31 +94,6 @@ public class NetworkHandler : MonoBehaviour
         }  
     }
 
-    /*
-    IEnumerator GetRequest(string thing, string uri)
-    {
-        StartCoroutine(setToken(thing, (token) => {
-            UnityWebRequest uwr = UnityWebRequest.Get(uri);
-
-            if (auth == true) {
-                uwr.SetRequestHeader("Authentication", this.token);
-            }
-
-            yield return uwr.SendWebRequest();
-        
-            if (uwr.isNetworkError)
-            {
-                Debug.Log("Error While Sending: " + uwr.error);
-            }
-            else
-            {
-                Debug.Log("Request sent successfully!");
-                JSONNode response = JSON.Parse(uwr.downloadHandler.text);
-                callback(response, uwr.responseCode);
-            }
-    }
-
-    */
     public IEnumerator PutRequest(string thing, string uri, string json, bool tokenRequired)
     {       
 

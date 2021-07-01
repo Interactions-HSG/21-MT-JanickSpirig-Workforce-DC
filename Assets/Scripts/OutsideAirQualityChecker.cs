@@ -23,9 +23,9 @@ public class OutsideAirQualityChecker : MonoBehaviour
     void Start()
     {
         airQualityEndpoint = "https://u50g7n0cbj.execute-api.us-east-1.amazonaws.com/v2/latest/9585"; // must come from the ontology
-        o3Threshold = 80; // must come from the ontology
-        pm10Threshold = 10; // must come from the ontology
-        no2Threshold = 20; // must come from the ontology
+        o3Threshold = 100; // must come from the ontology
+        pm10Threshold = 100; // must come from the ontology
+        no2Threshold = 100; // must come from the ontology
 
         aqSet = false;
 
@@ -65,24 +65,29 @@ public class OutsideAirQualityChecker : MonoBehaviour
                     break;
             }
         }
-        
+
+        // DATA CLEANUP
+        outsideAirQualityOkay = true;
+        messages.Clear();
+
         if (no2 > no2Threshold) {
-            this.outsideAirQualityOkay = false;
+            outsideAirQualityOkay = false;
             messages.Add("NO2 level of " + Convert.ToString(no2) + " is too high!");
             Debug.Log("NO2 level of " + Convert.ToString(no2) + " is too high!");
         }
 
         if (pm10 > pm10Threshold) {
-            this.outsideAirQualityOkay = false; 
+            outsideAirQualityOkay = false; 
             messages.Add("PM10 level of " + Convert.ToString(pm10) + " is too high!");
             Debug.Log("PM10 level of " + Convert.ToString(pm10) + " is too high!");
         }
 
         if (o3 > o3Threshold) {
-            this.outsideAirQualityOkay = false;
+            outsideAirQualityOkay = false;
             messages.Add("O3 level of " + Convert.ToString(o3) + " is too high!");
             Debug.Log("O3 level of " + Convert.ToString(o3) + " is too high!");
         }
+
         aqSet = true;
     }
 }

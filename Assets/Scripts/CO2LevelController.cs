@@ -10,85 +10,96 @@ using TMPro;
 
 public class CO2LevelController : MonoBehaviour
 {
+    public WeatherChecker weatherChecker;
     public OutsideAirQualityChecker outsideAirQualityChecker;
     public GameObject co2Warning;
     public SceneController sceneController;
 
     private double co2Threshold;
     private double co2Value;
-    private bool co2ValueSet;
-    private bool processStarted;
+    private bool checkOpeningWindowsOkay;
+    private bool processRunning;
+
     private DateTime timeLastExecution;
     private int frequencyOfCheckInSeconds;
     private string sensorEndpoint;
-    private bool aqRequested;
+    private bool firstExecution;
 
     // Start is called before the first frame update
     void Start()
     {
-        co2ValueSet = false;
-        processStarted = false;
-        aqRequested = false;
-        // we don't want to execute all the checks simultaneously
-        timeLastExecution = DateTime.Now;
-        frequencyOfCheckInSeconds = 60; // must come from the ontology
+        checkOpeningWindowsOkay = false;
+        firstExecution = true;
+        processRunning = false;
+        
+        frequencyOfCheckInSeconds = 120; // must come from the ontology
         sensorEndpoint = ""; // must come from the ontology
         co2Threshold = Convert.ToDouble(1000); // must come from the onology
-
-
-        // outsideAirQualityChecker.aqSet = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // get weather forecast every 15 minutes and check if windows are open, if windows are open, then display an alert!
-        // authentication with POST request
+        if (sceneController.inOffice && !sceneController.locationUndefined)
+        {
+            if (firstExecution)
+            {
+                timeLastExecution = sceneController.officeEntryTime.AddSeconds(60);
+                firstExecution = false;
+            }
 
-        if (sceneController.inOffice && !sceneController.locationUndefined) {
-            if (!processStarted) {
-                DateTime currentDateTime = DateTime.Now;
-                double diffMinutes = (currentDateTime - timeLastExecution).TotalSeconds;
+            DateTime currentDateTime = DateTime.Now;
+            double diffSeconds = (currentDateTime - timeLastExecution).TotalSeconds;
             
-                if (diffMinutes > frequencyOfCheckInSeconds) {
-                    Debug.Log("Check CO2 concentration in office.");
-                    StartCoroutine(getCo2Data());
-                    timeLastExecution = currentDateTime;
-                    processStarted = true;
-                }
-            }
+            if (diffSeconds > frequencyOfCheckInSeconds) {
+                Debug.Log("Check CO2 concentration in office.");
+                StartCoroutine(getCo2Data());
+                timeLastExecution = currentDateTime;
+                processRunning = true;
+            }   
         }
 
-        if (co2ValueSet) {
-            if (co2Value > co2Threshold) {
-                // co2 is too high!
-                // check if outside air quality is sufficient to open the window.
-                StartCoroutine(outsideAirQualityChecker.getAQData());
-                aqRequested = true;
-            }
-            co2ValueSet = false;
+        if (checkOpeningWindowsOkay && processRunning) {
+            // CHECK OUTSIDE AIR QUALITY
+            StartCoroutine(outsideAirQualityChecker.getAQData());
+
+            // CHECK IF IT OS GOING TO RAIN
+            StartCoroutine(weatherChecker.getWeatherForecast());
+            checkOpeningWindowsOkay = false;
         }
 
-        if (outsideAirQualityChecker.aqSet) {
-            string text = "";
-            if (!outsideAirQualityChecker.outsideAirQualityOkay) {
-                // air quaility is bad, do not open window, instead increase mechanical ventilation rate.   
-                text = $"The current CO2 pollution in the office exceeds currently the limit of {Convert.ToString(co2Threshold)}. As the outdoor air quality is not good enough and could harm your health, please do not open the windows. Instead, consider increase the mechanical ventilation to achieve better air quality and productivity."; 
+        if (outsideAirQualityChecker.aqSet && weatherChecker.weatherForecastSet && processRunning) {
 
-                outsideAirQualityChecker.outsideAirQualityOkay = true;
-                outsideAirQualityChecker.messages.Clear();
+            string warningText = "";
+
+            // OUTSIDE AIR QUALITY OKAY AND NOT GOING TO RAIN -> OPEN WINDOW
+            if (outsideAirQualityChecker.outsideAirQualityOkay && !weatherChecker.goingToRain)
+            {
+                warningText = $"The current CO2 pollution in the office exceeds currently the limit of {Convert.ToString(co2Threshold)}. Please open the windows to achieve better air quality and productivity. Don't worry, it is not going to start raining in the next few minutes and the outdoor air quality is also fine.";
             }
-            else {
-                // air quality is good, recommend to open the window or / and increase mechanical ventilation
-                text = $"The current CO2 pollution in the office exceeds currently the limit of {Convert.ToString(co2Threshold)}. Please open the windows to achieve better air quality and productivity. Don't worry, it is not going to start raining in the next few minutes and the outdoor air quality is also fine."; 
+            // OUTSIDE AIR QUALITY OKAY BUT IT IS GOING TO RAIN -> DO NOT OPEN WINDOW
+            else if (outsideAirQualityChecker.outsideAirQualityOkay && weatherChecker.goingToRain)
+            {
+                warningText = $"The current CO2 pollution in the office exceeds currently the limit of {Convert.ToString(co2Threshold)}. As it is going to rain with a probability of more than {Convert.ToString(weatherChecker.rainProbabilityThreshold)} percent, please do not open the windows. Instead, consider increase the mechanical ventilation to achieve better air quality and productivity."; 
+            }
+            // OUTSIDE AIR QUALITY NOT OKAY AND IT IS NOT GOING TO RAIN -> DO NOT OPEN WINDOW
+            else if (!outsideAirQualityChecker.outsideAirQualityOkay && !weatherChecker.goingToRain)
+            {
+                warningText = $"The current CO2 pollution in the office exceeds currently the limit of {Convert.ToString(co2Threshold)}. As the outside air quality is not okay and could harm you health, please do not open the windows. Instead, consider increase the mechanical ventilation to achieve better air quality and productivity."; 
+            }
+            // OUTSIDE AIR QUALITY NOT OKAY AND IT IS GOINT TO RAIN -> DO NOT OPEN WINDOW
+            else if (!outsideAirQualityChecker.outsideAirQualityOkay && weatherChecker.goingToRain)
+            {
+                warningText = $"The current CO2 pollution in the office exceeds currently the limit of {Convert.ToString(co2Threshold)}. As the outside air quality is not okay and it is very likely going to rain, please do not open the windows. Instead, consider increase the mechanical ventilation to achieve better air quality and productivity."; 
             }
 
-            co2Warning.transform.Find("DescriptionText").GetComponent<TextMeshPro>().text = text;
+            co2Warning.transform.Find("DescriptionText").GetComponent<TextMeshPro>().text = warningText;
             sceneController.showCO2Warning = true;
 
             outsideAirQualityChecker.aqSet = false;
+            weatherChecker.weatherForecastSet = false;
+            processRunning = false;
         }
-        processStarted = false;
     }
 
     public IEnumerator getCo2Data () {
@@ -106,6 +117,9 @@ public class CO2LevelController : MonoBehaviour
         
         // set the CO2 value based on the JSON structure
         co2Value = 1100.0;
-        co2ValueSet = true;
+
+        if (co2Value > co2Threshold) {
+            checkOpeningWindowsOkay= true;
+        }
     }
 }
