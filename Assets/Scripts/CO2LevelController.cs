@@ -7,23 +7,27 @@ using System;
 using SimpleJSON;
 using System.Globalization;
 using TMPro;
+using System.Linq;
 
 public class CO2LevelController : MonoBehaviour
 {
+    public OntologyReader ontologyReader;
     public WeatherChecker weatherChecker;
     public OutsideAirQualityChecker outsideAirQualityChecker;
     public GameObject co2Warning;
     public SceneController sceneController;
 
     private double co2Threshold;
-    private double co2Value;
+    public double co2Value;
     private bool checkOpeningWindowsOkay;
     private bool processRunning;
+    public bool valueUpdated;
 
     private DateTime timeLastExecution;
     private int frequencyOfCheckInSeconds;
-    private string sensorEndpoint;
+    private string co2SensorEndpoint;
     private bool firstExecution;
+    private bool endpointSet;
 
     // Start is called before the first frame update
     void Start()
@@ -31,20 +35,28 @@ public class CO2LevelController : MonoBehaviour
         checkOpeningWindowsOkay = false;
         firstExecution = true;
         processRunning = false;
+        endpointSet = false;
+        valueUpdated = false;
         
         frequencyOfCheckInSeconds = 120; // must come from the ontology
-        sensorEndpoint = ""; // must come from the ontology
         co2Threshold = Convert.ToDouble(1000); // must come from the onology
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!endpointSet) {
+            if (ontologyReader.endpointsSet) {
+                co2SensorEndpoint = ontologyReader.endpoints.FirstOrDefault(o => o.thing == "CO2 sensor").uri;
+                endpointSet = true;
+            } 
+        }
+
         if (sceneController.inOffice && !sceneController.locationUndefined)
         {
             if (firstExecution)
             {
-                timeLastExecution = sceneController.officeEntryTime.AddSeconds(60);
+                timeLastExecution = sceneController.officeEntryTime.AddSeconds(500);
                 firstExecution = false;
             }
 
@@ -53,7 +65,7 @@ public class CO2LevelController : MonoBehaviour
             
             if (diffSeconds > frequencyOfCheckInSeconds) {
                 Debug.Log("Check CO2 concentration in office.");
-                StartCoroutine(getCo2Data());
+                StartCoroutine(getCo2Data(false));
                 timeLastExecution = currentDateTime;
                 processRunning = true;
             }   
@@ -102,7 +114,7 @@ public class CO2LevelController : MonoBehaviour
         }
     }
 
-    public IEnumerator getCo2Data () {
+    public IEnumerator getCo2Data (bool dataOnly) {
 
         string temp_url = "https://u50g7n0cbj.execute-api.us-east-1.amazonaws.com/v2/latest/9585";
 
@@ -117,9 +129,13 @@ public class CO2LevelController : MonoBehaviour
         
         // set the CO2 value based on the JSON structure
         co2Value = 1100.0;
-
-        if (co2Value > co2Threshold) {
-            checkOpeningWindowsOkay= true;
+        
+        if (!dataOnly) {
+            if (co2Value > co2Threshold) {
+                checkOpeningWindowsOkay= true;
+            }
+        } else {
+            valueUpdated = true;
         }
     }
 }

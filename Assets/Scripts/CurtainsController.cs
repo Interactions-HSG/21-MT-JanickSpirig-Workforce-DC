@@ -7,42 +7,64 @@ using System;
 using SimpleJSON;
 using System.Globalization;
 using TMPro;
+using System.Linq;
 
 public class CurtainsController : MonoBehaviour
 {
-    private string curtainEndpoint;
+    public OntologyReader ontologyReader;
+    private string curtainStopEndpoint;
+    private string curtainUpEndpoint;
+    private string curtainDownEndpoint;
+
+    private bool endpointsSet;
     
-    // Start is called before the first frame update
     void Start()
     {
-        curtainEndpoint = "http://10.2.1.212:1880/knx/floor_4/room_402/blinds"; // must come from the ontology
+        endpointsSet = false;
+
+    }
+
+    void Update()
+    {
+        // get endpoints from ontology
+        if (!endpointsSet) {
+            if (ontologyReader.endpointsSet) {
+                var endpoints = ontologyReader.endpoints.Where(o => o.thing == "window").ToList();
+                foreach (Endpoint x in endpoints) {
+                    if (x.uri.Contains("up")) {
+                        curtainUpEndpoint = x.uri;
+                    } else if (x.uri.Contains("down")) {
+                        curtainDownEndpoint = x.uri;
+                    } else if (x.uri.Contains("stop")) {
+                        curtainStopEndpoint = x.uri;
+                    }
+                }
+                endpointsSet = true;
+            }
+        }
     }
 
     // Update is called once per frame
 
     public void curtainsUp()
     {
-        string url = curtainEndpoint + "/up";
-        StartCoroutine(modifyCurtainState(url));
+        StartCoroutine(modifyCurtainState(curtainUpEndpoint));
     }
 
     public void curtainsDown()
     {
-        string url = curtainEndpoint + "/down";
-        StartCoroutine(modifyCurtainState(url));
+        StartCoroutine(modifyCurtainState(curtainDownEndpoint));
     }
 
     public void curtainsStop()
     {
-        string url = curtainEndpoint + "/stop";
-        Debug.Log("We are here!");
-        // StartCoroutine(modifyCurtainState(url));
+        StartCoroutine(modifyCurtainState(curtainStopEndpoint));
     }
 
-    private IEnumerator modifyCurtainState(string url)
+    private IEnumerator modifyCurtainState(string uri)
     {
-        byte[] dataToPut = System.Text.Encoding.UTF8.GetBytes("");
-        UnityWebRequest uwr = UnityWebRequest.Put(url, dataToPut);
+        byte[] dataToPut = System.Text.Encoding.UTF8.GetBytes("{}");
+        UnityWebRequest uwr = UnityWebRequest.Put(uri, dataToPut);
         yield return uwr.SendWebRequest();
         yield return new WaitForSeconds((float)1.0);
 

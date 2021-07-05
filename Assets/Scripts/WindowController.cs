@@ -7,9 +7,11 @@ using System;
 using SimpleJSON;
 using System.Globalization;
 using TMPro;
+using System.Linq;
 
 public class WindowController : MonoBehaviour
 {
+    public OntologyReader ontologyReader;
     public SceneController sceneController;
     public WeatherChecker weatherChecker;
     public OutsideAirQualityChecker outsideAirQualityChecker;
@@ -21,6 +23,7 @@ public class WindowController : MonoBehaviour
     private int frequencyOfCheckInSeconds;
     private DateTime timeLastExecution;
     private bool firstExecution;
+    private bool endpointSet;
 
 
     // Start is called before the first frame update
@@ -30,18 +33,26 @@ public class WindowController : MonoBehaviour
         firstExecution = true;
         processRunning = false;
         checkClosingNeeded = false;
-        windowEndpoint = "http://10.2.1.218/things/sensor/properties"; // must come from the ontology
+        endpointSet = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (!endpointSet) {
+            if (ontologyReader.endpointsSet) {
+                windowEndpoint = ontologyReader.endpoints.FirstOrDefault(o => o.thing == "window status").uri;
+                endpointSet = true;
+            } 
+        }
+
         
         if (sceneController.inOffice && !sceneController.locationUndefined)
         {    
             if (firstExecution)
             {
-                timeLastExecution = sceneController.officeEntryTime;
+                timeLastExecution = sceneController.officeEntryTime.AddSeconds(500);
                 firstExecution = false;
             }
 

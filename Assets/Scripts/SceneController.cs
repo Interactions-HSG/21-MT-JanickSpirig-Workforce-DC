@@ -12,10 +12,15 @@ public class SceneController : MonoBehaviour
     public GameObject labWelcomeBox;
     public GameObject labMenu;
     public GameObject CO2Warning;
+    public GameObject temperatureWarning;
     public GameObject windowOpenWarning;
     public GameObject officeWelcomeBox;
     public GameObject curtainsControl;
     public GameObject ceilingLightControl;
+    public GameObject labLightReminder;
+    public GameObject lablightReminderConfirm;
+    public GameObject hueInformation; 
+    public GameObject hueControl;
     
     public DateTime officeEntryTime;
     public DateTime labEntryTime;
@@ -32,10 +37,15 @@ public class SceneController : MonoBehaviour
     public bool showWindowOpenWarning  {get; set; }
     public bool showCurtainsControl {get; set; }
     public bool showCeilingLightControl {get; set; }
+    public bool showTemperatureWarning {get; set; }
+    public bool showLabLightReminder {get; set; }
+    public bool showLabLightReminderConfirm {get; set; }
+    public bool showHueControl {get; set; }
+    public bool showHueInformation {get; set; }
 
 	void Start ()
 	{
-        // HOLOGRAMS
+        // WHICH HOLOGRAMS TO SHOW BY DEFAULT
         showCherrybot = false;
         showLeubot = false;
         showLabWelcomeBox = false;
@@ -45,6 +55,10 @@ public class SceneController : MonoBehaviour
         showWindowOpenWarning = false;
         showCurtainsControl = false;
         showCeilingLightControl = false;
+        showTemperatureWarning = false;
+        showLabLightReminder = false;
+        showHueControl = true;
+        showHueInformation = false;
 
         // USER LOCATION AT START
         locationUndefined = true;
@@ -54,7 +68,54 @@ public class SceneController : MonoBehaviour
 
 	void Update ()
 	{
+        
+        if (showHueControl)
+        {
+            hueControl.SetActive(true);
+        }
+        else
+        {
+            hueControl.SetActive(false);
+        }
+
+        if (showHueInformation)
+        {
+            hueInformation.SetActive(true);
+        }
+        else
+        {
+            hueInformation.SetActive(false);
+        }
+
+        if (showLabLightReminderConfirm)
+        {
+            lablightReminderConfirm.SetActive(true);
+        }
+        else
+        {
+            lablightReminderConfirm.SetActive(false);
+        }
+
+        if (showLabLightReminder)
+        {
+            labLightReminder.SetActive(true);
+        }
+        else
+        {
+            labLightReminder.SetActive(false);
+        }
+
         // CO2 WARNING
+        if (showCO2Warning)
+        {
+            CO2Warning.SetActive(true);
+        }
+        else
+        {
+            CO2Warning.SetActive(false);
+        }
+
+        // TEMPERATURE WARNING
         if (showCO2Warning)
         {
             CO2Warning.SetActive(true);

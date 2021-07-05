@@ -6,10 +6,11 @@ using System.Web;
 using System;
 using SimpleJSON;
 using System.Globalization;
+using System.Linq;
 
 public class OutsideAirQualityChecker : MonoBehaviour
 {
-
+    public OntologyReader ontologyReader;
     private string airQualityEndpoint;
     private int o3Threshold;
     private int pm10Threshold;
@@ -22,7 +23,8 @@ public class OutsideAirQualityChecker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        airQualityEndpoint = "https://u50g7n0cbj.execute-api.us-east-1.amazonaws.com/v2/latest/9585"; // must come from the ontology
+        airQualityEndpoint = "";
+
         o3Threshold = 100; // must come from the ontology
         pm10Threshold = 100; // must come from the ontology
         no2Threshold = 100; // must come from the ontology
@@ -32,7 +34,15 @@ public class OutsideAirQualityChecker : MonoBehaviour
         outsideAirQualityOkay = true;
 
         messages = new List<String>();
+    }
 
+    void Update() {
+        if (airQualityEndpoint == "") {
+            if (ontologyReader.endpointsSet) {
+                airQualityEndpoint = ontologyReader.endpoints.FirstOrDefault(o => o.thing == "airquality").uri;
+                Debug.Log(airQualityEndpoint);
+            }
+        }
     }
 
     public IEnumerator getAQData() {

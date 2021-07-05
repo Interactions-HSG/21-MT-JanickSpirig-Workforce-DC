@@ -10,6 +10,7 @@ public class HTTPListener : MonoBehaviour
 	public SceneController sceneController;
 	private HttpListener listener;
 	private Thread listenerThread;
+	public HueController hueController;
 
 	void Start ()
 	{
@@ -112,6 +113,50 @@ public class HTTPListener : MonoBehaviour
 						else if (value == "0")
 						{
 							sceneController.showCeilingLightControl = false;
+						}
+						break;
+					case "hue-red":
+						if (value == "1")
+						{
+							hueController.processRequest("red");
+						}
+						else if (value == "0")
+						{
+							sceneController.showHueInformation = false;
+							sceneController.showHueControl = false;
+						}
+						break;
+					case "hue-green":
+						if (value == "1")
+						{
+							hueController.processRequest("green");
+						}
+						else if (value == "0")
+						{
+							sceneController.showHueInformation = false;
+							sceneController.showHueControl = false;	
+						}
+						break;
+					case "hue-yellow":
+						if (value == "1")
+						{
+							hueController.processRequest("yellow");
+						}
+						else if (value == "0")
+						{
+							sceneController.showHueInformation = false;
+							sceneController.showHueControl = false;
+						}
+						break;
+					case "hue-purple":
+						if (value == "1")
+						{
+							hueController.processRequest("purple");
+						}
+						else if (value == "0")
+						{
+							sceneController.showHueInformation = false;
+							sceneController.showHueControl = false;
 						}
 						break;
 				}
