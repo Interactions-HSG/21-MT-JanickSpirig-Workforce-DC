@@ -8,6 +8,7 @@ using System.Threading;
 public class SceneController : MonoBehaviour
 {
     public GameObject cherrybotItemBox;
+    public GameObject dialogAuthenticate;
     public GameObject leubotItemBox;
     public GameObject labWelcomeBox;
     public GameObject labMenu;
@@ -42,6 +43,7 @@ public class SceneController : MonoBehaviour
     public bool showLabLightReminderConfirm {get; set; }
     public bool showHueControl {get; set; }
     public bool showHueInformation {get; set; }
+    public bool showDialogAuthenticate {get; set; }
 
 	void Start ()
 	{
@@ -59,6 +61,7 @@ public class SceneController : MonoBehaviour
         showLabLightReminder = false;
         showHueControl = true;
         showHueInformation = false;
+        showDialogAuthenticate = true;
 
         // USER LOCATION AT START
         locationUndefined = true;
@@ -68,6 +71,16 @@ public class SceneController : MonoBehaviour
 
 	void Update ()
 	{
+
+        // CHERRYBOT AUTHENTICATION
+        if (showDialogAuthenticate)
+        {
+            dialogAuthenticate.SetActive(true);
+        }
+        else
+        {
+            dialogAuthenticate.SetActive(false);
+        }
         
         if (showHueControl)
         {

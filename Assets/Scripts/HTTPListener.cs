@@ -11,13 +11,15 @@ public class HTTPListener : MonoBehaviour
 	private HttpListener listener;
 	private Thread listenerThread;
 	public HueController hueController;
+	public authenticator authenticator;
+	public RobotInSceneHandler robotInSceneHandler;
 
 	void Start ()
 	{
 		listener = new HttpListener ();
 		listener.Prefixes.Add ("http://localhost:5050/");
 		listener.Prefixes.Add ("http://127.0.0.1:5050/");
-		// listener.Prefixes.Add("http://192.168.43.54:5050/");
+		//listener.Prefixes.Add("http://192.168.43.54:5050/");
 		listener.AuthenticationSchemes = AuthenticationSchemes.Anonymous;
 		listener.Start ();
 
@@ -40,7 +42,7 @@ public class HTTPListener : MonoBehaviour
 
 	private void ListenerCallback (IAsyncResult result)
 	{				
-		var context = listener.EndGetContext (result);		
+		var context = listener.EndGetContext(result);		
 		
 		Debug.Log ("Request received");
 
@@ -54,9 +56,10 @@ public class HTTPListener : MonoBehaviour
 					case "Cherrybot":
 						// 1 is equal to show and 0 is equal to hide
 						if (value == "1")
-						{
-							Debug.Log("We are here! ");
-							sceneController.showCherrybot = true;
+						{	
+							robotInSceneHandler.thing = "Cherrybot";
+							robotInSceneHandler.processRobot = true;
+							// sceneController.showCherrybot = true;
 						}
 						else if (value == "0")
 						{
@@ -66,7 +69,8 @@ public class HTTPListener : MonoBehaviour
 					case "Leubot":
 						if (value == "1")
 						{
-							sceneController.showLeubot = true;
+							// robotInSceneHandler.thing = "(key);
+							// sceneController.showLeubot= true;
 						}
 						else if (value == "0")
 						{
@@ -159,6 +163,17 @@ public class HTTPListener : MonoBehaviour
 							sceneController.showHueControl = false;
 						}
 						break;
+					case "miroAuth":
+					if (value == "1")
+					{
+						// display info box that tells the user that the authentication was successful
+						authenticator.loggedIn = true;
+					}
+					else if (value == "0")
+					{
+						
+					}
+					break;
 				}
 			}
 		}
