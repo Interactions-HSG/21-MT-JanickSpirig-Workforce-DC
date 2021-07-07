@@ -9,6 +9,7 @@ public class RobotInSceneHandler : MonoBehaviour
     public SceneController sceneController;
     public authenticator authenticator;
     public GameObject dialogBox;
+    public GameObject infoBox;
     public bool processRobot {get; set; }
 
     public TMPro.TextMeshPro titleText;
@@ -23,7 +24,7 @@ public class RobotInSceneHandler : MonoBehaviour
 
         if (processRobot)
         {
-            handleRobot();
+            handleRobotAppereance();
             processRobot = false;
         }
 
@@ -32,22 +33,46 @@ public class RobotInSceneHandler : MonoBehaviour
             sceneController.showDialogAuthenticate = false;
             if (thing == "Cherrybot")
             {
-                sceneController.showCherrybot = true;
+                sceneController.showCherrybotControl = true;
             }
             else if (thing == "Leubot")
             {
-                sceneController.showLeubot = true;
+                sceneController.showLeubotControl = true;
             }
             authenticator.loggedIn = false;
         }
     }
 
-    public void handleRobot() {
+    public void handleRobotAppereance() {
+        sceneController.showRobotInfobox = true;
+        
+        string titleText = "";
+        string descriptionText = "";
+
+        if (thing == "Cherrybot")
+        {
+            titleText = $"Hi, {thing}!";
+            descriptionText = $"This is the {thing} which is currently executing process 657. As you can see, he automates the process of putting tenis balls into its case. If you want to control the robot yourself, just click below!";
+        }
+        else if (thing == "Leubot")
+        {
+            titleText = $"Hi, {thing}!";
+            descriptionText = "This is another very cool robot, just try it out by clicking below to authenticate yourself again!";
+        }
+
+        infoBox.transform.Find("TitleText").GetComponent<TextMeshPro>().text = titleText;
+        infoBox.transform.Find("DescriptionText").GetComponent<TextMeshPro>().text = descriptionText;
+
+    }
+
+
+    public void handleRobotControl() {
         // set tile and text of authenticate dialogbox
         string masterPwd = authenticator.password;
+        sceneController.showRobotInfobox = false;
         sceneController.showDialogAuthenticate = true;
 
-        dialogBox.transform.Find("TitleText").GetComponent<TextMeshPro>().text = thing;
-        dialogBox.transform.Find("DescriptionText").GetComponent<TextMeshPro>().text = $"This is the {thing}, which can do various tasks. To control the {thing} yourself, please enter the password below: {masterPwd}";
+        dialogBox.transform.Find("TitleText").GetComponent<TextMeshPro>().text = $"Let's play!";
+        dialogBox.transform.Find("DescriptionText").GetComponent<TextMeshPro>().text = $"To control the {thing} yourself, click on the button and enter this password: {masterPwd}";
     }
 }

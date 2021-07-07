@@ -22,12 +22,13 @@ public class SceneController : MonoBehaviour
     public GameObject lablightReminderConfirm;
     public GameObject hueInformation; 
     public GameObject hueControl;
+    public GameObject robotInfobox;
     
     public DateTime officeEntryTime;
     public DateTime labEntryTime;
 
-    public bool showCherrybot {get; set;}
-    public bool showLeubot {get; set;}
+    public bool showCherrybotControl {get; set;}
+    public bool showLeubotControl {get; set;}
     public bool showLabWelcomeBox {get; set;}
     public bool showOfficeWelcomeBox {get; set; }
     public bool showLabMenu {get; set; }
@@ -44,12 +45,13 @@ public class SceneController : MonoBehaviour
     public bool showHueControl {get; set; }
     public bool showHueInformation {get; set; }
     public bool showDialogAuthenticate {get; set; }
+    public bool showRobotInfobox {get; set; }
 
 	void Start ()
 	{
         // WHICH HOLOGRAMS TO SHOW BY DEFAULT
-        showCherrybot = false;
-        showLeubot = false;
+        showCherrybotControl = false;
+        showLeubotControl = false;
         showLabWelcomeBox = false;
         showOfficeWelcomeBox = false;
         showLabMenu = false;
@@ -61,7 +63,8 @@ public class SceneController : MonoBehaviour
         showLabLightReminder = false;
         showHueControl = true;
         showHueInformation = false;
-        showDialogAuthenticate = true;
+        showDialogAuthenticate = false;
+        showRobotInfobox = false;
 
         // USER LOCATION AT START
         locationUndefined = true;
@@ -71,6 +74,16 @@ public class SceneController : MonoBehaviour
 
 	void Update ()
 	{
+
+        // ROBOT INFO BOX
+        if (showRobotInfobox)
+        {
+            robotInfobox.SetActive(true);
+        }
+        else
+        {
+            robotInfobox.SetActive(false);
+        }
 
         // CHERRYBOT AUTHENTICATION
         if (showDialogAuthenticate)
@@ -179,7 +192,7 @@ public class SceneController : MonoBehaviour
         }
 
         // CHERRYBOT
-        if (showCherrybot)
+        if (showCherrybotControl)
         {
             cherrybotItemBox.SetActive(true);
         }
@@ -189,7 +202,7 @@ public class SceneController : MonoBehaviour
         }  
 
         // LEUBOT
-        if (showLeubot)
+        if (showLeubotControl)
         {
             leubotItemBox.SetActive(true);
         }

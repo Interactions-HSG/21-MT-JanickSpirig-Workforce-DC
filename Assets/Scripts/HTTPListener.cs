@@ -63,7 +63,7 @@ public class HTTPListener : MonoBehaviour
 						}
 						else if (value == "0")
 						{
-							sceneController.showCherrybot = false;
+							sceneController.showCherrybotControl = false;
 						}
 						break;
 					case "Leubot":
@@ -74,7 +74,7 @@ public class HTTPListener : MonoBehaviour
 						}
 						else if (value == "0")
 						{
-							sceneController.showLeubot = false;
+							sceneController.showLeubotControl = false;
 						}
 						break;
 					case "Lab":

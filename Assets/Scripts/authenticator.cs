@@ -25,7 +25,8 @@ public class authenticator : MonoBehaviour {
 
     public TextMeshPro previewText;
     public GameObject dialogAuthenticate;
-    
+
+
 
     void Start()
     {
@@ -57,19 +58,29 @@ public class authenticator : MonoBehaviour {
     }
 
     public void showKeyboard() {
-        keyBoard.ShowKeyboard();   
+        // hide the button field
+        dialogAuthenticate.transform.Find("Dialog").Find("ButtonParent").gameObject.SetActive(false);
+
+        // show the keyboard
+        keyBoard.ShowKeyboard();
+
+        // show the preview keyboard preview field
+        dialogAuthenticate.transform.Find("KeyboardPreview").gameObject.SetActive(true);
     }
 
     public void processPassword() {
+        // hide keyboard and clear text
         keyBoard.HideKeyboard();
-        string enteredPassword = keyBoard.Text;
+        string enteredText = keyBoard.Text;
         keyBoard.ClearKeyboardText();
         
+        // hide preview field
+        dialogAuthenticate.transform.Find("KeyboardPreview").gameObject.SetActive(false);
+        
+        // get the result text component
         TextMeshPro resultText = dialogAuthenticate.transform.Find("PwdResultText").GetComponent<TextMeshPro>();
-        resultText.text = enteredPassword;
 
-        /*
-        if (checkPassword(enteredPassword)) {
+        if (checkPassword(enteredText)) {
             // PASSWORD IS CORRECT
 
             // hide the password field
@@ -78,9 +89,10 @@ public class authenticator : MonoBehaviour {
             resultText.text = "PASSWORD CORRECT! Now please shake the MiroCard sideways for a couple of seconds to fully accomplish the two-factor authtentication!";
         } else {
             // PASSWORD IS NOT CORRECT
-            resultText.text = "PASSWORD INCORRECT! Please enter the correct password!";
+            resultText.text = "PASSWORD INCORRECT! Please click on the button below and try again!";
+            // show the button again so user can start everything from beginning
+            dialogAuthenticate.transform.Find("Dialog").Find("ButtonParent").gameObject.SetActive(true);
         }
-        */
     }
 
 }
