@@ -17,9 +17,11 @@ public class HTTPListener : MonoBehaviour
 	void Start ()
 	{
 		listener = new HttpListener ();
-		listener.Prefixes.Add ("http://localhost:5050/");
-		listener.Prefixes.Add ("http://127.0.0.1:5050/");
-		//listener.Prefixes.Add("http://192.168.43.54:5050/");
+		//listener.Prefixes.Add ("http://localhost:5050/");
+		//listener.Prefixes.Add ("http://127.0.0.1:5050/");
+		listener.Prefixes.Add("http://192.168.43.54:5050/");
+		//listener.Prefixes.Add("http://10.2.1.85:5050/");
+
 		listener.AuthenticationSchemes = AuthenticationSchemes.Anonymous;
 		listener.Start ();
 
@@ -122,7 +124,7 @@ public class HTTPListener : MonoBehaviour
 					case "hue-red":
 						if (value == "1")
 						{
-							hueController.processRequest("red");
+							hueController.showHueInfoBox = true;
 						}
 						else if (value == "0")
 						{
@@ -133,7 +135,7 @@ public class HTTPListener : MonoBehaviour
 					case "hue-green":
 						if (value == "1")
 						{
-							hueController.processRequest("green");
+							hueController.showHueInfoBox = true;
 						}
 						else if (value == "0")
 						{
@@ -144,7 +146,7 @@ public class HTTPListener : MonoBehaviour
 					case "hue-yellow":
 						if (value == "1")
 						{
-							hueController.processRequest("yellow");
+							hueController.showHueInfoBox = true;
 						}
 						else if (value == "0")
 						{
@@ -155,7 +157,7 @@ public class HTTPListener : MonoBehaviour
 					case "hue-purple":
 						if (value == "1")
 						{
-							hueController.processRequest("purple");
+							hueController.showHueInfoBox = true;
 						}
 						else if (value == "0")
 						{
@@ -168,6 +170,17 @@ public class HTTPListener : MonoBehaviour
 					{
 						// display info box that tells the user that the authentication was successful
 						authenticator.loggedIn = true;
+					}
+					else if (value == "0")
+					{
+						
+					}
+					break;
+					case "cbEnded":
+					if (value == "1")
+					{
+						// display info box that tells the user that the authentication was successful
+						sceneController.showCherrybotControl = true;
 					}
 					else if (value == "0")
 					{

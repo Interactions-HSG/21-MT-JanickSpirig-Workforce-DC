@@ -40,7 +40,6 @@ public class OutsideAirQualityChecker : MonoBehaviour
         if (airQualityEndpoint == "") {
             if (ontologyReader.endpointsSet) {
                 airQualityEndpoint = ontologyReader.endpoints.FirstOrDefault(o => o.thing == "airquality").uri;
-                Debug.Log(airQualityEndpoint);
             }
         }
     }

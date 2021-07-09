@@ -6,6 +6,8 @@ using System.Net;
 using System.Threading;
 using System.Text;
 using System.Web;
+using System.Collections.Generic;
+using Microsoft.MixedReality.Toolkit.UI;
 
 public class CherrybotHandler : MonoBehaviour
 {
@@ -50,15 +52,15 @@ public class CherrybotHandler : MonoBehaviour
 	
     }
 
-    public void changePosition(
-        string x,
-        string y,
-        string z,
-        string roll,
-        string pitch,
-        string yaw,
-        string speed
-        ) {
+    public void changePosition(List<string> targetPosition) {
+
+        string x = targetPosition[0];
+        string y = targetPosition[1];
+        string z = targetPosition[2];
+        string roll = targetPosition[3];
+        string pitch = targetPosition[4];
+        string yaw = targetPosition[5];
+        string speed = "70";
 
         uri = "/tcp/target";
         method = "PUT";
@@ -82,6 +84,5 @@ public class CherrybotHandler : MonoBehaviour
         json = value;
         
         requestToSend = true;
-
     }
 }

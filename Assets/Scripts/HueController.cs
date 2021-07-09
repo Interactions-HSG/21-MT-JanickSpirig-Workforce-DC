@@ -1,28 +1,34 @@
 using UnityEngine;
 using UnityEngine.Networking;
-using System;
 using System.Collections;
 using TMPro;
 using Microsoft.MixedReality.Toolkit.UI;
+using System.Linq;
+using SimpleJSON;
 
 
 public class HueController : MonoBehaviour {
      
     public SceneController sceneController;
     public CO2LevelController cO2LevelController;
-
-    public GameObject birghtnessSlider;
+    public OntologyReader ontologyReader;
+    public GameObject brightnessSlider;
     public GameObject redToggle;
     public GameObject greenToggle;
     public GameObject yellowToggle;
     public GameObject purpleToggle;
+    public TextMeshPro hueInfoDescripton;
 
     private string currentColor;
+    private bool hueDataSet;
+    private bool hueUpdated;
     private int currentBrightness;
-    private string airQuality;
-    private string hueEndpoint;
+    private string hueEndpoint = "";
 
     public bool adjustLamp {get; set; }
+    public bool getCurrentHue {get; set; }
+    public bool showHueInfoBox {get; set; }
+    public bool showHueControl {get; set; }
 
     public string targetColor {get; set; }
 
@@ -30,20 +36,80 @@ public class HueController : MonoBehaviour {
 
     void Start() {
         adjustLamp = false;
-        hueEndpoint =  "http://10.2.1.211:1880/room_402/hue"; // should come from the ontology
+
+        // set this boolean to TRUE to set the current hue data in the control box
+        getCurrentHue = true;
     }
 
     void Update() {
+        
+        // set hue endpoint
+        if (hueEndpoint == "") {
+            if (ontologyReader.endpointsSet) {
+                ontologyReader.endpoints.ToList().ForEach(o => {if (o.method == "GET" && o.thing == "hue"){hueEndpoint = o.uri;}});
+            }
+            Debug.Log(hueEndpoint);
+        }
 
         if (adjustLamp) {
-            //StartCoroutine(changeLampState());
-            Debug.Log(targetColor);
-            Debug.Log(targetBrightness);
+            StartCoroutine(changeLampState());
             adjustLamp = false;
         }
 
+        if (getCurrentHue && hueEndpoint != "") {
+            StartCoroutine(getHueData());
+            getCurrentHue = false;
+        }
+
+        if (hueDataSet) {
+            // update GUI with current values
+            
+            switch (currentColor)
+            {
+                case "green":
+                    greenToggle.GetComponent<Interactable>().IsToggled = true;
+                    break;
+                case "red":
+                    redToggle.GetComponent<Interactable>().IsToggled = true;
+                    break;
+                case "gold":
+                    yellowToggle.GetComponent<Interactable>().IsToggled = true;
+                    break;
+                case "violet":
+                    purpleToggle.GetComponent<Interactable>().IsToggled = true;
+                    break;
+            }
+            
+            // set current brightness value
+            brightnessSlider.GetComponent<PinchSlider>().SliderValue = (float) (currentBrightness / 100);
+            hueDataSet = false;
+            hueUpdated = true;
+        }
+
+
+        if (showHueInfoBox || showHueControl) {
+            getCurrentHue = true;
+            if (hueUpdated) {
+                // now we have the current hue data and can display the info or control box
+                if (showHueInfoBox) {
+                    StartCoroutine(cO2LevelController.getCo2Data(true));
+                    if (cO2LevelController.valueUpdated) {
+                        // we have now the newest co2-level in the office
+                        displayHueInfoBox();
+                        cO2LevelController.valueUpdated = false;
+                        hueUpdated = false;
+                        showHueInfoBox = false;
+                    }
+                } else if (showHueControl) {
+                    sceneController.showHueControl = true;
+                    showHueControl = false;
+                    hueUpdated = false;
+                }
+            }
+        }
+
         /*
-        // we sow the information only one time, when the user is standing in front of the hue lamp, this is the case as soon as we have retrieved the current CO2-level from the sensor.
+        // we show the information only one time, when the user is standing in front of the hue lamp, this is the case as soon as we have retrieved the current CO2-level from the sensor.
         if (cO2LevelController.valueUpdated) {
 
             // display now the warning messages with alle the texts
@@ -56,21 +122,31 @@ public class HueController : MonoBehaviour {
         */
     }
 
-    public void displayControlField() {
+    public void updateTargetBrightness() {
+        targetBrightness = brightnessSlider.GetComponent<PinchSlider>().SliderValue;
+        Debug.Log(targetBrightness);
+    }
 
-        // set toggle and brightness according to current state
+    private IEnumerator getHueData() {
 
-        sceneController.showHueControl = true;
+        UnityWebRequest uwr = UnityWebRequest.Get(hueEndpoint);
 
+        uwr.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
+        
+        yield return uwr.SendWebRequest();
 
+        JSONNode data = JSON.Parse(uwr.downloadHandler.text);
+        
+        currentColor = data["color"];
+        currentBrightness = data["brightness"];
+
+        hueDataSet = true;
     }
 
     private IEnumerator changeLampState() {
 
-        int brightness = (int) targetBrightness;
-
+        int brightness = (int) (targetBrightness * 100);
         string json = "{\"on\": true,\"color\": \"" + targetColor + "\", \"brightness\":" + brightness.ToString() + ", \"override\": true}";
-
         byte[] dataToPut = System.Text.Encoding.UTF8.GetBytes(json);
         UnityWebRequest uwr = UnityWebRequest.Put(hueEndpoint, dataToPut);
 
@@ -78,14 +154,10 @@ public class HueController : MonoBehaviour {
         yield return uwr.SendWebRequest();
     }
 
-    public void updateTargetBrightness() {
-        targetBrightness = birghtnessSlider.GetComponent<PinchSlider>().SliderValue;
-
-    }
-
-    public void processRequest(string color) {
+    public void displayHueInfoBox() {
         // get CO2 value and set tex tin infobox and display the ifnobox
-        currentColor = color;
+
+        string airQuality = "";
 
         switch (currentColor)
         {
@@ -103,8 +175,7 @@ public class HueController : MonoBehaviour {
                 break;
         }
 
-        // if there is a value from a previous execution has been set
-        cO2LevelController.valueUpdated = false;
-        StartCoroutine(cO2LevelController.getCo2Data(true));
+        hueInfoDescripton.text = $"This ist the smart hue-lamp. Its color indicates how well the air-quality currently is. The current color {currentColor} indicates a {airQuality} Airquality as the current co2 level is at {cO2LevelController.co2Value}. Click the button below to change control the lamp yourself.";
+        sceneController.showHueInformation = true; 
     }
 }

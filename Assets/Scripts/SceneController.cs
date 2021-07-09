@@ -50,7 +50,7 @@ public class SceneController : MonoBehaviour
 	void Start ()
 	{
         // WHICH HOLOGRAMS TO SHOW BY DEFAULT
-        showCherrybotControl = false;
+        showCherrybotControl = true;
         showLeubotControl = false;
         showLabWelcomeBox = false;
         showOfficeWelcomeBox = false;
@@ -61,7 +61,7 @@ public class SceneController : MonoBehaviour
         showCeilingLightControl = false;
         showTemperatureWarning = false;
         showLabLightReminder = false;
-        showHueControl = true;
+        showHueControl = false;
         showHueInformation = false;
         showDialogAuthenticate = false;
         showRobotInfobox = false;
