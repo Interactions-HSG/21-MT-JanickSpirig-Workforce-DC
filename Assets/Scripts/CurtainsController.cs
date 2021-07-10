@@ -24,6 +24,8 @@ public class CurtainsController : MonoBehaviour
 
     }
 
+    // one script for both, curtains in lab and in office!
+
     void Update()
     {
         // get endpoints from ontology

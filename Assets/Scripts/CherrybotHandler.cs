@@ -60,7 +60,7 @@ public class CherrybotHandler : MonoBehaviour
         string roll = targetPosition[3];
         string pitch = targetPosition[4];
         string yaw = targetPosition[5];
-        string speed = "70";
+        string speed = "100";
 
         uri = "/tcp/target";
         method = "PUT";

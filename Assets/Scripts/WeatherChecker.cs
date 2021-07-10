@@ -6,16 +6,22 @@ using System.Web;
 using System;
 using SimpleJSON;
 using System.Globalization;
+using TMPro;
+using Microsoft.MixedReality.Toolkit.UI;
+using System.Linq;
 
 public class WeatherChecker : MonoBehaviour
 {
     private string consumerKey;
     private string consumerSecret;
     private string geoLocationId;
-    private string authEndpoint;
-    private string forecastEndpoint;
+    private string apiAuthEndpoint = "";
+    private string apiForecastEndpoint = "";
+    private string apiAuthMethod;
+    private string apiForecastMethod;
     private DateTime timeLastExecution;
 
+    public OntologyReader ontologyReader;
     public bool weatherForecastSet;
     public bool goingToRain; 
     public int rainProbabilityThreshold;
@@ -26,8 +32,9 @@ public class WeatherChecker : MonoBehaviour
         consumerKey = "lBpHXNlMxvKAjVtT4bX8vitdD1IZjOX9";
         consumerSecret = "OHAHQ6EC2gSUzvxF";
         geoLocationId = "47.4238,9.3739";
-        authEndpoint = "https://api.srgssr.ch/oauth/v1/accesstoken?grant_type=client_credentials";
-        forecastEndpoint = "https://api.srgssr.ch/srf-meteo/forecast/" + geoLocationId;
+
+        // authEndpoint = "https://api.srgssr.ch/oauth/v1/accesstoken?grant_type=client_credentials";
+        // forecastEndpoint = "https://api.srgssr.ch/srf-meteo/forecast/" + geoLocationId;
 
         weatherForecastSet = false;
         goingToRain = false;
@@ -35,9 +42,27 @@ public class WeatherChecker : MonoBehaviour
         rainProbabilityThreshold = 90;
     }
 
+    void Update() {
+        if (apiAuthEndpoint == "" && apiForecastEndpoint == "") {
+            if (ontologyReader.endpointsSet) {
+                ontologyReader.endpoints.ToList().ForEach(o => {
+                    if (o.thing == "meteo") {
+                        if (o.actionName.Contains("forecast")) {
+                            apiForecastEndpoint = o.uri;
+                            apiForecastMethod = o.method;
+                        } else if (o.actionName.Contains("authentication")) {
+                            apiAuthEndpoint = o.uri;
+                            apiAuthMethod = o.method;
+                        }
+                    }
+                });
+            }
+        }
+    }
+
     public IEnumerator getWeatherForecast () {
         // AUTHENTICATION
-        var uwr = new UnityWebRequest(authEndpoint, "POST");
+        var uwr = new UnityWebRequest(apiAuthEndpoint, apiAuthMethod);
 
         string auth = consumerKey + ":" + consumerSecret;
         auth = System.Convert.ToBase64String(System.Text.Encoding.GetEncoding("ISO-8859-1").GetBytes(auth));
@@ -51,9 +76,8 @@ public class WeatherChecker : MonoBehaviour
         string token = JSON.Parse(uwr.downloadHandler.text)["access_token"];
         string bearerToken = "Bearer " + token;
 
-        // GET WEATHER FORECAST
-        var uri =  forecastEndpoint;
-        UnityWebRequest uwr2 = UnityWebRequest.Get(uri);
+
+        UnityWebRequest uwr2 = new UnityWebRequest(apiForecastEndpoint, apiForecastMethod);
         uwr2.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
         uwr2.SetRequestHeader("Authorization", bearerToken);
         yield return uwr2.SendWebRequest();

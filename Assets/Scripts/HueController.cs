@@ -5,6 +5,8 @@ using TMPro;
 using Microsoft.MixedReality.Toolkit.UI;
 using System.Linq;
 using SimpleJSON;
+using System;
+using System.Collections.Generic;
 
 
 public class HueController : MonoBehaviour {
@@ -23,7 +25,10 @@ public class HueController : MonoBehaviour {
     private bool hueDataSet;
     private bool hueUpdated;
     private int currentBrightness;
-    private string hueEndpoint = "";
+    private string apiStatusEndpoint = "";
+    private string apiStatusMethod;
+    private string apiUpdateEndpoint = "";
+    private string apiUpdateMethod;
 
     public bool adjustLamp {get; set; }
     public bool getCurrentHue {get; set; }
@@ -44,11 +49,20 @@ public class HueController : MonoBehaviour {
     void Update() {
         
         // set hue endpoint
-        if (hueEndpoint == "") {
+        if (apiStatusEndpoint == "" && apiUpdateEndpoint == "") {
             if (ontologyReader.endpointsSet) {
-                ontologyReader.endpoints.ToList().ForEach(o => {if (o.method == "GET" && o.thing == "hue"){hueEndpoint = o.uri;}});
+                ontologyReader.endpoints.ToList().ForEach(o => {
+                    if (o.thing == "hue") {
+                        if (o.actionDescription == "lamp status") {
+                            apiStatusEndpoint = o.uri;
+                            apiStatusMethod = o.method;
+                        } else if (o.actionDescription == "change color") {
+                            apiUpdateEndpoint = o.uri;
+                            apiUpdateEndpoint = o.method;
+                        }
+                    }
+                });
             }
-            Debug.Log(hueEndpoint);
         }
 
         if (adjustLamp) {
@@ -56,7 +70,7 @@ public class HueController : MonoBehaviour {
             adjustLamp = false;
         }
 
-        if (getCurrentHue && hueEndpoint != "") {
+        if (getCurrentHue && apiStatusEndpoint != "") {
             StartCoroutine(getHueData());
             getCurrentHue = false;
         }
@@ -129,7 +143,7 @@ public class HueController : MonoBehaviour {
 
     private IEnumerator getHueData() {
 
-        UnityWebRequest uwr = UnityWebRequest.Get(hueEndpoint);
+        UnityWebRequest uwr = new UnityWebRequest(apiStatusEndpoint, apiStatusMethod);
 
         uwr.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
         
@@ -148,8 +162,13 @@ public class HueController : MonoBehaviour {
         int brightness = (int) (targetBrightness * 100);
         string json = "{\"on\": true,\"color\": \"" + targetColor + "\", \"brightness\":" + brightness.ToString() + ", \"override\": true}";
         byte[] dataToPut = System.Text.Encoding.UTF8.GetBytes(json);
-        UnityWebRequest uwr = UnityWebRequest.Put(hueEndpoint, dataToPut);
 
+        UnityWebRequest uwr = new UnityWebRequest();
+        
+        if (apiUpdateMethod == "PUT") {
+            uwr =  UnityWebRequest.Put(apiUpdateEndpoint, dataToPut);
+        }
+        
         uwr.SetRequestHeader ("Content-Type", "application/json");
         yield return uwr.SendWebRequest();
     }

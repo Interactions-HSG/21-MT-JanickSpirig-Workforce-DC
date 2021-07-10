@@ -26,7 +26,7 @@ public class OntologyReader : MonoBehaviour {
         endpointsSet = false;
         thresholdsSet = false;
         // query and set endpoints
-        string query = readQuery("selectMethodTypeTarget.rq");
+        string query = readQuery("selectThings.rq");
         StartCoroutine(queryOntology(query, "endpoints")); 
     }
 
@@ -85,7 +85,8 @@ public class OntologyReader : MonoBehaviour {
         if (what == "endpoints") {
             for (int i = 1; i <= lines.Length - 2; i++) {
                 string[] line = lines[i].Split(Convert.ToChar(","));
-                Endpoint endpoint = new Endpoint((string)line[0], (string)line[1], (string)line[3], (string)line[4]);
+                Debug.Log(line);
+                Endpoint endpoint = new Endpoint((string)line[0], (string)line[1], (string)line[2], (string)line[3], (string)line[4], (string)line[5]);
                 endpoints.Add(endpoint);
             }
             endpointsSet = true;
@@ -98,13 +99,17 @@ public class Endpoint {
     public string thing;
     public string method;
     public string uri;
-    public string action;
+    public string actionName;
+    public string actionDescription;
+    public string space;
 
-    public Endpoint(string thing, string method, string uri, string action) {
+    public Endpoint(string thing, string method, string uri, string actionName, string actionDescription, string space) {
         this.thing = thing;
         this.method = method;
         this.uri = uri;
-        this.action = action;
+        this.actionName = actionName;
+        this.actionDescription = actionDescription;
+        this.space = space;
     }   
 }
 

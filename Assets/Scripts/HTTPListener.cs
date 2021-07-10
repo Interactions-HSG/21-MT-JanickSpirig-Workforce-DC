@@ -17,9 +17,9 @@ public class HTTPListener : MonoBehaviour
 	void Start ()
 	{
 		listener = new HttpListener ();
-		//listener.Prefixes.Add ("http://localhost:5050/");
-		//listener.Prefixes.Add ("http://127.0.0.1:5050/");
-		listener.Prefixes.Add("http://192.168.43.54:5050/");
+		listener.Prefixes.Add ("http://localhost:5050/");
+		listener.Prefixes.Add ("http://127.0.0.1:5050/");
+		// listener.Prefixes.Add("http://192.168.43.54:5050/");
 		//listener.Prefixes.Add("http://10.2.1.85:5050/");
 
 		listener.AuthenticationSchemes = AuthenticationSchemes.Anonymous;

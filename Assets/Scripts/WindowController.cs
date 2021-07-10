@@ -19,7 +19,8 @@ public class WindowController : MonoBehaviour
     
     private bool checkClosingNeeded;
     private bool processRunning;
-    private string windowEndpoint;
+    private string apiEndpoint;
+    private string apiMethod;
     private int frequencyOfCheckInSeconds;
     private DateTime timeLastExecution;
     private bool firstExecution;
@@ -42,11 +43,14 @@ public class WindowController : MonoBehaviour
 
         if (!endpointSet) {
             if (ontologyReader.endpointsSet) {
-                windowEndpoint = ontologyReader.endpoints.FirstOrDefault(o => o.thing == "window status").uri;
+
+                Endpoint windowThing = ontologyReader.endpoints.FirstOrDefault(o => o.thing == "window status");
+
+                apiEndpoint = windowThing.uri;
+                apiMethod = windowThing.method;
                 endpointSet = true;
             } 
         }
-
         
         if (sceneController.inOffice && !sceneController.locationUndefined)
         {    
@@ -69,7 +73,6 @@ public class WindowController : MonoBehaviour
             
         }
         
-
         if (checkClosingNeeded && processRunning)
         {
             StartCoroutine(weatherChecker.getWeatherForecast());
@@ -101,7 +104,7 @@ public class WindowController : MonoBehaviour
 
     public IEnumerator checkWindow () {
 
-        UnityWebRequest uwr = UnityWebRequest.Get(windowEndpoint);
+        UnityWebRequest uwr = new UnityWebRequest(apiEndpoint, apiMethod);
         uwr.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
         
         yield return uwr.SendWebRequest();

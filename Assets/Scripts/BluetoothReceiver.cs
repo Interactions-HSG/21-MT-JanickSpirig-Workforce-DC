@@ -15,7 +15,7 @@ public class BluetoothReceiver : MonoBehaviour
 
     public TextMeshPro description;
 
-    
+    /*
     void Awake()
     {
         description.text = "Awake";
@@ -27,6 +27,7 @@ public class BluetoothReceiver : MonoBehaviour
         // statusDisplay.Display("UWP APIs are not supported on this platform!");
 #endif
     }
+    */
 
 #if ENABLE_WINMD_SUPPORT
 

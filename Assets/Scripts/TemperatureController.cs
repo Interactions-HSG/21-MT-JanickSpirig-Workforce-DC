@@ -18,7 +18,8 @@ public class TemperatureController : MonoBehaviour
     // if outside air quality is not good enough, then recommend to adjust mechanical ventilation
     private bool endpointSet;
     private bool firstExecution;
-    private string temperatureEndpoint;
+    private string apiEndpoint;
+    private string apiMethod;
     private double frequencyOfCheckInSeconds;
     private DateTime timeLastExecution;
     
@@ -37,7 +38,11 @@ public class TemperatureController : MonoBehaviour
     {
         if (!endpointSet) {
             if (ontologyReader.endpointsSet) {
-                temperatureEndpoint = ontologyReader.endpoints.FirstOrDefault(o => o.thing == "temperature sensor").uri;
+
+                Endpoint tempThing = ontologyReader.endpoints.FirstOrDefault(o => o.thing == "temperature sensor");
+
+                apiEndpoint = tempThing.uri;
+                apiMethod = tempThing.method;
                 endpointSet = true;
             } 
         }
@@ -63,7 +68,7 @@ public class TemperatureController : MonoBehaviour
 
     private IEnumerator getTemperature() {
 
-        UnityWebRequest uwr = UnityWebRequest.Get(temperatureEndpoint);
+        UnityWebRequest uwr = new UnityWebRequest(apiEndpoint, apiMethod);
 
         uwr.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
         yield return uwr.SendWebRequest();

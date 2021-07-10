@@ -11,7 +11,8 @@ using System.Linq;
 public class OutsideAirQualityChecker : MonoBehaviour
 {
     public OntologyReader ontologyReader;
-    private string airQualityEndpoint;
+    private string apiEndpoint;
+    private string apiMethod;
     private int o3Threshold;
     private int pm10Threshold;
     private int no2Threshold;
@@ -23,7 +24,7 @@ public class OutsideAirQualityChecker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        airQualityEndpoint = "";
+        apiEndpoint = "";
 
         o3Threshold = 100; // must come from the ontology
         pm10Threshold = 100; // must come from the ontology
@@ -37,17 +38,21 @@ public class OutsideAirQualityChecker : MonoBehaviour
     }
 
     void Update() {
-        if (airQualityEndpoint == "") {
+        if (apiEndpoint == "") {
             if (ontologyReader.endpointsSet) {
-                airQualityEndpoint = ontologyReader.endpoints.FirstOrDefault(o => o.thing == "airquality").uri;
+                ontologyReader.endpoints.ToList().ForEach(o => {
+                    if (o.thing == "airquality") {
+                        apiEndpoint = o.uri;
+                        apiMethod = o.method;
+                    }
+                });
             }
         }
     }
 
     public IEnumerator getAQData() {
-        
-        UnityWebRequest uwr = UnityWebRequest.Get(airQualityEndpoint);
 
+        UnityWebRequest uwr = new UnityWebRequest(apiEndpoint, apiMethod);
         uwr.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
         
         yield return uwr.SendWebRequest();

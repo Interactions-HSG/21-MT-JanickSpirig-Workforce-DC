@@ -11,12 +11,14 @@ public class StatusDisplay : MonoBehaviour {
 
     public TextMeshPro statusMessage;
 
+    /*
     void Update() {
         if (displayMessage) {
             statusMessage.text = message;
             displayMessage = false;
         }
     }
+    */
 
     public void Display(string m) {
         displayMessage = true;

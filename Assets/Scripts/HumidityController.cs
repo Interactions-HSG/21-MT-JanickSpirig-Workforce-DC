@@ -11,7 +11,8 @@ using TMPro;
 public class HumidityController : MonoBehaviour
 {
     private bool endpointSet;
-    private string humidityEndpoint;
+    private string apiEndpoint;
+    private string apiMethod;
     private bool firstExecution;
     private bool thresholdSet;
     private DateTime timeLastExecution;
@@ -22,7 +23,6 @@ public class HumidityController : MonoBehaviour
     public OntologyReader ontologyReader;
     public SceneController sceneController;
     public GameObject humidityWarning;
-
 
     void Start()
     {
@@ -36,7 +36,11 @@ public class HumidityController : MonoBehaviour
     {
         if (!endpointSet) {
             if (ontologyReader.endpointsSet) {
-                humidityEndpoint = ontologyReader.endpoints.FirstOrDefault(o => o.thing == "humidity sensor").uri;
+
+                Endpoint humidityThing = ontologyReader.endpoints.FirstOrDefault(o => o.thing == "humidity sensor");
+
+                apiEndpoint = humidityThing.uri;
+                apiMethod = humidityThing.method;
                 endpointSet = true;
             } 
         }
@@ -68,7 +72,7 @@ public class HumidityController : MonoBehaviour
     }
     private IEnumerator getHumidity() {
 
-        UnityWebRequest uwr = UnityWebRequest.Get(humidityEndpoint);
+        UnityWebRequest uwr = new UnityWebRequest(apiEndpoint, apiMethod);
 
         uwr.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
         yield return uwr.SendWebRequest();

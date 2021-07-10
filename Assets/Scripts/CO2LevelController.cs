@@ -25,7 +25,9 @@ public class CO2LevelController : MonoBehaviour
 
     private DateTime timeLastExecution;
     private int frequencyOfCheckInSeconds;
-    private string co2SensorEndpoint;
+    private string apiEndpoint;
+    private string apiMethod;
+
     private bool firstExecution;
     private bool endpointSet;
 
@@ -47,7 +49,11 @@ public class CO2LevelController : MonoBehaviour
     {
         if (!endpointSet) {
             if (ontologyReader.endpointsSet) {
-                co2SensorEndpoint = ontologyReader.endpoints.FirstOrDefault(o => o.thing == "CO2 sensor").uri;
+
+                Endpoint co2Thing = ontologyReader.endpoints.FirstOrDefault(o => o.thing == "CO2 sensor");
+                
+                apiEndpoint = co2Thing.uri;
+                apiMethod = co2Thing.method;
                 endpointSet = true;
             } 
         }
@@ -116,10 +122,10 @@ public class CO2LevelController : MonoBehaviour
 
     public IEnumerator getCo2Data (bool dataOnly) {
 
-        string temp_url = "https://u50g7n0cbj.execute-api.us-east-1.amazonaws.com/v2/latest/9585";
+        // string temp_url = "https://u50g7n0cbj.execute-api.us-east-1.amazonaws.com/v2/latest/9585";
 
         // UnityWebRequest uwr = UnityWebRequest.Get(sensorEndpoint);
-        UnityWebRequest uwr = UnityWebRequest.Get(temp_url);
+        UnityWebRequest uwr = new UnityWebRequest(apiEndpoint, apiMethod);
 
         uwr.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
         
