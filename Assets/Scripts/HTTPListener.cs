@@ -11,6 +11,7 @@ public class HTTPListener : MonoBehaviour
 	private HttpListener listener;
 	private Thread listenerThread;
 	public HueController hueController;
+	public CurtainsController curtainsController;
 	public authenticator authenticator;
 	public RobotInSceneHandler robotInSceneHandler;
 
@@ -177,16 +178,27 @@ public class HTTPListener : MonoBehaviour
 					}
 					break;
 					case "cbEnded":
-					if (value == "1")
-					{
-						// display info box that tells the user that the authentication was successful
-						sceneController.showCherrybotControl = true;
-					}
-					else if (value == "0")
-					{
-						
-					}
+						if (value == "1")
+						{
+							// display info box that tells the user that the authentication was successful
+							sceneController.showCherrybotControl = true;
+						}
+						else if (value == "0")
+						{
+							
+						}
 					break;
+					case "window":
+						if (value == "1")
+						{
+							// display the curtains control button
+							curtainsController.processWindow = true;
+						}
+						else if (value == "0")
+						{
+
+						}
+						break;
 				}
 			}
 		}

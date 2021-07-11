@@ -21,12 +21,14 @@ public class LabLightHandler : MonoBehaviour
     private bool sendReminder;
     private bool labLightsChecked;
 
-    private string lightEndpoint;
+    private string apiStatusEndpoint = "";
+    private string apiStatusMethod;
+    private string apiUpdateEndpoint = "";
+    private string apiUpdateMethod;
 
 	void Start ()
 	{
         labLightsChecked = false;
-        lightEndpoint = "";
 	}
 
 	void Update ()
@@ -48,19 +50,20 @@ public class LabLightHandler : MonoBehaviour
         }
 
         // set here the endpoints
-        if (lightEndpoint == "") {
+        if (apiUpdateEndpoint == "" && apiStatusEndpoint == "") {
             if (ontologyReader.endpointsSet) {
-                //lightEndpoint= ontologyReader.endpoints.FirstOrDefault(o => o.thing == "ceiling-light").uri;
-                lightEndpoint = "https://api.interactions.ics.unisg.ch/knx/lights/61-102/g4";
-                /* 
-                foreach (Endpoint x in endpoints) {
-                    if (x.uri.Contains("false")) {
-                        lightOffEndpoint = x.uri;
-                    } else if (x.uri.Contains("true")) {
-                        lightOnEndpoint = x.uri;
+                ontologyReader.endpoints.ToList().ForEach(o => {
+                    if (o.thing == "ceiling-light") {
+                        if (o.actionDescription == "switch ligths") {
+                            // error in ontology, that's why a split is necessary
+                            apiUpdateEndpoint = o.uri.Split('?')[0];
+                            apiUpdateMethod = o.method;
+                        } else if (o.actionDescription == "ligths status") {
+                            apiStatusEndpoint = o.uri;
+                            apiStatusMethod = o.uri;
+                        }
                     }
-                }
-                */
+                });
             }
         }
 
@@ -74,7 +77,6 @@ public class LabLightHandler : MonoBehaviour
                         requestToSend = false;
                         break;
                 }
-            
         };
         */
 	
@@ -91,9 +93,8 @@ public class LabLightHandler : MonoBehaviour
     }
 
     private IEnumerator getLightState() {
-
-        UnityWebRequest uwr = UnityWebRequest.Get(lightEndpoint);
-
+        
+        UnityWebRequest uwr = new UnityWebRequest(apiStatusEndpoint, apiStatusMethod);
         uwr.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
         yield return uwr.SendWebRequest();
 
@@ -110,10 +111,14 @@ public class LabLightHandler : MonoBehaviour
         string json = "{\"state\":" + state  + "}";
 
         byte[] dataToPut = System.Text.Encoding.UTF8.GetBytes("{}");
-        UnityWebRequest uwr = UnityWebRequest.Put(lightEndpoint, dataToPut);
+
+        UnityWebRequest uwr = new UnityWebRequest();
+
+        if (apiUpdateMethod == "PUT") {
+            uwr = UnityWebRequest.Put(apiUpdateEndpoint, dataToPut);
+        }
        
         uwr.SetRequestHeader ("Content-Type", "application/json");
-
         yield return uwr.SendWebRequest();
 
         Debug.Log(uwr.responseCode);    

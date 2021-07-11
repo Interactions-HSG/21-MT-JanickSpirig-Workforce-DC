@@ -46,18 +46,19 @@ public class SceneController : MonoBehaviour
     public bool showHueInformation {get; set; }
     public bool showDialogAuthenticate {get; set; }
     public bool showRobotInfobox {get; set; }
+    public bool blindInteractionDone {get; set; }
 
 	void Start ()
 	{
         // WHICH HOLOGRAMS TO SHOW BY DEFAULT
-        showCherrybotControl = false;
+        showCherrybotControl = true;
         showLeubotControl = false;
         showLabWelcomeBox = false;
         showOfficeWelcomeBox = false;
         showLabMenu = false;
         showCO2Warning = false;
         showWindowOpenWarning = false;
-        showCurtainsControl = true;
+        showCurtainsControl = false;
         showCeilingLightControl = false;
         showTemperatureWarning = false;
         showLabLightReminder = false;
@@ -65,6 +66,9 @@ public class SceneController : MonoBehaviour
         showHueInformation = false;
         showDialogAuthenticate = false;
         showRobotInfobox = false;
+
+        // CONTROL PREVIOUS INTERACTIONS
+        blindInteractionDone = false;
 
         // USER LOCATION AT START
         locationUndefined = true;
@@ -74,6 +78,16 @@ public class SceneController : MonoBehaviour
 
 	void Update ()
 	{
+
+        // TEMPERATURE WARNING
+        if (showTemperatureWarning)
+        {
+            temperatureWarning.SetActive(true);
+        }
+        else
+        {
+            temperatureWarning.SetActive(false);
+        }
 
         // ROBOT INFO BOX
         if (showRobotInfobox)

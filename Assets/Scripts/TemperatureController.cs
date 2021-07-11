@@ -18,19 +18,28 @@ public class TemperatureController : MonoBehaviour
     // if outside air quality is not good enough, then recommend to adjust mechanical ventilation
     private bool endpointSet;
     private bool firstExecution;
+    private bool tempTooHigh;
+    private bool tempTooLow;
+    private double currentTemp;
+
+
     private string apiEndpoint;
     private string apiMethod;
     private double frequencyOfCheckInSeconds;
     private DateTime timeLastExecution;
+    private bool measureDone;
     
     public GameObject tempWarning;
     public SceneController sceneController;
     public OntologyReader ontologyReader;
+    public OutsideAirQualityChecker outsideAirQualityChecker;
 
     void Start()
     {
         endpointSet = false;
-        frequencyOfCheckInSeconds = 120.0;
+        measureDone = false;
+        // we want to have the warning displayed after x seconds of blind interaction
+        frequencyOfCheckInSeconds = 5.0;
         firstExecution = true;
     }
 
@@ -47,11 +56,13 @@ public class TemperatureController : MonoBehaviour
             } 
         }
 
-        if (sceneController.inOffice && !sceneController.locationUndefined)
+        // measure temperature if user is in lab, has interacted with the blinds and no measurement has been executed before
+        if (sceneController.blindInteractionDone && sceneController.inLab && !measureDone)
         {
             if (firstExecution)
             {
-                timeLastExecution = sceneController.officeEntryTime.AddSeconds(700);
+                // based 
+                timeLastExecution = DateTime.Now; // set initial starting point
                 firstExecution = false;
             }
 
@@ -59,15 +70,41 @@ public class TemperatureController : MonoBehaviour
             double diffSeconds = (currentDateTime - timeLastExecution).TotalSeconds;
             
             if (diffSeconds > frequencyOfCheckInSeconds) {
-                Debug.Log("Check temperature in office.");
+                Debug.Log("Check temperature in lab.");
                 StartCoroutine(getTemperature());
-                timeLastExecution = currentDateTime;
+                // timeLastExecution = currentDateTime; // as we only want to have it executed once
+                measureDone = true;
             }   
+        }
+
+        if ((tempTooHigh || tempTooLow) && outsideAirQualityChecker.aqSet) {
+            
+            string warningText = "";
+
+            // RECOMMEND TO OPEN WINDOW
+            if (tempTooLow) {
+                warningText = $"The current room temperature of {Convert.ToString(currentTemp)} is too low, please increase the heating rate.";
+            } else if (tempTooHigh) {
+                if (outsideAirQualityChecker.outsideAirQualityOkay) {
+                    // OPEN WINDOW
+                    warningText = $"The current room temperature of {Convert.ToString(currentTemp)} is too high, please open the window as outside air is cooler and also of good quality.";   
+                } else {
+                    // INCREASE COOLING
+                    warningText = $"The current room temperature of {Convert.ToString(currentTemp)} is too high, please increase the cooling rate as the outside air is of bad quality.";   
+                }
+            } 
+
+            tempWarning.transform.Find("DescriptionText").GetComponent<TextMeshPro>().text = warningText;
+            sceneController.showTemperatureWarning = true;
+            
+            tempTooLow = false;
+            tempTooHigh = false;
+            outsideAirQualityChecker.aqSet = false;
         }
     }
 
     private IEnumerator getTemperature() {
-
+        /*
         UnityWebRequest uwr = new UnityWebRequest(apiEndpoint, apiMethod);
 
         uwr.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
@@ -77,6 +114,12 @@ public class TemperatureController : MonoBehaviour
         
         // set the CO2 value based on the JSON structure
         double currentTemperature = (int)data["Temperature"];
+        */
+        yield return "";
+
+        double currentTemperature = (double)29.0;
+
+        currentTemp = currentTemperature;
 
         List<Double> tempThreshold = new List<double>();
 
@@ -87,16 +130,21 @@ public class TemperatureController : MonoBehaviour
             tempThreshold.Add(18.4);
             tempThreshold.Add(24.8);
         }
+        
+        Debug.Log(currentTemperature);
+        Debug.Log(tempThreshold[0]);
 
-        string warningText = "";
         if (currentTemperature < tempThreshold[0]) {
-            warningText = $"The current temperature of {Convert.ToString(currentTemperature)} is too low, please increase the heating rate.";
+            tempTooLow = true;
         } else if (currentTemperature > tempThreshold[1]) {
-            warningText = $"The current temperature of {Convert.ToString(currentTemperature)} is too high, please increase the cooling rate.";
+            tempTooHigh = true;
         }
 
-        tempWarning.transform.Find("DescriptionText").GetComponent<TextMeshPro>().text = warningText;
-        sceneController.showTemperatureWarning = true;
+        if (tempTooHigh || tempTooLow) {
+            StartCoroutine(outsideAirQualityChecker.getAQData());
+        }
+
+
     }
 
     private bool isHeatingSeason() {
