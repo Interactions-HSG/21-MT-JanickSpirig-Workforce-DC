@@ -46,6 +46,8 @@ public class OutsideAirQualityChecker : MonoBehaviour
                         apiMethod = o.method;
                     }
                 });
+                Debug.Log(apiEndpoint);
+                Debug.Log(apiMethod); 
             }
         }
     }
@@ -56,6 +58,8 @@ public class OutsideAirQualityChecker : MonoBehaviour
         uwr.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
         
         yield return uwr.SendWebRequest();
+        Debug.Log("Request sent!");
+        Debug.Log(uwr.responseCode);
 
         var data = JSON.Parse(uwr.downloadHandler.text);
 

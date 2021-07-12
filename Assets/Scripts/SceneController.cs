@@ -23,6 +23,9 @@ public class SceneController : MonoBehaviour
     public GameObject hueInformation; 
     public GameObject hueControl;
     public GameObject robotInfobox;
+    public GameObject labLightQuestion;
+    public GameObject miroCardInfoBox;
+    public GameObject labByeMessage;
     
     public DateTime officeEntryTime;
     public DateTime labEntryTime;
@@ -46,12 +49,21 @@ public class SceneController : MonoBehaviour
     public bool showHueInformation {get; set; }
     public bool showDialogAuthenticate {get; set; }
     public bool showRobotInfobox {get; set; }
+    public bool showLabLightQuestion {get; set; }
+    public bool showMiroCardInfo {get; set; }
+    public bool showLabByeMessage {get; set; }
+
     public bool blindInteractionDone {get; set; }
+    public bool cherrybotInteractionDone {get; set; }
+    public bool temperatureWarningDone {get; set; }
+    public bool miroCardInfoDone {get; set; }
+    public bool leubotInteractionDone {get; set; }
 
 	void Start ()
 	{
         // WHICH HOLOGRAMS TO SHOW BY DEFAULT
-        showCherrybotControl = true;
+        showLabLightQuestion = false;
+        showCherrybotControl = false;
         showLeubotControl = false;
         showLabWelcomeBox = false;
         showOfficeWelcomeBox = false;
@@ -66,9 +78,15 @@ public class SceneController : MonoBehaviour
         showHueInformation = false;
         showDialogAuthenticate = false;
         showRobotInfobox = false;
+        showMiroCardInfo = false;
+        showLabByeMessage = false;
 
         // CONTROL PREVIOUS INTERACTIONS
         blindInteractionDone = false;
+        temperatureWarningDone = false;
+        cherrybotInteractionDone = false;
+        miroCardInfoDone = false;
+        leubotInteractionDone = false;
 
         // USER LOCATION AT START
         locationUndefined = true;
@@ -78,6 +96,32 @@ public class SceneController : MonoBehaviour
 
 	void Update ()
 	{
+        if (showLabByeMessage)
+        {
+            labByeMessage.SetActive(true);
+        }
+        else
+        {
+            labByeMessage.SetActive(false);
+        }
+
+        if (showMiroCardInfo)
+        {
+            miroCardInfoBox.SetActive(true);
+        }
+        else
+        {
+            miroCardInfoBox.SetActive(false);
+        }
+
+        if (showLabLightQuestion)
+        {
+            labLightQuestion.SetActive(true);
+        }
+        else
+        {
+            labLightQuestion.SetActive(false);
+        }
 
         // TEMPERATURE WARNING
         if (showTemperatureWarning)
@@ -263,10 +307,8 @@ public class SceneController : MonoBehaviour
         locationUndefined = false;
 
         showLabWelcomeBox = false;
-        showLabMenu = true;
+        // showLabMenu = true;
 
         labEntryTime = DateTime.Now;
     }
-
-
 }

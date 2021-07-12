@@ -65,6 +65,8 @@ public class LabLightHandler : MonoBehaviour
                     }
                 });
             }
+            Debug.Log(apiStatusEndpoint);
+            Debug.Log(apiUpdateEndpoint);
         }
 
         /*	
@@ -110,7 +112,7 @@ public class LabLightHandler : MonoBehaviour
     {     
         string json = "{\"state\":" + state  + "}";
 
-        byte[] dataToPut = System.Text.Encoding.UTF8.GetBytes("{}");
+        byte[] dataToPut = System.Text.Encoding.UTF8.GetBytes(json);
 
         UnityWebRequest uwr = new UnityWebRequest();
 

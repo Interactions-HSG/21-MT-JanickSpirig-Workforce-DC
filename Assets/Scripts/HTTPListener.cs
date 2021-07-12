@@ -18,8 +18,9 @@ public class HTTPListener : MonoBehaviour
 	void Start ()
 	{
 		listener = new HttpListener ();
-		listener.Prefixes.Add ("http://localhost:5050/");
-		listener.Prefixes.Add ("http://127.0.0.1:5050/");
+		/*
+		// listener.Prefixes.Add ("http://localhost:5050/");
+		// listener.Prefixes.Add ("http://127.0.0.1:5050/");
 		// listener.Prefixes.Add("http://192.168.43.54:5050/");
 		//listener.Prefixes.Add("http://10.2.1.85:5050/");
 
@@ -29,6 +30,7 @@ public class HTTPListener : MonoBehaviour
 		listenerThread = new Thread (startListener);
 		listenerThread.Start ();
 		Debug.Log ("Server Started");
+		*/
 	}
 
 	void Update ()
@@ -59,10 +61,19 @@ public class HTTPListener : MonoBehaviour
 					case "Cherrybot":
 						// 1 is equal to show and 0 is equal to hide
 						if (value == "1")
-						{	
-							robotInSceneHandler.thing = "Cherrybot";
-							robotInSceneHandler.processRobot = true;
-							// sceneController.showCherrybot = true;
+						{
+							
+							// only show Cherrybot if interaction with blinds already happended
+							if (sceneController.miroCardInfoDone && sceneController.inLab) {
+								robotInSceneHandler.thing = "Cherrybot";
+								robotInSceneHandler.processRobot = true;
+							}
+							/*
+							if (sceneController.miroCardInfoDone && sceneController.inLab) {
+								sceneController.showCherrybotControl = true;
+							}
+							*/
+							
 						}
 						else if (value == "0")
 						{
@@ -72,8 +83,18 @@ public class HTTPListener : MonoBehaviour
 					case "Leubot":
 						if (value == "1")
 						{
-							// robotInSceneHandler.thing = "(key);
-							// sceneController.showLeubot= true;
+						
+							// only show Leubot it interaction with blinds already happened
+							if (sceneController.cherrybotInteractionDone && sceneController.inLab) {
+								robotInSceneHandler.thing = "Leubot";
+								robotInSceneHandler.processRobot = true;
+							}	
+							
+							/*
+							if (sceneController.cherrybotInteractionDone && sceneController.inLab) {
+								sceneController.showLeubotControl = true;
+							}
+							*/	
 						}
 						else if (value == "0")
 						{
@@ -100,16 +121,6 @@ public class HTTPListener : MonoBehaviour
 						else if (value == "0")
 						{
 							sceneController.showOfficeWelcomeBox = false;
-						}
-						break;
-					case "Window":
-						if (value == "1")
-						{
-							sceneController.showCurtainsControl = true;
-						}
-						else if (value == "0")
-						{
-							sceneController.showCurtainsControl = false;
 						}
 						break;
 					case "Ceiling-light":
@@ -193,6 +204,19 @@ public class HTTPListener : MonoBehaviour
 						{
 							// display the curtains control button
 							curtainsController.processWindow = true;
+						}
+						else if (value == "0")
+						{
+
+						}
+						break;
+					case "smartcard":
+						if (value == "1")
+						{
+							// display the info boy only after temperature warning has been done
+							if (sceneController.temperatureWarningDone && sceneController.inLab) {
+								sceneController.showMiroCardInfo = true;
+							}
 						}
 						else if (value == "0")
 						{

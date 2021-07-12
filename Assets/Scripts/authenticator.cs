@@ -60,12 +60,12 @@ public class authenticator : MonoBehaviour {
     public void showKeyboard() {
         // hide the button field
         dialogAuthenticate.transform.Find("Dialog").Find("ButtonParent").gameObject.SetActive(false);
-
+        
         // show the keyboard
         keyBoard.ShowKeyboard();
 
         // show the preview keyboard preview field
-        dialogAuthenticate.transform.Find("KeyboardPreview").gameObject.SetActive(true);
+        // dialogAuthenticate.transform.Find("KeyboardPreview").gameObject.SetActive(true);
     }
 
     public void processPassword() {

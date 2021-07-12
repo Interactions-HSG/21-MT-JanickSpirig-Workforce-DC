@@ -77,7 +77,7 @@ public class TemperatureController : MonoBehaviour
             }   
         }
 
-        if ((tempTooHigh || tempTooLow) && outsideAirQualityChecker.aqSet) {
+        if ((tempTooHigh || tempTooLow) && outsideAirQualityChecker.aqSet ) {
             
             string warningText = "";
 
@@ -143,8 +143,6 @@ public class TemperatureController : MonoBehaviour
         if (tempTooHigh || tempTooLow) {
             StartCoroutine(outsideAirQualityChecker.getAQData());
         }
-
-
     }
 
     private bool isHeatingSeason() {

@@ -60,7 +60,7 @@ public class HueController : MonoBehaviour {
                             apiUpdateEndpoint = o.uri;
                             apiUpdateEndpoint = o.method;
                         }
-                    }
+                    }   
                 });
             }
         }

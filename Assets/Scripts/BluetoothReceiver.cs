@@ -15,19 +15,19 @@ public class BluetoothReceiver : MonoBehaviour
 
     public TextMeshPro description;
 
-    /*
     void Awake()
     {
-        description.text = "Awake";
+        /*
+        Debug.Log("Awake");
 #if ENABLE_WINMD_SUPPORT
         StartWatcher();
-        description.text = "Supported";
+        Debug.Log("Supported");
 #else
-        description.text = "Not supported!";
+        Debug.Log("Not supported!");
         // statusDisplay.Display("UWP APIs are not supported on this platform!");
 #endif
+        */
     }
-    */
 
 #if ENABLE_WINMD_SUPPORT
 
@@ -46,21 +46,21 @@ public class BluetoothReceiver : MonoBehaviour
         void OnAdvertisementReceived(object sender, BluetoothLEAdvertisementReceivedEventArgs eventArgs)
         {
             Debug.Log("We have received an add!");
-            description.text = "Advertisement received!";
+            Debug.Log("Advertisement received!");
             string m = RetrieveStringFromUtf8IBuffer(eventArgs.Advertisement.DataSections[0].Data);
-            description.text = m;
+            Debug.Log(m);
         }
 
         try {
             BluetoothLEAdvertisementWatcher watcher = new BluetoothLEAdvertisementWatcher();
-            // watcher.AdvertisementFilter.Advertisement.ManufacturerData.Add(GetManufacturerData());
+            watcher.AdvertisementFilter.Advertisement.ManufacturerData.Add(GetManufacturerData());
             watcher.Received += OnAdvertisementReceived;
             watcher.Start();
             Debug.Log("watcher has been started!");
-            description.text = "Watcher started!";
+            Debug.Log("Watcher started!");
         } catch (Exception e){
             Debug.Log("we got an exception.");
-            description.text = $"Watcher could not start! Error: {e.Message}";
+            Debug.Log($"Watcher could not start! Error: {e.Message}");
         }
     }
 

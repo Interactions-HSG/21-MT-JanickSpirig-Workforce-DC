@@ -30,9 +30,9 @@ public class LeubotButtonController : MonoBehaviour
         stateElbow = false;
         stateGripper = false;
         
-        moveIcon = "IconAdjust";
+        moveIcon = "IconHide";
         resetIcon = "IconRefresh";
-
+    
         setInitialIcons();
     }
 
