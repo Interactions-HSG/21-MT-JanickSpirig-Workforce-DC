@@ -17,7 +17,7 @@ public class BluetoothReceiver : MonoBehaviour
 
     void Awake()
     {
-        /*
+    /*
         Debug.Log("Awake");
 #if ENABLE_WINMD_SUPPORT
         StartWatcher();
@@ -26,7 +26,7 @@ public class BluetoothReceiver : MonoBehaviour
         Debug.Log("Not supported!");
         // statusDisplay.Display("UWP APIs are not supported on this platform!");
 #endif
-        */
+*/
     }
 
 #if ENABLE_WINMD_SUPPORT
@@ -46,9 +46,11 @@ public class BluetoothReceiver : MonoBehaviour
         void OnAdvertisementReceived(object sender, BluetoothLEAdvertisementReceivedEventArgs eventArgs)
         {
             Debug.Log("We have received an add!");
+            System.Diagnostics.Debug.WriteLine("OMG We have received an ad!");
             Debug.Log("Advertisement received!");
             string m = RetrieveStringFromUtf8IBuffer(eventArgs.Advertisement.DataSections[0].Data);
             Debug.Log(m);
+            System.Diagnostics.Debug.WriteLine(m);
         }
 
         try {

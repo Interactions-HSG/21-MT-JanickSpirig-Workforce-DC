@@ -16,6 +16,39 @@ public class OntologyReader : MonoBehaviour {
     private string passcode = "MxkA3dCcFE7";
     private string ontologyEndpoint;
 
+    private string selectThingsRq = @"PREFIX td: <https://www.w3.org/2019/wot/td#>
+PREFIX htv: <http://www.w3.org/2011/http#>
+PREFIX hctl: <https://www.w3.org/2019/wot/hypermedia#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX js: <https://www.w3.org/2019/wot/json-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX bot: <https://w3id.org/bot#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT DISTINCT  ?thing ?method  ?target ?affordance ?affordanceName ?spaceName
+WHERE {
+    ?td a td:Thing .
+    ?td dc:title ?thing .
+    ?td td:hasInteractionAffordance ?aff .
+    ?aff td:hasForm ?form .
+    ?aff rdfs:comment ?affordance .
+    ?form htv:methodName ?method .
+    ?form hctl:forContentType ?contentType .
+    ?form hctl:hasOperationType ?operationType .
+    ?form hctl:hasTarget ?target .
+    OPTIONAL {
+        ?space a bot:Space .
+        ?aff td:name ?affordanceName .
+        ?space dc:title ?spaceName .
+        ?space bot:containsElement ?td .
+        # Retrieve json schema to build payload
+        # ?affordance td:hasInputSchema ?schema .
+        # ?schema js:properties ?property .
+        # ?property a ?propertyType .
+        # ?property js:propertyName ?propertyName .
+    }
+}";
+
     public List<Endpoint> endpoints = new List<Endpoint>();
     public List<Threshold> thresholds = new List<Threshold>();
     public bool endpointsSet;
@@ -26,17 +59,18 @@ public class OntologyReader : MonoBehaviour {
         endpointsSet = false;
         thresholdsSet = false;
         // query and set endpoints
-        string query = readQuery("selectThings.rq");
+        // string query = readQuery("selectThings.rq");
+        string query = readQuery();
         StartCoroutine(queryOntology(query, "endpoints")); 
     }
 
-    public string readQuery(string filename) {
+    public string readQuery() {
         // read the query
-        string filePath = @"Assets/SPARQL/" + filename;
-        StreamReader sr = new StreamReader(filePath);
-        string fileContent = sr.ReadToEnd();
-        sr.Close();
-        return encodeQuery(fileContent);
+        //string filePath = @"Assets/Scripts/" + filename;
+        //StreamReader sr = new StreamReader(filePath);
+        //string fileContent = sr.ReadToEnd();
+        //sr.Close();
+        return encodeQuery(selectThingsRq);
     }
 
     private string encodeQuery(string value)  

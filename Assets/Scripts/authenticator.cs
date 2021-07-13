@@ -22,10 +22,10 @@ public class authenticator : MonoBehaviour {
     private string miroCardEndpoint;
 
     private MixedRealityKeyboard keyBoard;
+    public DateTime timePwdCorrect {get; set; }
 
     public TextMeshPro previewText;
     public GameObject dialogAuthenticate;
-
 
 
     void Start()
@@ -37,12 +37,17 @@ public class authenticator : MonoBehaviour {
         // previewText = dialogAuthenticate.transform.Find("PasswordField").Find("PreviewText").gameObject.GetComponent<TextMeshPro>();
     }
 
-    
+    public void resetDialog() {
+        // reset dialog to inital state with button and welcometext only
+        dialogAuthenticate.transform.Find("Dialog").Find("PwdResultText").gameObject.SetActive(false);
+        dialogAuthenticate.transform.Find("Dialog").Find("ButtonParent").gameObject.SetActive(true);
+    }
+
     private bool checkPassword(string enteredPwd) {
 
         if (enteredPwd == password)
         {
-            StartCoroutine(sendInfoToMiroCard());
+            // StartCoroutine(sendInfoToMiroCard());
             return true;
         } else
         {
@@ -70,23 +75,25 @@ public class authenticator : MonoBehaviour {
 
     public void processPassword() {
         // hide keyboard and clear text
-        keyBoard.HideKeyboard();
         string enteredText = keyBoard.Text;
+        keyBoard.HideKeyboard();
         keyBoard.ClearKeyboardText();
         
         // hide preview field
-        dialogAuthenticate.transform.Find("KeyboardPreview").gameObject.SetActive(false);
+        // dialogAuthenticate.transform.Find("KeyboardPreview").gameObject.SetActive(false);
         
         // get the result text component
-        TextMeshPro resultText = dialogAuthenticate.transform.Find("PwdResultText").GetComponent<TextMeshPro>();
+        TextMeshPro resultText = dialogAuthenticate.transform.Find("Dialog").Find("PwdResultText").GetComponent<TextMeshPro>();
 
         if (checkPassword(enteredText)) {
             // PASSWORD IS CORRECT
 
             // hide the password field
-            dialogAuthenticate.transform.Find("PasswordField").gameObject.SetActive(false);
+            dialogAuthenticate.transform.Find("Dialog").Find("ButtonParent").gameObject.SetActive(false);
             // Instruct user to shake miro card.
-            resultText.text = "PASSWORD CORRECT! Now please shake the MiroCard sideways for a couple of seconds to fully accomplish the two-factor authtentication!";
+            resultText.text = "PASSWORD CORRECT! I will shortly present you the commads to control the Robot.";
+            timePwdCorrect = DateTime.Now; 
+            loggedIn = true;
         } else {
             // PASSWORD IS NOT CORRECT
             resultText.text = "PASSWORD INCORRECT! Please click on the button below and try again!";

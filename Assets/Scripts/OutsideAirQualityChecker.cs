@@ -56,11 +56,13 @@ public class OutsideAirQualityChecker : MonoBehaviour
 
         UnityWebRequest uwr = new UnityWebRequest(apiEndpoint, apiMethod);
         uwr.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
-        
         yield return uwr.SendWebRequest();
         Debug.Log("Request sent!");
         Debug.Log(uwr.responseCode);
 
+        Console.Out.WriteLine(uwr.responseCode);
+        Console.Out.WriteLine(uwr.responseCode);
+        Console.Out.WriteLine(uwr.downloadHandler.text);
         var data = JSON.Parse(uwr.downloadHandler.text);
 
         JSONNode indicators = (JSONNode) data["results"][0]["measurements"];

@@ -46,6 +46,7 @@ public class LabLightHandler : MonoBehaviour
 
         if (sendReminder) {
             sceneController.showLabLightReminder = true;
+            Debug.Log("We are here!");
             sendReminder = false;
         }
 
@@ -60,7 +61,7 @@ public class LabLightHandler : MonoBehaviour
                             apiUpdateMethod = o.method;
                         } else if (o.actionDescription == "ligths status") {
                             apiStatusEndpoint = o.uri;
-                            apiStatusMethod = o.uri;
+                            apiStatusMethod = o.method;
                         }
                     }
                 });
@@ -95,12 +96,14 @@ public class LabLightHandler : MonoBehaviour
     }
 
     private IEnumerator getLightState() {
-        
+        Debug.Log(apiStatusEndpoint);
+        Debug.Log(apiStatusMethod);
         UnityWebRequest uwr = new UnityWebRequest(apiStatusEndpoint, apiStatusMethod);
         uwr.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
         yield return uwr.SendWebRequest();
 
         JSONNode data = JSON.Parse(uwr.downloadHandler.text);
+        Debug.Log(uwr.downloadHandler.text);
 
         // if light is still on when user entered the office, we recommend the robot to turn off the light automatically
         if (data["state"] == "on") {

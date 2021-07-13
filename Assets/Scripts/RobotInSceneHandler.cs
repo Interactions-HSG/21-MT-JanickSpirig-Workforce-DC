@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class RobotInSceneHandler : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class RobotInSceneHandler : MonoBehaviour
     public GameObject dialogBox;
     public GameObject infoBox;
     public bool processRobot {get; set; }
+    public bool tbProcessFinished;
 
     public TMPro.TextMeshPro titleText;
     public TMPro.TextMeshPro descriptionText;
@@ -28,18 +30,24 @@ public class RobotInSceneHandler : MonoBehaviour
             processRobot = false;
         }
 
-        if (authenticator.loggedIn)
-        {
-            sceneController.showDialogAuthenticate = false;
-            if (thing == "Cherrybot")
-            {
-                sceneController.showCherrybotControl = true;
+        if (authenticator.loggedIn && tbProcessFinished)
+        { 
+            if ((DateTime.Now - authenticator.timePwdCorrect).TotalSeconds > 3.0) {
+
+                // reset the dialogauthenticate firs 
+                authenticator.resetDialog();
+                sceneController.showDialogAuthenticate = false;
+                
+                if (thing == "Cherrybot")
+                {
+                    sceneController.showCherrybotControl = true;
+                }
+                else if (thing == "Leubot")
+                {
+                    sceneController.showLeubotControl = true;
+                }
+                authenticator.loggedIn = false;
             }
-            else if (thing == "Leubot")
-            {
-                sceneController.showLeubotControl = true;
-            }
-            authenticator.loggedIn = false;
         }
     }
 
@@ -62,7 +70,6 @@ public class RobotInSceneHandler : MonoBehaviour
 
         infoBox.transform.Find("TitleText").GetComponent<TextMeshPro>().text = titleText;
         infoBox.transform.Find("DescriptionText").GetComponent<TextMeshPro>().text = descriptionText;
-
     }
 
 

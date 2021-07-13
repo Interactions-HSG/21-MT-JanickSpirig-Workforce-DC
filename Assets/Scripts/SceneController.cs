@@ -59,6 +59,8 @@ public class SceneController : MonoBehaviour
     public bool miroCardInfoDone {get; set; }
     public bool leubotInteractionDone {get; set; }
 
+    private DateTime commandReceived;
+
 	void Start ()
 	{
         // WHICH HOLOGRAMS TO SHOW BY DEFAULT
@@ -92,6 +94,9 @@ public class SceneController : MonoBehaviour
         locationUndefined = true;
         inOffice = false;
         inLab = false;
+
+        
+
 	}
 
 	void Update ()
@@ -307,7 +312,7 @@ public class SceneController : MonoBehaviour
         locationUndefined = false;
 
         showLabWelcomeBox = false;
-        // showLabMenu = true;
+        showLabMenu = true;
 
         labEntryTime = DateTime.Now;
     }

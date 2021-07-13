@@ -18,10 +18,10 @@ public class HTTPListener : MonoBehaviour
 	void Start ()
 	{
 		listener = new HttpListener ();
-		/*
+		
 		// listener.Prefixes.Add ("http://localhost:5050/");
-		// listener.Prefixes.Add ("http://127.0.0.1:5050/");
-		// listener.Prefixes.Add("http://192.168.43.54:5050/");
+		listener.Prefixes.Add ("http://127.0.0.1:5050/");
+	 	// listener.Prefixes.Add("http://192.168.43.54:5050/");
 		//listener.Prefixes.Add("http://10.2.1.85:5050/");
 
 		listener.AuthenticationSchemes = AuthenticationSchemes.Anonymous;
@@ -30,11 +30,6 @@ public class HTTPListener : MonoBehaviour
 		listenerThread = new Thread (startListener);
 		listenerThread.Start ();
 		Debug.Log ("Server Started");
-		*/
-	}
-
-	void Update ()
-	{		
 	}
 
 	private void startListener ()
@@ -177,6 +172,8 @@ public class HTTPListener : MonoBehaviour
 							sceneController.showHueControl = false;
 						}
 						break;
+					/* 
+					// ENDPOINT FOR MIRO CARD AUTHENTICATION
 					case "miroAuth":
 					if (value == "1")
 					{
@@ -188,15 +185,12 @@ public class HTTPListener : MonoBehaviour
 						
 					}
 					break;
+					*/
 					case "cbEnded":
 						if (value == "1")
 						{
 							// display info box that tells the user that the authentication was successful
-							sceneController.showCherrybotControl = true;
-						}
-						else if (value == "0")
-						{
-							
+							robotInSceneHandler.tbProcessFinished = true;
 						}
 					break;
 					case "window":
@@ -204,10 +198,6 @@ public class HTTPListener : MonoBehaviour
 						{
 							// display the curtains control button
 							curtainsController.processWindow = true;
-						}
-						else if (value == "0")
-						{
-
 						}
 						break;
 					case "smartcard":
@@ -217,10 +207,6 @@ public class HTTPListener : MonoBehaviour
 							if (sceneController.temperatureWarningDone && sceneController.inLab) {
 								sceneController.showMiroCardInfo = true;
 							}
-						}
-						else if (value == "0")
-						{
-
 						}
 						break;
 				}
