@@ -33,7 +33,8 @@ public class WeatherChecker : MonoBehaviour
         consumerSecret = "OHAHQ6EC2gSUzvxF";
         geoLocationId = "47.4238,9.3739";
 
-        // authEndpoint = "https://api.srgssr.ch/oauth/v1/accesstoken?grant_type=client_credentials";
+        apiAuthEndpoint = "https://api.srgssr.ch/oauth/v1/accesstoken?grant_type=client_credentials";
+        apiAuthMethod = "POST";
         // forecastEndpoint = "https://api.srgssr.ch/srf-meteo/forecast/" + geoLocationId;
 
         weatherForecastSet = false;
@@ -43,17 +44,24 @@ public class WeatherChecker : MonoBehaviour
     }
 
     void Update() {
-        if (apiAuthEndpoint == "" && apiForecastEndpoint == "") {
+        if (/*apiAuthEndpoint == "" && */apiForecastEndpoint == "") {
             if (ontologyReader.endpointsSet) {
                 ontologyReader.endpoints.ToList().ForEach(o => {
                     if (o.thing == "meteo") {
-                        if (o.actionName.Contains("forecast")) {
-                            apiForecastEndpoint = o.uri;
+                        //Debug.Log(o);
+                        //Debug.Log(o.actionName);
+                        
+                        if (o.actionDescription.Contains("forecast")) {
+                            // becasue of ',' in location id  
+                            apiForecastEndpoint = o.uri + "," + o.actionName;
                             apiForecastMethod = o.method;
-                        } else if (o.actionName.Contains("authentication")) {
+                            Debug.Log(apiForecastEndpoint);
+                            Debug.Log(apiForecastMethod);
+                        } 
+                        /*else if (o.actionName.Contains("authentication")) {
                             apiAuthEndpoint = o.uri;
                             apiAuthMethod = o.method;
-                        }
+                        } */
                     }
                 });
             }
@@ -73,14 +81,25 @@ public class WeatherChecker : MonoBehaviour
         
         yield return uwr.SendWebRequest();
 
+        Debug.Log("Weather authentication result");
+        Debug.Log(uwr.responseCode);
+
         string token = JSON.Parse(uwr.downloadHandler.text)["access_token"];
-        string bearerToken = "Bearer " + token;
+        string bearerToken = "";
+        yield return bearerToken = "Bearer " + token;
 
-
-        UnityWebRequest uwr2 = new UnityWebRequest(apiForecastEndpoint, apiForecastMethod);
+        UnityWebRequest uwr2 = UnityWebRequest.Get(apiForecastEndpoint);
+        // var uwr2 = new UnityWebRequest(apiForecastEndpoint, apiForecastMethod);
         uwr2.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
         uwr2.SetRequestHeader("Authorization", bearerToken);
+        uwr2.SetRequestHeader("Accept", "*/*");
+        uwr2.chunkedTransfer=false;
+        uwr2.useHttpContinue = false;
         yield return uwr2.SendWebRequest();
+        Debug.Log(uwr2.error);
+        Debug.Log(uwr2.responseCode);
+        
+        Debug.Log(uwr2.downloadHandler.text);
 
         if (Convert.ToInt32(uwr2.responseCode) == 200)
         {

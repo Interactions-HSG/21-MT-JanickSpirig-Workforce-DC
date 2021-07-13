@@ -13,8 +13,10 @@ public class LabLightQuestionHandler : MonoBehaviour
     // Start is called before the first frame update
 
     private bool questionAsked;
-    private bool byeMessageShown;
-    private bool firstExecutionByeMessage;
+    private bool labByeMessageShown;
+    private bool officeByeMessageShown;
+    private bool firstExecutionLabByeMessage;
+    private bool firstExecutionOfficeByeMessage;
     private bool firstExecutionLightConfirmMessage;
     private DateTime referencePoint;
     private double secondsAfterEntry;
@@ -31,8 +33,9 @@ public class LabLightQuestionHandler : MonoBehaviour
         secondsUntilByeMessage = 5.0;
         scecondsUntilLightConfirmMessage = 1.5;
         questionAsked = false;  
-        byeMessageShown = false;
-        firstExecutionByeMessage = true;
+        officeByeMessageShown = false;
+        labByeMessageShown = false;
+        firstExecutionLabByeMessage = true;
         firstExecutionLightConfirmMessage = true;
     }
 
@@ -48,20 +51,38 @@ public class LabLightQuestionHandler : MonoBehaviour
             }
         }
 
-        if (sceneController.inLab && sceneController.leubotInteractionDone && !byeMessageShown) {
+        if (sceneController.inLab && sceneController.leubotInteractionDone && !labByeMessageShown) {
             
-            if (firstExecutionByeMessage)  {
+            if (firstExecutionLabByeMessage)  {
                 referencePoint = DateTime.Now;
-                firstExecutionByeMessage = false;
+                firstExecutionLabByeMessage = false;
             }
 
             double difference = (DateTime.Now - referencePoint).TotalSeconds;
 
             if (difference > secondsUntilByeMessage) {
                 sceneController.showLabByeMessage = true;
-                byeMessageShown = true;
+                labByeMessageShown = true;
             }
     
+        }
+
+
+        if (sceneController.inOffice && sceneController.humidityWarningDone && !officeByeMessageShown) {
+            // display bye messag 
+            if (firstExecutionOfficeByeMessage)  {
+                referencePoint = DateTime.Now;
+                firstExecutionOfficeByeMessage = false;
+            }
+
+            double difference = (DateTime.Now - referencePoint).TotalSeconds;
+
+            if (difference > secondsUntilByeMessage) {
+                sceneController.showOfficeByeMessage = true;
+                officeByeMessageShown = true;
+            }
+
+
         }
 
         if (sceneController.inLab && questionAnswered) {
@@ -95,7 +116,6 @@ public class LabLightQuestionHandler : MonoBehaviour
 
                 questionAnswered = false;
             }
-    
 
 
 

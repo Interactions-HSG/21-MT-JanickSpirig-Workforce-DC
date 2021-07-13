@@ -25,6 +25,7 @@ public class WindowController : MonoBehaviour
     private DateTime timeLastExecution;
     private bool firstExecution;
     private bool endpointSet;
+    private bool measureDone; 
 
 
     // Start is called before the first frame update
@@ -35,15 +36,17 @@ public class WindowController : MonoBehaviour
         processRunning = false;
         checkClosingNeeded = false;
         endpointSet = false;
+        measureDone = false;
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (!endpointSet) {
-            if (ontologyReader.endpointsSet) {
-
+        if (!endpointSet)
+        {
+            if (ontologyReader.endpointsSet)
+            {
                 Endpoint windowThing = ontologyReader.endpoints.FirstOrDefault(o => o.thing == "window status");
 
                 apiEndpoint = windowThing.uri;
@@ -52,38 +55,39 @@ public class WindowController : MonoBehaviour
             } 
         }
         
-        if (sceneController.inOffice && !sceneController.locationUndefined)
+        if (sceneController.inOffice && sceneController.co2WarningDone && !measureDone && endpointSet)
         {    
             if (firstExecution)
             {
-                timeLastExecution = sceneController.officeEntryTime.AddSeconds(500);
+                timeLastExecution = DateTime.Now;
                 firstExecution = false;
             }
 
             DateTime currentDateTime = DateTime.Now;
             double diffMinutes = (currentDateTime - timeLastExecution).TotalSeconds;
            
-            if (diffMinutes > frequencyOfCheckInSeconds)
+            // execute ceck 30 seconds after co2 warning was displayed
+            if ((DateTime.Now - timeLastExecution).TotalSeconds > 5.0)
             {
                 Debug.Log("Check if window is open..");
                 StartCoroutine(checkWindow());
                 timeLastExecution = currentDateTime;
                 processRunning = true;
-            }
-            
+                measureDone = true;
+            }  
         }
         
         if (checkClosingNeeded && processRunning)
         {
             StartCoroutine(weatherChecker.getWeatherForecast());
-            StartCoroutine(outsideAirQualityChecker.getAQData());
+            // StartCoroutine(outsideAirQualityChecker.getAQData());
             checkClosingNeeded = false;
         }
 
         if (weatherChecker.weatherForecastSet && outsideAirQualityChecker.aqSet && processRunning)
         {
             bool displayWarning = false;
-            string warningText = "It is going to rain or outside Air Quality is too bad. Please close the windows!";
+            string warningText = "I just recognized that it is going to rain very soon or the outside air quality is too bad so it could harm your health. Please close the windows again.";
             if (weatherChecker.goingToRain || !outsideAirQualityChecker.outsideAirQualityOkay)
             {
                 displayWarning = true;
@@ -109,9 +113,15 @@ public class WindowController : MonoBehaviour
         
         yield return uwr.SendWebRequest();
 
-        var data = JSON.Parse(uwr.downloadHandler.text);
+        JSONNode data = JSON.Parse(uwr.downloadHandler.text);
 
         // check if window is open and set checkForecast only if window is open 
+
+        // window is open
+        if (data["window"] == 1) {
+            checkClosingNeeded = true;
+        }
+
         bool windowopen = true;
         if (windowopen)
         {

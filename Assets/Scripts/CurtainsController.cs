@@ -75,16 +75,20 @@ public class CurtainsController : MonoBehaviour
             
             GameObject stopButton = curtainsControl.transform.Find("ButtonCollection").Find("Stop").gameObject;
 
-            if (sceneController.inOffice) {
+            if (sceneController.inOffice && sceneController.labLightReminderDone) {
                 // display curtain control with all three buttons and set endpoints accordingly
                 setEndpoints("402");
                 stopButton.SetActive(true);
                 sceneController.showCurtainsControl = true;
-            } else if (sceneController.inLab) {
+
+                processWindow = false;
+            } else if (sceneController.inLab && sceneController.labLightTurnOnOffDone) {
                 // display curtain control with only two buttons and set endpoints accordingly
                 setEndpoints("lab");
                 stopButton.SetActive(false);
                 sceneController.showCurtainsControl = true;
+                
+                processWindow = false;
             }
             
             processWindow = false;
@@ -117,7 +121,7 @@ public class CurtainsController : MonoBehaviour
 
     public void curtainsUp()
     {
-        // StartCoroutine(modifyCurtainState(curtainUpEndpoint));
+        StartCoroutine(modifyCurtainState(curtainUpEndpoint));
 
         buttonClicked = DateTime.Now;
         executingUp = true;
@@ -131,7 +135,7 @@ public class CurtainsController : MonoBehaviour
 
     public void curtainsDown()
     {
-        // StartCoroutine(modifyCurtainState(curtainDownEndpoint));
+        StartCoroutine(modifyCurtainState(curtainDownEndpoint));
         
         buttonClicked = DateTime.Now;
         executingDown = true;
@@ -145,7 +149,7 @@ public class CurtainsController : MonoBehaviour
 
     public void curtainsStop()
     {
-        // StartCoroutine(modifyCurtainState(curtainStopEndpoint));
+        StartCoroutine(modifyCurtainState(curtainStopEndpoint));
 
         buttonClicked = DateTime.Now;
         executingStop = true;

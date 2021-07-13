@@ -128,6 +128,15 @@ public class HTTPListener : MonoBehaviour
 							sceneController.showCeilingLightControl = false;
 						}
 						break;
+					case "hue":
+						if (value == "1")
+						{
+							if (sceneController.inOffice && sceneController.blindInteractionDone){
+								hueController.showHueInfoBox = true;
+							}
+						}
+						break;
+					/*
 					case "hue-red":
 						if (value == "1")
 						{
@@ -172,6 +181,7 @@ public class HTTPListener : MonoBehaviour
 							sceneController.showHueControl = false;
 						}
 						break;
+					*/
 					/* 
 					// ENDPOINT FOR MIRO CARD AUTHENTICATION
 					case "miroAuth":

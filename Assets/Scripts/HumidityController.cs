@@ -19,6 +19,7 @@ public class HumidityController : MonoBehaviour
     private int frequencyOfCheckInSeconds;
     private double humidityMinThreshold;
     private double humidityMaxThreshold;
+    private bool measureDone;
 
     public OntologyReader ontologyReader;
     public SceneController sceneController;
@@ -30,6 +31,10 @@ public class HumidityController : MonoBehaviour
         endpointSet = false; 
         frequencyOfCheckInSeconds = 120;
         firstExecution = true;
+        measureDone = false; 
+
+        humidityMinThreshold = 0.0;
+        humidityMaxThreshold = 30.0; // should come from the onotlogy!
     }
 
     void Update()
@@ -41,32 +46,37 @@ public class HumidityController : MonoBehaviour
 
                 apiEndpoint = humidityThing.uri;
                 apiMethod = humidityThing.method;
+
+                Debug.Log("Humidity thing");
+                Debug.Log(apiEndpoint);
+                Debug.Log(apiMethod);
+                
                 endpointSet = true;
             } 
         }
-
+        
+        /*
         if (!thresholdSet) {
             if (ontologyReader.thresholdsSet) {
                 humidityMinThreshold = ontologyReader.thresholds.FirstOrDefault(o => o.thing == "humidity sensor").minThreshold;
                 humidityMaxThreshold = ontologyReader.thresholds.FirstOrDefault(o => o.thing == "humidity sensor").minThreshold;
             }
         }
+        */
 
-        if (sceneController.inOffice && !sceneController.locationUndefined)
+        if (sceneController.inOffice && !measureDone && sceneController.rainWarningDone)
         {
             if (firstExecution)
             {
-                timeLastExecution = sceneController.officeEntryTime.AddSeconds(700);
+                timeLastExecution = DateTime.Now;
                 firstExecution = false;
             }
-
-            DateTime currentDateTime = DateTime.Now;
-            double diffSeconds = (currentDateTime - timeLastExecution).TotalSeconds;
             
-            if (diffSeconds > frequencyOfCheckInSeconds) {
+            if ((DateTime.Now - timeLastExecution).TotalSeconds > 30.0) {
                 Debug.Log("Check humidity concentration in office.");
                 StartCoroutine(getHumidity());
-                timeLastExecution = currentDateTime;
+                // timeLastExecution = currentDateTime;
+                measureDone = true; 
             }   
         }
     }
@@ -79,8 +89,8 @@ public class HumidityController : MonoBehaviour
 
         JSONNode data = JSON.Parse(uwr.downloadHandler.text);
         
-        // set the CO2 value based on the JSON structure
-        double currentHumidity = (int)data["Humidity"];
+        // set the humidity value based on the JSON structure
+        float currentHumidity = (float)data["Humidity"];
 
         string warningText = "";
         if (currentHumidity < humidityMinThreshold) {
@@ -90,6 +100,6 @@ public class HumidityController : MonoBehaviour
         }
 
         humidityWarning.transform.Find("DescriptionText").GetComponent<TextMeshPro>().text = warningText;
-        sceneController.showTemperatureWarning = true;
+        sceneController.showHumidityWarning = true;
     }
 }

@@ -66,8 +66,6 @@ public class LabLightHandler : MonoBehaviour
                     }
                 });
             }
-            Debug.Log(apiStatusEndpoint);
-            Debug.Log(apiUpdateEndpoint);
         }
 
         /*	
@@ -108,6 +106,8 @@ public class LabLightHandler : MonoBehaviour
         // if light is still on when user entered the office, we recommend the robot to turn off the light automatically
         if (data["state"] == "on") {
             sendReminder = true;
+        } else {
+            sceneController.labLightReminderDone = true;
         }
     }
 

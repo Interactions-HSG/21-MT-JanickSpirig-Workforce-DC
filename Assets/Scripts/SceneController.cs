@@ -26,6 +26,8 @@ public class SceneController : MonoBehaviour
     public GameObject labLightQuestion;
     public GameObject miroCardInfoBox;
     public GameObject labByeMessage;
+    public GameObject officeByeMessage;
+    public GameObject humidityWarning;
     
     public DateTime officeEntryTime;
     public DateTime labEntryTime;
@@ -52,12 +54,21 @@ public class SceneController : MonoBehaviour
     public bool showLabLightQuestion {get; set; }
     public bool showMiroCardInfo {get; set; }
     public bool showLabByeMessage {get; set; }
+    public bool showOfficeByeMessage {get; set; }
+    public bool showHumidityWarning {get; set; }
 
     public bool blindInteractionDone {get; set; }
     public bool cherrybotInteractionDone {get; set; }
     public bool temperatureWarningDone {get; set; }
     public bool miroCardInfoDone {get; set; }
     public bool leubotInteractionDone {get; set; }
+    public bool blindOfficeInteractionDone {get; set; }
+    public bool hueInteractionDone {get; set; }
+    public bool labLightReminderDone {get; set; }
+    public bool labLightTurnOnOffDone {get; set; }
+    public bool co2WarningDone {get; set; }
+    public bool rainWarningDone {get; set; }
+    public bool humidityWarningDone {get; set; }
 
     private DateTime commandReceived;
 
@@ -82,6 +93,8 @@ public class SceneController : MonoBehaviour
         showRobotInfobox = false;
         showMiroCardInfo = false;
         showLabByeMessage = false;
+        showOfficeByeMessage = false;
+        showHumidityWarning = false;
 
         // CONTROL PREVIOUS INTERACTIONS
         blindInteractionDone = false;
@@ -89,18 +102,39 @@ public class SceneController : MonoBehaviour
         cherrybotInteractionDone = false;
         miroCardInfoDone = false;
         leubotInteractionDone = false;
+        hueInteractionDone = false;
+        labLightReminderDone = false;
+        labLightTurnOnOffDone = false;
+        co2WarningDone = false; // teting
+        rainWarningDone = false;
+        humidityWarningDone = false;
 
         // USER LOCATION AT START
         locationUndefined = true;
-        inOffice = false;
+        inOffice = false; // testing
         inLab = false;
-
-        
-
-	}
+	}   
 
 	void Update ()
 	{
+        if (showHumidityWarning)
+        {
+            humidityWarning.SetActive(true);
+        }
+        else
+        {
+            humidityWarning.SetActive(false);
+        }
+
+        if (showOfficeByeMessage)
+        {
+            officeByeMessage.SetActive(true);
+        }
+        else
+        {
+            officeByeMessage.SetActive(false);
+        }
+
         if (showLabByeMessage)
         {
             labByeMessage.SetActive(true);
@@ -312,7 +346,7 @@ public class SceneController : MonoBehaviour
         locationUndefined = false;
 
         showLabWelcomeBox = false;
-        showLabMenu = true;
+        showLabMenu = false;
 
         labEntryTime = DateTime.Now;
     }

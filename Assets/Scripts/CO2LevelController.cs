@@ -18,7 +18,7 @@ public class CO2LevelController : MonoBehaviour
     public SceneController sceneController;
 
     private double co2Threshold;
-    public double co2Value;
+    public int co2Value;
     private bool checkOpeningWindowsOkay;
     private bool processRunning;
     public bool valueUpdated;
@@ -30,6 +30,9 @@ public class CO2LevelController : MonoBehaviour
 
     private bool firstExecution;
     private bool endpointSet;
+    private bool threshSet;
+    private bool measureDone;
+    public bool getCurrentCo2;
 
     // Start is called before the first frame update
     void Start()
@@ -39,9 +42,11 @@ public class CO2LevelController : MonoBehaviour
         processRunning = false;
         endpointSet = false;
         valueUpdated = false;
+        measureDone = false;
+        threshSet = false;
+        getCurrentCo2 = false;
         
         frequencyOfCheckInSeconds = 120; // must come from the ontology
-        co2Threshold = Convert.ToDouble(1000); // must come from the onology
     }
 
     // Update is called once per frame
@@ -58,22 +63,35 @@ public class CO2LevelController : MonoBehaviour
             } 
         }
 
-        if (sceneController.inOffice && !sceneController.locationUndefined)
+        if (!threshSet) {
+            if (ontologyReader.thresholdsSet) {
+                Threshold co2Thresh = ontologyReader.thresholds.FirstOrDefault(o => o.desc == "target CO2");
+
+                co2Threshold = co2Thresh.value;
+                threshSet = true;
+            }
+        }
+
+        if (getCurrentCo2) {
+            StartCoroutine(getCo2Data(true));
+            getCurrentCo2 = false;
+        }
+
+        if (sceneController.inOffice && sceneController.hueInteractionDone && !measureDone && endpointSet && threshSet)
         {
+
             if (firstExecution)
             {
-                timeLastExecution = sceneController.officeEntryTime.AddSeconds(500);
+                timeLastExecution = DateTime.Now;
                 firstExecution = false;
             }
-
-            DateTime currentDateTime = DateTime.Now;
-            double diffSeconds = (currentDateTime - timeLastExecution).TotalSeconds;
             
-            if (diffSeconds > frequencyOfCheckInSeconds) {
+            // execute CO2 check after 30s seconds
+            if ((DateTime.Now - timeLastExecution).TotalSeconds > 30.0) {
                 Debug.Log("Check CO2 concentration in office.");
                 StartCoroutine(getCo2Data(false));
-                timeLastExecution = currentDateTime;
                 processRunning = true;
+                measureDone = true;
             }   
         }
 
@@ -82,33 +100,34 @@ public class CO2LevelController : MonoBehaviour
             StartCoroutine(outsideAirQualityChecker.getAQData());
 
             // CHECK IF IT OS GOING TO RAIN
-            StartCoroutine(weatherChecker.getWeatherForecast());
+            // for simulation we disable this check
+            //StartCoroutine(weatherChecker.getWeatherForecast());
             checkOpeningWindowsOkay = false;
         }
 
-        if (outsideAirQualityChecker.aqSet && weatherChecker.weatherForecastSet && processRunning) {
+        if (outsideAirQualityChecker.aqSet /*&& weatherChecker.weatherForecastSet*/ && processRunning) {
 
             string warningText = "";
 
             // OUTSIDE AIR QUALITY OKAY AND NOT GOING TO RAIN -> OPEN WINDOW
             if (outsideAirQualityChecker.outsideAirQualityOkay && !weatherChecker.goingToRain)
             {
-                warningText = $"The current CO2 pollution in the office exceeds currently the limit of {Convert.ToString(co2Threshold)}. Please open the windows to achieve better air quality and productivity. Don't worry, it is not going to start raining in the next few minutes and the outdoor air quality is also fine.";
+                warningText = $"The current CO2 pollution in the office exceeds currently the maximum limit. Please open the windows to achieve better air quality and productivity. Don't worry, it is not going to start raining in the next few minutes and the outdoor air quality is also fine.";
             }
             // OUTSIDE AIR QUALITY OKAY BUT IT IS GOING TO RAIN -> DO NOT OPEN WINDOW
             else if (outsideAirQualityChecker.outsideAirQualityOkay && weatherChecker.goingToRain)
             {
-                warningText = $"The current CO2 pollution in the office exceeds currently the limit of {Convert.ToString(co2Threshold)}. As it is going to rain with a probability of more than {Convert.ToString(weatherChecker.rainProbabilityThreshold)} percent, please do not open the windows. Instead, consider increase the mechanical ventilation to achieve better air quality and productivity."; 
+                warningText = $"The current CO2 pollution in the office exceeds currently the maximum limit. As it is going to rain with a probability of more than {Convert.ToString(weatherChecker.rainProbabilityThreshold)} percent, please do not open the windows. Instead, consider increase the mechanical ventilation to achieve better air quality and productivity."; 
             }
             // OUTSIDE AIR QUALITY NOT OKAY AND IT IS NOT GOING TO RAIN -> DO NOT OPEN WINDOW
             else if (!outsideAirQualityChecker.outsideAirQualityOkay && !weatherChecker.goingToRain)
             {
-                warningText = $"The current CO2 pollution in the office exceeds currently the limit of {Convert.ToString(co2Threshold)}. As the outside air quality is not okay and could harm you health, please do not open the windows. Instead, consider increase the mechanical ventilation to achieve better air quality and productivity."; 
+                warningText = $"The current CO2 pollution in the office exceeds currently the maximum. As the outside air quality is not okay and could harm you health, please do not open the windows. Instead, consider increase the mechanical ventilation to achieve better air quality and productivity."; 
             }
             // OUTSIDE AIR QUALITY NOT OKAY AND IT IS GOINT TO RAIN -> DO NOT OPEN WINDOW
             else if (!outsideAirQualityChecker.outsideAirQualityOkay && weatherChecker.goingToRain)
             {
-                warningText = $"The current CO2 pollution in the office exceeds currently the limit of {Convert.ToString(co2Threshold)}. As the outside air quality is not okay and it is very likely going to rain, please do not open the windows. Instead, consider increase the mechanical ventilation to achieve better air quality and productivity."; 
+                warningText = $"The current CO2 pollution in the office exceeds currently the maximum limit. As the outside air quality is not okay and it is very likely going to rain, please do not open the windows. Instead, consider increase the mechanical ventilation to achieve better air quality and productivity."; 
             }
 
             co2Warning.transform.Find("DescriptionText").GetComponent<TextMeshPro>().text = warningText;
@@ -122,19 +141,16 @@ public class CO2LevelController : MonoBehaviour
 
     public IEnumerator getCo2Data (bool dataOnly) {
 
-        // string temp_url = "https://u50g7n0cbj.execute-api.us-east-1.amazonaws.com/v2/latest/9585";
-
-        // UnityWebRequest uwr = UnityWebRequest.Get(sensorEndpoint);
         UnityWebRequest uwr = new UnityWebRequest(apiEndpoint, apiMethod);
 
         uwr.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
         
         yield return uwr.SendWebRequest();
 
-        string data = JSON.Parse(uwr.downloadHandler.text);
+        JSONNode data = JSON.Parse(uwr.downloadHandler.text);
         
         // set the CO2 value based on the JSON structure
-        co2Value = 1100.0;
+        co2Value = data["co2"];
         
         if (!dataOnly) {
             if (co2Value > co2Threshold) {

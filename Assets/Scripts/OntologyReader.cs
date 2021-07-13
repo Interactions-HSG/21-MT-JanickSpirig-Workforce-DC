@@ -48,6 +48,20 @@ WHERE {
         # ?property js:propertyName ?propertyName .
     }
 }";
+    private string selectThreshRq = @"PREFIX ex: <http://www.purl.org/oema/externalfactors/CarbonDioxide>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX units: <http://www.purl.org/oema/units/>
+PREFIX dCompanion: <https://things.interactions.ics.unisg.ch/dc#>
+PREFIX dc: <http://purl.org/dc/terms/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT DISTINCT ?desc ?value ?unitLabel WHERE { 
+?pollutant a <http://www.purl.org/oema/externalfactors/CarbonDioxide> .
+?pollutant a <http://www.purl.org/oema/externalfactors/PollutantTargetValue> .
+?pollutant units:unitOfMeasure ?unit .
+?unit rdfs:label ?unitLabel .
+?pollutant dCompanion:value ?value .
+?pollutant rdfs:comment ?desc .
+}";
 
     public List<Endpoint> endpoints = new List<Endpoint>();
     public List<Threshold> thresholds = new List<Threshold>();
@@ -59,18 +73,8 @@ WHERE {
         endpointsSet = false;
         thresholdsSet = false;
         // query and set endpoints
-        // string query = readQuery("selectThings.rq");
-        string query = readQuery();
-        StartCoroutine(queryOntology(query, "endpoints")); 
-    }
-
-    public string readQuery() {
-        // read the query
-        //string filePath = @"Assets/Scripts/" + filename;
-        //StreamReader sr = new StreamReader(filePath);
-        //string fileContent = sr.ReadToEnd();
-        //sr.Close();
-        return encodeQuery(selectThingsRq);
+        StartCoroutine(queryOntology(encodeQuery(selectThingsRq), "endpoints")); 
+        StartCoroutine(queryOntology(encodeQuery(selectThreshRq), "thresholds"));
     }
 
     private string encodeQuery(string value)  
@@ -118,12 +122,23 @@ WHERE {
         
         if (what == "endpoints") {
             for (int i = 1; i <= lines.Length - 2; i++) {
+                
                 string[] line = lines[i].Split(Convert.ToChar(","));
-                Debug.Log(line);
+            
+
                 Endpoint endpoint = new Endpoint((string)line[0], (string)line[1], (string)line[2], (string)line[3], (string)line[4], (string)line[5]);
                 endpoints.Add(endpoint);
             }
             endpointsSet = true;
+        }
+        if (what == "thresholds") {
+
+            for (int i = 1; i <= lines.Length - 2; i++) {
+                string[] line = lines[i].Split(Convert.ToChar(","));
+                Threshold threshold = new Threshold((string)line[0], Convert.ToInt32(line[1]), (string)line[2]);
+                thresholds.Add(threshold);
+            }
+            thresholdsSet = true;
         }
     }
 }
@@ -149,13 +164,13 @@ public class Endpoint {
 
 
 public class Threshold {
-    public string thing;
-    public double minThreshold;
-    public double maxThreshold;
+    public string desc;
+    public int value;
+    public string unit;
 
-    public Threshold(string thing, double minThreshold, double maxThreshold) {
-        this.thing = thing;
-        this.minThreshold = minThreshold;
-        this.maxThreshold = maxThreshold;
+    public Threshold(string desc, int value, string unit) {
+        this.desc = desc;
+        this.value = value;
+        this.unit = unit;
     }   
 }
