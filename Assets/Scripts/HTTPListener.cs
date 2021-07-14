@@ -21,8 +21,8 @@ public class HTTPListener : MonoBehaviour
 		
 		// listener.Prefixes.Add ("http://localhost:5050/");
 		// listener.Prefixes.Add ("http://127.0.0.1:5050/");
-	 	listener.Prefixes.Add("http://192.168.43.54:5050/");
-		//listener.Prefixes.Add("http://10.2.1.85:5050/");
+	 	// listener.Prefixes.Add("http://192.168.43.54:5050/"); // janick187 hotspot
+		listener.Prefixes.Add("http://10.2.1.85:5050/"); // labnet connection
 
 		listener.AuthenticationSchemes = AuthenticationSchemes.Anonymous;
 		listener.Start ();

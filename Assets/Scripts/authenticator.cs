@@ -39,8 +39,8 @@ public class authenticator : MonoBehaviour {
 
     public void resetDialog() {
         // reset dialog to inital state with button and welcometext only
-        dialogAuthenticate.transform.Find("Dialog").Find("PwdResultText").gameObject.SetActive(false);
-        dialogAuthenticate.transform.Find("Dialog").Find("ButtonParent").gameObject.SetActive(true);
+        dialogAuthenticate.transform.Find("PwdResultText").gameObject.SetActive(false);
+        dialogAuthenticate.transform.Find("ButtonParent").gameObject.SetActive(true);
     }
 
     private bool checkPassword(string enteredPwd) {
@@ -64,7 +64,7 @@ public class authenticator : MonoBehaviour {
 
     public void showKeyboard() {
         // hide the button field
-        dialogAuthenticate.transform.Find("Dialog").Find("ButtonParent").gameObject.SetActive(false);
+        dialogAuthenticate.transform.Find("ButtonParent").gameObject.SetActive(false);
         
         // show the keyboard
         keyBoard.ShowKeyboard();
@@ -83,13 +83,13 @@ public class authenticator : MonoBehaviour {
         // dialogAuthenticate.transform.Find("KeyboardPreview").gameObject.SetActive(false);
         
         // get the result text component
-        TextMeshPro resultText = dialogAuthenticate.transform.Find("Dialog").Find("PwdResultText").GetComponent<TextMeshPro>();
+        TextMeshPro resultText = dialogAuthenticate.transform.Find("PwdResultText").GetComponent<TextMeshPro>();
 
         if (checkPassword(enteredText)) {
             // PASSWORD IS CORRECT
 
             // hide the password field
-            dialogAuthenticate.transform.Find("Dialog").Find("ButtonParent").gameObject.SetActive(false);
+            dialogAuthenticate.transform.Find("ButtonParent").gameObject.SetActive(false);
             // Instruct user to shake miro card.
             resultText.text = "PASSWORD CORRECT! I will shortly present you the commads to control the Robot.";
             timePwdCorrect = DateTime.Now; 
@@ -98,7 +98,7 @@ public class authenticator : MonoBehaviour {
             // PASSWORD IS NOT CORRECT
             resultText.text = "PASSWORD INCORRECT! Please click on the button below and try again!";
             // show the button again so user can start everything from beginning
-            dialogAuthenticate.transform.Find("Dialog").Find("ButtonParent").gameObject.SetActive(true);
+            dialogAuthenticate.transform.Find("ButtonParent").gameObject.SetActive(true);
         }
     }
 

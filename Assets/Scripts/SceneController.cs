@@ -11,7 +11,7 @@ public class SceneController : MonoBehaviour
     public GameObject dialogAuthenticate;
     public GameObject leubotItemBox;
     public GameObject labWelcomeBox;
-    public GameObject labMenu;
+
     public GameObject CO2Warning;
     public GameObject temperatureWarning;
     public GameObject windowOpenWarning;
@@ -36,7 +36,6 @@ public class SceneController : MonoBehaviour
     public bool showLeubotControl {get; set;}
     public bool showLabWelcomeBox {get; set;}
     public bool showOfficeWelcomeBox {get; set; }
-    public bool showLabMenu {get; set; }
     public bool showCO2Warning {get; set; }
     public bool inLab {get; set; }
     public bool inOffice {get; set; }
@@ -80,7 +79,7 @@ public class SceneController : MonoBehaviour
         showLeubotControl = false;
         showLabWelcomeBox = false;
         showOfficeWelcomeBox = false;
-        showLabMenu = false;
+        
         showCO2Warning = false;
         showWindowOpenWarning = false;
         showCurtainsControl = false;
@@ -318,15 +317,7 @@ public class SceneController : MonoBehaviour
             labWelcomeBox.SetActive(false);
         }
 
-        // LAB MENU
-        if (showLabMenu)
-        {
-            labMenu.SetActive(true);
-        }
-        else
-        {
-            labMenu.SetActive(false);
-        }
+
 	}
 
     public void uponOfficeEntrance()
@@ -346,8 +337,7 @@ public class SceneController : MonoBehaviour
         locationUndefined = false;
 
         showLabWelcomeBox = false;
-        showLabMenu = false;
-
+      
         labEntryTime = DateTime.Now;
     }
 }

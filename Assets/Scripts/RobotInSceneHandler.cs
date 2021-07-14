@@ -47,6 +47,7 @@ public class RobotInSceneHandler : MonoBehaviour
                     sceneController.showLeubotControl = true;
                 }
                 authenticator.loggedIn = false;
+                tbProcessFinished = false;
             }
         }
     }

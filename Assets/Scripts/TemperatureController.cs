@@ -41,10 +41,14 @@ public class TemperatureController : MonoBehaviour
         // we want to have the warning displayed after x seconds of blind interaction
         frequencyOfCheckInSeconds = 5.0;
         firstExecution = true;
+
+        apiEndpoint = "http://10.2.1.88:8080/temperature";
+        apiMethod = "GET";
     }
 
     void Update()
     {
+        /*
         if (!endpointSet) {
             if (ontologyReader.endpointsSet) {
 
@@ -55,6 +59,7 @@ public class TemperatureController : MonoBehaviour
                 endpointSet = true;
             } 
         }
+        */
 
         // measure temperature if user is in lab, has interacted with the blinds and no measurement has been executed before
         if (sceneController.blindInteractionDone && sceneController.inLab && !measureDone)
@@ -87,7 +92,7 @@ public class TemperatureController : MonoBehaviour
             } else if (tempTooHigh) {
                 if (outsideAirQualityChecker.outsideAirQualityOkay) {
                     // OPEN WINDOW
-                    warningText = $"The current room temperature of {Convert.ToString(currentTemp)} is too high, please open the window as outside air is cooler and also of good quality.";   
+                    warningText = $"The current room temperature of {Convert.ToString(currentTemp)} is too high, please open the window. Don't worry, the outside air is of good quality.";   
                 } else {
                     // INCREASE COOLING
                     warningText = $"The current room temperature of {Convert.ToString(currentTemp)} is too high, please increase the cooling rate as the outside air is of bad quality.";   
@@ -104,7 +109,7 @@ public class TemperatureController : MonoBehaviour
     }
 
     private IEnumerator getTemperature() {
-        /*
+        
         UnityWebRequest uwr = new UnityWebRequest(apiEndpoint, apiMethod);
 
         uwr.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
@@ -113,11 +118,8 @@ public class TemperatureController : MonoBehaviour
         JSONNode data = JSON.Parse(uwr.downloadHandler.text);
         
         // set the CO2 value based on the JSON structure
-        double currentTemperature = (int)data["Temperature"];
-        */
-        yield return "";
-
-        double currentTemperature = (double)29.0;
+        double currentTemperature = (double)data["temperature"];
+        Debug.Log(currentTemperature);
 
         currentTemp = currentTemperature;
 
@@ -128,10 +130,9 @@ public class TemperatureController : MonoBehaviour
             tempThreshold.Add(24.5);
         } else {
             tempThreshold.Add(18.4);
-            tempThreshold.Add(24.8);
+            tempThreshold.Add(21.8); //manipulate value
         }
         
-        Debug.Log(currentTemperature);
         Debug.Log(tempThreshold[0]);
 
         if (currentTemperature < tempThreshold[0]) {

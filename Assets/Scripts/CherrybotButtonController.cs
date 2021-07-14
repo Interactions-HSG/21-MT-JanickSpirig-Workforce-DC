@@ -46,14 +46,17 @@ public class CherrybotButtonController : MonoBehaviour
         gripperOpenValue = 850;
         gripperCloseValue = 620;
         
+        // safety stop to move robot back to tennis ball later
+        positions.Add(new List<string> {"500", "-2.2034161e-14", "280", "2.4067882e-7", "-89.99999", "180.0"});
+        // positions.Add(new List<string> {"460.9", "-10.5", "472.4", "-179.6", "-3.3", "-7.6"});
         // first target position (above tennis ball)        
         positions.Add(new List<string> {"111.2", "529.8", "334.2", "-176.7", "-5.1", "89.7"});
         // second target position (tennis ball inside gripper)
         positions.Add(new List<string> {"112", "541.2", "235.7", "-176", "-0.7", "90.4"});
         // third target position (safety stop)
-        positions.Add(new List<string> {"190", "529.8", "334.2", "-176.7", "-5.1", "89.7"});
+        positions.Add(new List<string> {"116.7", "529.5", "365.9", "-177.1", "-34.1", "89.4"});
         // initial position to prevent any colission of the robot
-        positions.Add(new List<string> {"500", "-2.2034161e-14", "280", "2.4067882e-7", "-89.99999", "180.0"});
+        positions.Add(new List<string> {"460.9", "-10.5", "472.4", "-179.6", "-3.3", "-7.6"});
         // fourth target position (over case)
         positions.Add(new List<string> {"17.7", "-474.8", "423.8", "177.7", "-38.4", "-87.5"});
         // fifth target position (initial position)
@@ -76,19 +79,17 @@ public class CherrybotButtonController : MonoBehaviour
                 statusText.SetActive(false);
 
                 switch (currentStep) {
-                    // move robot into position just above the tennis ball
+                    // move robot into safety stop
                     case 0:
                         helper.MainLabelText = "Move Cherrybot";
                         helper.SetQuadIconByName(moveIcon);
-                        timeout = 14.0;
+                        timeout = 7.0;
                         break;
-
-                    // open gripper
+                    // move robot into position just above the tennis ball
                     case 1:
-                        helper.MainLabelText = "Open Gripper";
-                        helper.SetQuadIconByName(gripperIcon);
-                        moveButton.SetActive(true);
-                        timeout = 1.5;
+                        helper.MainLabelText = "Move Cherrybot";
+                        helper.SetQuadIconByName(moveIcon);
+                        timeout = 7.0;
                         break;
 
                     // move robot into position to grab tennis ball
@@ -96,7 +97,7 @@ public class CherrybotButtonController : MonoBehaviour
                         helper.MainLabelText = "Move Cherrybot";
                         helper.SetQuadIconByName(moveIcon);
                         moveButton.SetActive(true);
-                        timeout = 3.0;
+                        timeout = 2.0;
                         break;
 
                     // close gripper to grab tennis ball
@@ -104,7 +105,7 @@ public class CherrybotButtonController : MonoBehaviour
                         helper.MainLabelText = "Close Gripper";
                         helper.SetQuadIconByName(gripperIcon);
                         moveButton.SetActive(true);
-                        timeout = 1.5;
+                        timeout = 1;
                         break;
 
                     // move robot into safety stop
@@ -112,7 +113,7 @@ public class CherrybotButtonController : MonoBehaviour
                         helper.MainLabelText = "Move Cherrybot";
                         helper.SetQuadIconByName(moveIcon);
                         moveButton.SetActive(true);
-                        timeout = 3.0;
+                        timeout = 2.0;
                         break;
 
                     // move robot into temporary position to prevent any colission
@@ -120,7 +121,7 @@ public class CherrybotButtonController : MonoBehaviour
                         helper.MainLabelText = "Move Cherrybot";
                         helper.SetQuadIconByName(moveIcon);
                         moveButton.SetActive(true);
-                        timeout = 9.0;
+                        timeout = 10.0;
                         break;
 
                     // move robot into position to release the tennis ball
@@ -128,7 +129,7 @@ public class CherrybotButtonController : MonoBehaviour
                         helper.MainLabelText = "Move Cherrybot";
                         helper.SetQuadIconByName(moveIcon);
                         moveButton.SetActive(true);
-                        timeout = 9.0;
+                        timeout = 7.0;
                         break;
                     
                     // release the tennis ball
@@ -136,7 +137,7 @@ public class CherrybotButtonController : MonoBehaviour
                         helper.MainLabelText = "Open Gripper";
                         helper.SetQuadIconByName(gripperIcon);
                         moveButton.SetActive(true);
-                        timeout = 1.5;
+                        timeout = 1.0;
                         break;
 
                     // reset robot --> move it back into initial position
@@ -176,7 +177,12 @@ public class CherrybotButtonController : MonoBehaviour
 
     public void moveRobot() {
 
-        cherrybotHandler.changePosition(positions[targetPosition]);
+        if (currentStep == 5) {
+            cherrybotHandler.resetPosition();
+            // cherrybotHandler.changePosition(positions[targetPosition]);
+        } else {
+            cherrybotHandler.changePosition(positions[targetPosition]);
+        }
 
         if (currentStep < 8) { currentStep  = currentStep + 1; }
         if (targetPosition < positions.Count) { targetPosition += 1; }
@@ -190,9 +196,6 @@ public class CherrybotButtonController : MonoBehaviour
         bool result = false;
 
         switch (currentStep) {
-            // open gripper
-            case 1 : result = true;
-            break;
             // close gripper
             case 3 : result = false;
             break;
@@ -200,6 +203,7 @@ public class CherrybotButtonController : MonoBehaviour
             case 7 : result = true;
             break;
         }
+        Debug.Log(result);
         return result;
     }
 
@@ -210,7 +214,7 @@ public class CherrybotButtonController : MonoBehaviour
 
         if (open) {
             // open the gripper
-            cherrybotHandler.changeGripper("850");
+            cherrybotHandler.changeGripper("800");
         } else {
             cherrybotHandler.changeGripper("620");
         }
