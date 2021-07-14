@@ -96,7 +96,7 @@ public class HTTPListener : MonoBehaviour
 							sceneController.showLeubotControl = false;
 						}
 						break;
-					case "Lab":
+					case "lab":
 						if (value == "1")
 						{
 							sceneController.showLabWelcomeBox = true;
@@ -106,7 +106,7 @@ public class HTTPListener : MonoBehaviour
 							sceneController.showLabWelcomeBox = false;
 						}
 						break;
-					case "Office":
+					case "office":
 						if (value == "1")
 						{
 							sceneController.showOfficeWelcomeBox = true;
@@ -118,7 +118,7 @@ public class HTTPListener : MonoBehaviour
 							sceneController.showOfficeWelcomeBox = false;
 						}
 						break;
-					case "Ceiling-light":
+					case "ceiling-light":
 						if (value == "1")
 						{
 							sceneController.showCeilingLightControl = true;
