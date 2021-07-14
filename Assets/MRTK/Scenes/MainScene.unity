@@ -519,7 +519,7 @@ PrefabInstance:
     - target: {fileID: 6568561198318305950, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
       propertyPath: additionalOffset.y
-      value: 0
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 7060007217809499154, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
@@ -671,7 +671,8 @@ PrefabInstance:
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 53567052321052104, guid: dd83a14aaabbfc841b2ca3ec1f819b74, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dd83a14aaabbfc841b2ca3ec1f819b74, type: 3}
 --- !u!1 &36043699 stripped
 GameObject:
@@ -954,6 +955,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &36043712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36043699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4479a0bd44d822241a4c5f4890c481c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateLinkedTransform: 0
+  moveLerpTime: 0.5
+  rotateLerpTime: 0.5
+  scaleLerpTime: 0
+  maintainScaleOnInitialization: 1
+  smoothing: 1
+  lifetime: 0
+  orientationType: 4
+  faceTrackedObjectWhileClamped: 1
+  faceUserDefinedTargetTransform: 0
+  targetToFace: {fileID: 0}
+  pivotAxis: 7
+  minDistance: 0.45
+  maxDistance: 0.78
+  defaultDistance: 0.52
+  maxViewHorizontalDegrees: 30
+  maxViewVerticalDegrees: 30
+  reorientWhenOutsideParameters: 1
+  orientToControllerDeadzoneDegrees: 60
+  ignoreAngleClamp: 0
+  ignoreDistanceClamp: 0
+  ignoreReferencePitchAndRoll: 1
+  pitchOffset: 0
+  verticalMaxDistance: 0
+  angularClampMode: 2
+  tetherAngleSteps: 6
+  boundsScaler: 4
 --- !u!1 &53943028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1573,7 +1613,7 @@ PrefabInstance:
     - target: {fileID: 1017117139351085740, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1668897239668584872, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
@@ -1900,7 +1940,8 @@ PrefabInstance:
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 53567052321052104, guid: dd83a14aaabbfc841b2ca3ec1f819b74, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dd83a14aaabbfc841b2ca3ec1f819b74, type: 3}
 --- !u!1 &141494897 stripped
 GameObject:
@@ -1908,6 +1949,45 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 141494896}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &141494898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 141494897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4479a0bd44d822241a4c5f4890c481c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateLinkedTransform: 0
+  moveLerpTime: 0.5
+  rotateLerpTime: 0.5
+  scaleLerpTime: 0
+  maintainScaleOnInitialization: 1
+  smoothing: 1
+  lifetime: 0
+  orientationType: 4
+  faceTrackedObjectWhileClamped: 1
+  faceUserDefinedTargetTransform: 0
+  targetToFace: {fileID: 0}
+  pivotAxis: 7
+  minDistance: 0.45
+  maxDistance: 0.78
+  defaultDistance: 0.52
+  maxViewHorizontalDegrees: 30
+  maxViewVerticalDegrees: 30
+  reorientWhenOutsideParameters: 1
+  orientToControllerDeadzoneDegrees: 60
+  ignoreAngleClamp: 0
+  ignoreDistanceClamp: 0
+  ignoreReferencePitchAndRoll: 1
+  pitchOffset: 0
+  verticalMaxDistance: 0
+  angularClampMode: 2
+  tetherAngleSteps: 6
+  boundsScaler: 4
 --- !u!4 &141494899 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 751685883744937855, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
@@ -2360,6 +2440,45 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &172417111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172417109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4479a0bd44d822241a4c5f4890c481c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateLinkedTransform: 0
+  moveLerpTime: 0.5
+  rotateLerpTime: 0.5
+  scaleLerpTime: 0
+  maintainScaleOnInitialization: 1
+  smoothing: 1
+  lifetime: 0
+  orientationType: 4
+  faceTrackedObjectWhileClamped: 1
+  faceUserDefinedTargetTransform: 0
+  targetToFace: {fileID: 0}
+  pivotAxis: 7
+  minDistance: 0.45
+  maxDistance: 0.78
+  defaultDistance: 0.52
+  maxViewHorizontalDegrees: 30
+  maxViewVerticalDegrees: 30
+  reorientWhenOutsideParameters: 1
+  orientToControllerDeadzoneDegrees: 60
+  ignoreAngleClamp: 0
+  ignoreDistanceClamp: 0
+  ignoreReferencePitchAndRoll: 1
+  pitchOffset: 0
+  verticalMaxDistance: 0
+  angularClampMode: 2
+  tetherAngleSteps: 6
+  boundsScaler: 4
 --- !u!4 &172417115 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 751685883744937855, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
@@ -2882,19 +3001,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4510122080978026, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.7
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4510122080978026, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.7
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4510122080978026, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.18
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4510122080978026, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4510122080978026, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2930,19 +3049,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4892726138630008, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.1427782
+      value: 0.12879223
       objectReference: {fileID: 0}
     - target: {fileID: 4892726138630008, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.027570736
+      value: 0.024976775
       objectReference: {fileID: 0}
     - target: {fileID: 4983009381304104, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.25714284
+      value: -0.3333333
       objectReference: {fileID: 0}
     - target: {fileID: 4983009381304104, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1422857
+      value: -0.0013333332
       objectReference: {fileID: 0}
     - target: {fileID: 4983009381304104, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2976,12 +3095,12 @@ PrefabInstance:
     - target: {fileID: 120256979407580908, guid: afaef0108a478c44a9eac26658bc29bf,
         type: 3}
       propertyPath: m_Positions.Array.data[0].x
-      value: 0.000000030134405
+      value: 0.0000000034769378
       objectReference: {fileID: 0}
     - target: {fileID: 120256979407580908, guid: afaef0108a478c44a9eac26658bc29bf,
         type: 3}
       propertyPath: m_Positions.Array.data[0].y
-      value: -0.0003600123
+      value: -0.0004
       objectReference: {fileID: 0}
     - target: {fileID: 120256979407580908, guid: afaef0108a478c44a9eac26658bc29bf,
         type: 3}
@@ -2991,12 +3110,12 @@ PrefabInstance:
     - target: {fileID: 120256979407580908, guid: afaef0108a478c44a9eac26658bc29bf,
         type: 3}
       propertyPath: m_Positions.Array.data[1].x
-      value: 0.11432638
+      value: 0.079522036
       objectReference: {fileID: 0}
     - target: {fileID: 120256979407580908, guid: afaef0108a478c44a9eac26658bc29bf,
         type: 3}
       propertyPath: m_Positions.Array.data[1].y
-      value: 0.05829411
+      value: 0.07102869
       objectReference: {fileID: 0}
     - target: {fileID: 120256979407580908, guid: afaef0108a478c44a9eac26658bc29bf,
         type: 3}
@@ -3202,6 +3321,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: ec72a3a105768f746b556a8dfdae61a8, type: 2}
+    - target: {fileID: 2196634049451066083, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3691605400661216942, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
       propertyPath: m_text
@@ -3266,7 +3390,7 @@ PrefabInstance:
     - target: {fileID: 8766546828693673598, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8766546828693673598, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
@@ -3276,12 +3400,12 @@ PrefabInstance:
     - target: {fileID: 8766546828693673598, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8766546828693673598, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8766546828693673598, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
@@ -3297,12 +3421,12 @@ PrefabInstance:
         type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1688913113}
+      objectReference: {fileID: 1230179599}
     - target: {fileID: 8766546828693673598, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 1688913113}
+      objectReference: {fileID: 1230179599}
     - target: {fileID: 8766546828693673598, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
@@ -3331,12 +3455,12 @@ PrefabInstance:
     - target: {fileID: 8766546828693673598, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: set_locationUndefined
+      value: setEndpoints
       objectReference: {fileID: 0}
     - target: {fileID: 8766546828693673598, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: set_locationUndefined
+      value: curtainsUp
       objectReference: {fileID: 0}
     - target: {fileID: 8766546828693673598, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
@@ -3370,6 +3494,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8766546828693673598, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: 402
+      objectReference: {fileID: 0}
+    - target: {fileID: 8766546828693673598, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
+        type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
@@ -3388,7 +3517,8 @@ PrefabInstance:
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 53567052321052104, guid: dd83a14aaabbfc841b2ca3ec1f819b74, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dd83a14aaabbfc841b2ca3ec1f819b74, type: 3}
 --- !u!1 &299144505 stripped
 GameObject:
@@ -3659,6 +3789,45 @@ MonoBehaviour:
   onHoverExited:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &299144514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299144505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4479a0bd44d822241a4c5f4890c481c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateLinkedTransform: 0
+  moveLerpTime: 0.5
+  rotateLerpTime: 0.5
+  scaleLerpTime: 0
+  maintainScaleOnInitialization: 1
+  smoothing: 1
+  lifetime: 0
+  orientationType: 4
+  faceTrackedObjectWhileClamped: 1
+  faceUserDefinedTargetTransform: 0
+  targetToFace: {fileID: 0}
+  pivotAxis: 7
+  minDistance: 0.45
+  maxDistance: 0.78
+  defaultDistance: 0.45
+  maxViewHorizontalDegrees: 30
+  maxViewVerticalDegrees: 30
+  reorientWhenOutsideParameters: 1
+  orientToControllerDeadzoneDegrees: 60
+  ignoreAngleClamp: 0
+  ignoreDistanceClamp: 0
+  ignoreReferencePitchAndRoll: 1
+  pitchOffset: 0
+  verticalMaxDistance: 0
+  angularClampMode: 2
+  tetherAngleSteps: 6
+  boundsScaler: 4
 --- !u!1 &300063610
 GameObject:
   m_ObjectHideFlags: 0
@@ -5139,6 +5308,11 @@ PrefabInstance:
       propertyPath: Events.Array.data[1].Settings.Array.data[1].IntValue
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3790480337859252193, guid: 8e686c90124b8e14cbf8093893109e9a,
+        type: 3}
+      propertyPath: additionalOffset.y
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 4394347128865118650, guid: 8e686c90124b8e14cbf8093893109e9a,
         type: 3}
       propertyPath: iconStyle
@@ -5254,7 +5428,8 @@ PrefabInstance:
       propertyPath: Events.Array.data[1].Settings.Array.data[1].IntValue
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8997744105682115357, guid: 8e686c90124b8e14cbf8093893109e9a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8e686c90124b8e14cbf8093893109e9a, type: 3}
 --- !u!1 &495665751 stripped
 GameObject:
@@ -5262,6 +5437,45 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 495665750}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &495665752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495665751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4479a0bd44d822241a4c5f4890c481c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateLinkedTransform: 0
+  moveLerpTime: 0.5
+  rotateLerpTime: 0.5
+  scaleLerpTime: 0
+  maintainScaleOnInitialization: 1
+  smoothing: 1
+  lifetime: 0
+  orientationType: 4
+  faceTrackedObjectWhileClamped: 1
+  faceUserDefinedTargetTransform: 0
+  targetToFace: {fileID: 0}
+  pivotAxis: 7
+  minDistance: 0.45
+  maxDistance: 0.78
+  defaultDistance: 0.52
+  maxViewHorizontalDegrees: 30
+  maxViewVerticalDegrees: 30
+  reorientWhenOutsideParameters: 1
+  orientToControllerDeadzoneDegrees: 60
+  ignoreAngleClamp: 0
+  ignoreDistanceClamp: 0
+  ignoreReferencePitchAndRoll: 1
+  pitchOffset: 0
+  verticalMaxDistance: 0
+  angularClampMode: 2
+  tetherAngleSteps: 6
+  boundsScaler: 4
 --- !u!1 &496668425
 GameObject:
   m_ObjectHideFlags: 0
@@ -6649,6 +6863,45 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 739472870}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &597459923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597459922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4479a0bd44d822241a4c5f4890c481c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateLinkedTransform: 0
+  moveLerpTime: 0.5
+  rotateLerpTime: 0.5
+  scaleLerpTime: 0
+  maintainScaleOnInitialization: 1
+  smoothing: 1
+  lifetime: 0
+  orientationType: 4
+  faceTrackedObjectWhileClamped: 1
+  faceUserDefinedTargetTransform: 0
+  targetToFace: {fileID: 0}
+  pivotAxis: 7
+  minDistance: 0.45
+  maxDistance: 0.78
+  defaultDistance: 0.52
+  maxViewHorizontalDegrees: 30
+  maxViewVerticalDegrees: 30
+  reorientWhenOutsideParameters: 1
+  orientToControllerDeadzoneDegrees: 60
+  ignoreAngleClamp: 0
+  ignoreDistanceClamp: 0
+  ignoreReferencePitchAndRoll: 1
+  pitchOffset: 0
+  verticalMaxDistance: 0
+  angularClampMode: 2
+  tetherAngleSteps: 6
+  boundsScaler: 4
 --- !u!4 &597459927 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1638712695838653332, guid: d112ab10fdb97d0449752ca93dcb03c9,
@@ -8515,7 +8768,8 @@ PrefabInstance:
       propertyPath: m_text
       value: Control Robot
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5715372533227453989, guid: d112ab10fdb97d0449752ca93dcb03c9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d112ab10fdb97d0449752ca93dcb03c9, type: 3}
 --- !u!1 &736833034
 GameObject:
@@ -8870,7 +9124,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5715372533227453989, guid: d112ab10fdb97d0449752ca93dcb03c9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d112ab10fdb97d0449752ca93dcb03c9, type: 3}
 --- !u!1 &778409879
 GameObject:
@@ -9908,6 +10163,11 @@ PrefabInstance:
       propertyPath: Events.Array.data[1].Settings.Array.data[1].IntValue
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3790480337859252193, guid: 8e686c90124b8e14cbf8093893109e9a,
+        type: 3}
+      propertyPath: additionalOffset.y
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 4394347128865118650, guid: 8e686c90124b8e14cbf8093893109e9a,
         type: 3}
       propertyPath: iconStyle
@@ -10023,7 +10283,8 @@ PrefabInstance:
       propertyPath: Events.Array.data[1].Settings.Array.data[1].IntValue
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8997744105682115357, guid: 8e686c90124b8e14cbf8093893109e9a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8e686c90124b8e14cbf8093893109e9a, type: 3}
 --- !u!1 &861576692 stripped
 GameObject:
@@ -10031,6 +10292,45 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 861576691}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &861576693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861576692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4479a0bd44d822241a4c5f4890c481c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateLinkedTransform: 0
+  moveLerpTime: 0.5
+  rotateLerpTime: 0.5
+  scaleLerpTime: 0
+  maintainScaleOnInitialization: 1
+  smoothing: 1
+  lifetime: 0
+  orientationType: 4
+  faceTrackedObjectWhileClamped: 1
+  faceUserDefinedTargetTransform: 0
+  targetToFace: {fileID: 0}
+  pivotAxis: 7
+  minDistance: 0.45
+  maxDistance: 0.78
+  defaultDistance: 0.52
+  maxViewHorizontalDegrees: 30
+  maxViewVerticalDegrees: 30
+  reorientWhenOutsideParameters: 1
+  orientToControllerDeadzoneDegrees: 60
+  ignoreAngleClamp: 0
+  ignoreDistanceClamp: 0
+  ignoreReferencePitchAndRoll: 1
+  pitchOffset: 0
+  verticalMaxDistance: 0
+  angularClampMode: 2
+  tetherAngleSteps: 6
+  boundsScaler: 4
 --- !u!1 &914052753
 GameObject:
   m_ObjectHideFlags: 0
@@ -11338,6 +11638,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a79e11d47f08a9245843161b98f97dd5, type: 2}
+    - target: {fileID: 2196634049451066083, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3691605400661216942, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
       propertyPath: m_text
@@ -11397,7 +11702,7 @@ PrefabInstance:
     - target: {fileID: 6568561198318305950, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
       propertyPath: additionalOffset.y
-      value: 0
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 7060007217809499154, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
@@ -11504,7 +11809,8 @@ PrefabInstance:
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 53567052321052104, guid: dd83a14aaabbfc841b2ca3ec1f819b74, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dd83a14aaabbfc841b2ca3ec1f819b74, type: 3}
 --- !u!1 &973642778 stripped
 GameObject:
@@ -11775,6 +12081,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTetherWhenManipulating: 1
   IsBoundsHandles: 0
+--- !u!114 &973642787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973642778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4479a0bd44d822241a4c5f4890c481c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateLinkedTransform: 0
+  moveLerpTime: 0.5
+  rotateLerpTime: 0.5
+  scaleLerpTime: 0
+  maintainScaleOnInitialization: 1
+  smoothing: 1
+  lifetime: 0
+  orientationType: 4
+  faceTrackedObjectWhileClamped: 1
+  faceUserDefinedTargetTransform: 0
+  targetToFace: {fileID: 0}
+  pivotAxis: 7
+  minDistance: 0.45
+  maxDistance: 0.78
+  defaultDistance: 0.47
+  maxViewHorizontalDegrees: 30
+  maxViewVerticalDegrees: 30
+  reorientWhenOutsideParameters: 1
+  orientToControllerDeadzoneDegrees: 60
+  ignoreAngleClamp: 0
+  ignoreDistanceClamp: 0
+  ignoreReferencePitchAndRoll: 1
+  pitchOffset: 0
+  verticalMaxDistance: 0
+  angularClampMode: 2
+  tetherAngleSteps: 6
+  boundsScaler: 4
 --- !u!1 &1005797093
 GameObject:
   m_ObjectHideFlags: 0
@@ -12312,7 +12657,8 @@ PrefabInstance:
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 53567052321052104, guid: dd83a14aaabbfc841b2ca3ec1f819b74, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dd83a14aaabbfc841b2ca3ec1f819b74, type: 3}
 --- !u!1 &1080416872
 GameObject:
@@ -13469,6 +13815,11 @@ PrefabInstance:
       propertyPath: Events.Array.data[1].Event.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 8300000, guid: 3448d870fb0a1b24ab44f20f2e1f982d, type: 3}
+    - target: {fileID: 3790480337859252193, guid: 8e686c90124b8e14cbf8093893109e9a,
+        type: 3}
+      propertyPath: additionalOffset.y
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 4439329060279784821, guid: 8e686c90124b8e14cbf8093893109e9a,
         type: 3}
       propertyPath: m_Mesh
@@ -13914,6 +14265,7 @@ MonoBehaviour:
   sceneController: {fileID: 1688913113}
   co2Value: 0
   valueUpdated: 0
+  getCurrentCo2: 0
 --- !u!1 &1105817097
 GameObject:
   m_ObjectHideFlags: 0
@@ -15120,6 +15472,45 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1176467471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1176467469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4479a0bd44d822241a4c5f4890c481c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateLinkedTransform: 0
+  moveLerpTime: 0.5
+  rotateLerpTime: 0.5
+  scaleLerpTime: 0
+  maintainScaleOnInitialization: 1
+  smoothing: 1
+  lifetime: 0
+  orientationType: 4
+  faceTrackedObjectWhileClamped: 1
+  faceUserDefinedTargetTransform: 0
+  targetToFace: {fileID: 0}
+  pivotAxis: 7
+  minDistance: 0.45
+  maxDistance: 0.78
+  defaultDistance: 0.52
+  maxViewHorizontalDegrees: 30
+  maxViewVerticalDegrees: 30
+  reorientWhenOutsideParameters: 1
+  orientToControllerDeadzoneDegrees: 60
+  ignoreAngleClamp: 0
+  ignoreDistanceClamp: 0
+  ignoreReferencePitchAndRoll: 1
+  pitchOffset: 0
+  verticalMaxDistance: 0
+  angularClampMode: 2
+  tetherAngleSteps: 6
+  boundsScaler: 4
 --- !u!4 &1176467475 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 751685883744937855, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
@@ -17859,7 +18250,7 @@ MonoBehaviour:
   trackedHandness: 3
   trackedHandJoint: 2
   transformOverride: {fileID: 0}
-  additionalOffset: {x: 0, y: 0, z: 0}
+  additionalOffset: {x: 0.02, y: 0.02, z: 0}
   additionalRotation: {x: 0, y: 0, z: 0}
   updateSolvers: 1
 --- !u!1 &1520615472
@@ -18281,10 +18672,15 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a79e11d47f08a9245843161b98f97dd5, type: 2}
+    - target: {fileID: 2196634049451066083, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3691605400661216942, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
       propertyPath: m_text
-      value: 
+      value: example
       objectReference: {fileID: 0}
     - target: {fileID: 3691605400661216942, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
@@ -18339,7 +18735,7 @@ PrefabInstance:
     - target: {fileID: 6568561198318305950, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
       propertyPath: additionalOffset.y
-      value: 0
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 7060007217809499154, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
@@ -18364,7 +18760,7 @@ PrefabInstance:
     - target: {fileID: 7507412556499342866, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
       propertyPath: m_text
-      value: WARNING - CO2 LEVEL
+      value: 'WARNING - HUMIDITY '
       objectReference: {fileID: 0}
     - target: {fileID: 7507412556499342866, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
@@ -18446,7 +18842,8 @@ PrefabInstance:
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 53567052321052104, guid: dd83a14aaabbfc841b2ca3ec1f819b74, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dd83a14aaabbfc841b2ca3ec1f819b74, type: 3}
 --- !u!1 &1578064229 stripped
 GameObject:
@@ -18717,6 +19114,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTetherWhenManipulating: 1
   IsBoundsHandles: 0
+--- !u!114 &1578064238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578064229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4479a0bd44d822241a4c5f4890c481c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateLinkedTransform: 0
+  moveLerpTime: 0.5
+  rotateLerpTime: 0.5
+  scaleLerpTime: 0
+  maintainScaleOnInitialization: 1
+  smoothing: 1
+  lifetime: 0
+  orientationType: 4
+  faceTrackedObjectWhileClamped: 1
+  faceUserDefinedTargetTransform: 0
+  targetToFace: {fileID: 0}
+  pivotAxis: 7
+  minDistance: 0.45
+  maxDistance: 0.78
+  defaultDistance: 0.52
+  maxViewHorizontalDegrees: 30
+  maxViewVerticalDegrees: 30
+  reorientWhenOutsideParameters: 1
+  orientToControllerDeadzoneDegrees: 60
+  ignoreAngleClamp: 0
+  ignoreDistanceClamp: 0
+  ignoreReferencePitchAndRoll: 1
+  pitchOffset: 0
+  verticalMaxDistance: 0
+  angularClampMode: 2
+  tetherAngleSteps: 6
+  boundsScaler: 4
 --- !u!1 &1580491669
 GameObject:
   m_ObjectHideFlags: 0
@@ -20054,7 +20490,8 @@ PrefabInstance:
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 53567052321052104, guid: dd83a14aaabbfc841b2ca3ec1f819b74, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dd83a14aaabbfc841b2ca3ec1f819b74, type: 3}
 --- !u!1 &1797649198
 GameObject:
@@ -22005,6 +22442,11 @@ PrefabInstance:
       propertyPath: Events.Array.data[1].Event.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 8300000, guid: 3448d870fb0a1b24ab44f20f2e1f982d, type: 3}
+    - target: {fileID: 3790480337859252193, guid: 8e686c90124b8e14cbf8093893109e9a,
+        type: 3}
+      propertyPath: additionalOffset.y
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 4439329060279784821, guid: 8e686c90124b8e14cbf8093893109e9a,
         type: 3}
       propertyPath: m_Mesh
@@ -22459,6 +22901,45 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 716824474}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2049637680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049637679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4479a0bd44d822241a4c5f4890c481c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateLinkedTransform: 0
+  moveLerpTime: 0.5
+  rotateLerpTime: 0.5
+  scaleLerpTime: 0
+  maintainScaleOnInitialization: 1
+  smoothing: 1
+  lifetime: 0
+  orientationType: 4
+  faceTrackedObjectWhileClamped: 1
+  faceUserDefinedTargetTransform: 0
+  targetToFace: {fileID: 0}
+  pivotAxis: 7
+  minDistance: 0.45
+  maxDistance: 0.78
+  defaultDistance: 0.52
+  maxViewHorizontalDegrees: 30
+  maxViewVerticalDegrees: 30
+  reorientWhenOutsideParameters: 1
+  orientToControllerDeadzoneDegrees: 60
+  ignoreAngleClamp: 0
+  ignoreDistanceClamp: 0
+  ignoreReferencePitchAndRoll: 1
+  pitchOffset: 0
+  verticalMaxDistance: 0
+  angularClampMode: 2
+  tetherAngleSteps: 6
+  boundsScaler: 4
 --- !u!1 &2051266084
 GameObject:
   m_ObjectHideFlags: 0
@@ -26285,6 +26766,45 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1799722945729165894}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1799722945729165896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799722945729165895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4479a0bd44d822241a4c5f4890c481c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateLinkedTransform: 0
+  moveLerpTime: 0.5
+  rotateLerpTime: 0.5
+  scaleLerpTime: 0
+  maintainScaleOnInitialization: 1
+  smoothing: 1
+  lifetime: 0
+  orientationType: 4
+  faceTrackedObjectWhileClamped: 1
+  faceUserDefinedTargetTransform: 0
+  targetToFace: {fileID: 0}
+  pivotAxis: 7
+  minDistance: 0.45
+  maxDistance: 0.78
+  defaultDistance: 0.52
+  maxViewHorizontalDegrees: 30
+  maxViewVerticalDegrees: 30
+  reorientWhenOutsideParameters: 1
+  orientToControllerDeadzoneDegrees: 60
+  ignoreAngleClamp: 0
+  ignoreDistanceClamp: 0
+  ignoreReferencePitchAndRoll: 1
+  pitchOffset: 0
+  verticalMaxDistance: 0
+  angularClampMode: 2
+  tetherAngleSteps: 6
+  boundsScaler: 4
 --- !u!82 &1799722945729165897
 AudioSource:
   m_ObjectHideFlags: 0
@@ -26413,45 +26933,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bec53c27d9234d14c90840dec9a7afe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1799722945729165902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1799722945729165895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4479a0bd44d822241a4c5f4890c481c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  updateLinkedTransform: 0
-  moveLerpTime: 0.5
-  rotateLerpTime: 0.5
-  scaleLerpTime: 0
-  maintainScaleOnInitialization: 1
-  smoothing: 1
-  lifetime: 0
-  orientationType: 4
-  faceTrackedObjectWhileClamped: 1
-  faceUserDefinedTargetTransform: 0
-  targetToFace: {fileID: 0}
-  pivotAxis: 7
-  minDistance: 0.45
-  maxDistance: 0.78
-  defaultDistance: 0.52
-  maxViewHorizontalDegrees: 30
-  maxViewVerticalDegrees: 30
-  reorientWhenOutsideParameters: 1
-  orientToControllerDeadzoneDegrees: 60
-  ignoreAngleClamp: 0
-  ignoreDistanceClamp: 0
-  ignoreReferencePitchAndRoll: 1
-  pitchOffset: 0
-  verticalMaxDistance: 0
-  angularClampMode: 2
-  tetherAngleSteps: 6
-  boundsScaler: 4
 --- !u!33 &1822919829459891856
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -36203,7 +36684,7 @@ Transform:
   m_GameObject: {fileID: 4215703321913672888}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.6}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 298206913}
   - {fileID: 195976006}
@@ -49458,7 +49939,7 @@ MonoBehaviour:
   trackedHandness: 3
   trackedHandJoint: 2
   transformOverride: {fileID: 0}
-  additionalOffset: {x: 0, y: 0.05, z: 0.05}
+  additionalOffset: {x: 0.1, y: 0.05, z: 0}
   additionalRotation: {x: 0, y: 0, z: 0}
   updateSolvers: 1
 --- !u!33 &9007856940870701612

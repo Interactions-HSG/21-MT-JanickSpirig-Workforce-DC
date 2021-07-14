@@ -20,8 +20,8 @@ public class HTTPListener : MonoBehaviour
 		listener = new HttpListener ();
 		
 		// listener.Prefixes.Add ("http://localhost:5050/");
-		listener.Prefixes.Add ("http://127.0.0.1:5050/");
-	 	// listener.Prefixes.Add("http://192.168.43.54:5050/");
+		// listener.Prefixes.Add ("http://127.0.0.1:5050/");
+	 	listener.Prefixes.Add("http://192.168.43.54:5050/");
 		//listener.Prefixes.Add("http://10.2.1.85:5050/");
 
 		listener.AuthenticationSchemes = AuthenticationSchemes.Anonymous;
@@ -131,6 +131,16 @@ public class HTTPListener : MonoBehaviour
 					case "hue":
 						if (value == "1")
 						{
+							sceneController.showHueInformation = true; // testing
+							if (sceneController.inOffice && sceneController.blindInteractionDone){
+								hueController.showHueInfoBox = true;
+							}
+						}
+						break;
+					case "hue-control":
+						if (value == "1")
+						{
+							sceneController.showHueControl = true; // testing 
 							if (sceneController.inOffice && sceneController.blindInteractionDone){
 								hueController.showHueInfoBox = true;
 							}

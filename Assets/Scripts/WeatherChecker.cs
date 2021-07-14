@@ -95,7 +95,7 @@ public class WeatherChecker : MonoBehaviour
         uwr2.SetRequestHeader("Accept", "*/*");
         uwr2.chunkedTransfer=false;
         uwr2.useHttpContinue = false;
-        yield return uwr2.SendWebRequest();
+        // yield return uwr2.SendWebRequest();
         Debug.Log(uwr2.error);
         Debug.Log(uwr2.responseCode);
         
@@ -134,8 +134,8 @@ public class WeatherChecker : MonoBehaviour
         }
         else
         {
-            Debug.Log("Error at Weather Forecast API!");
-            Debug.Log(uwr2.responseCode);
+            //Debug.Log("Error at Weather Forecast API!");
+            //Debug.Log(uwr2.responseCode);
 
             // for testing purpose only
             goingToRain = true;

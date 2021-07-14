@@ -106,12 +106,12 @@ public class HueController : MonoBehaviour {
 
             // SET PINCH SLIDER VALUE
             // update value
-            brightnessSlider.GetComponent<PinchSlider>().SliderValue = newBrightness;
-            
+            //brightnessSlider.GetComponent<PinchSlider>().SliderValue = newBrightness;
+
             // update line
-            brightnessSlider.transform.Find("TrackVisuals").Find("Line_active").gameObject.transform.localScale = new Vector3(transform.localScale.x, newBrightness, transform.localScale.z);
+            //brightnessSlider.transform.Find("TrackVisuals").Find("Line_active").gameObject.transform.localScale = new Vector3(transform.localScale.x, newBrightness, transform.localScale.z);
             // update label
-            brightnessSlider.transform.Find("SliderValue").GetComponent<TextMeshPro>().text = $"{newBrightness:F2}";
+            //brightnessSlider.transform.Find("SliderValue").GetComponent<TextMeshPro>().text = $"{newBrightness:F2}";
             
             hueDataSet = false;
             hueUpdated = true;

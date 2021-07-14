@@ -17,8 +17,8 @@ public class HumidityController : MonoBehaviour
     private bool thresholdSet;
     private DateTime timeLastExecution;
     private int frequencyOfCheckInSeconds;
-    private double humidityMinThreshold;
-    private double humidityMaxThreshold;
+    private float humidityMinThreshold;
+    private float humidityMaxThreshold;
     private bool measureDone;
 
     public OntologyReader ontologyReader;
@@ -33,8 +33,8 @@ public class HumidityController : MonoBehaviour
         firstExecution = true;
         measureDone = false; 
 
-        humidityMinThreshold = 0.0;
-        humidityMaxThreshold = 30.0; // should come from the onotlogy!
+        humidityMinThreshold = (float)0.0;
+        humidityMaxThreshold = (float)30.0; // should come from the onotlogy!
     }
 
     void Update()
@@ -90,8 +90,8 @@ public class HumidityController : MonoBehaviour
         JSONNode data = JSON.Parse(uwr.downloadHandler.text);
         
         // set the humidity value based on the JSON structure
-        float currentHumidity = (float)data["Humidity"];
-
+        float currentHumidity = (float)data["humidity"];
+        Debug.Log(currentHumidity);
         string warningText = "";
         if (currentHumidity < humidityMinThreshold) {
             warningText = $"The current humidity of {Convert.ToString(currentHumidity)} is too low, please adjust the ventilation accordingly.";

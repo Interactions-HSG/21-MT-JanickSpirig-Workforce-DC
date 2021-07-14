@@ -36,6 +36,7 @@ public class LabLightQuestionHandler : MonoBehaviour
         officeByeMessageShown = false;
         labByeMessageShown = false;
         firstExecutionLabByeMessage = true;
+        firstExecutionOfficeByeMessage = true;
         firstExecutionLightConfirmMessage = true;
     }
 
@@ -69,7 +70,7 @@ public class LabLightQuestionHandler : MonoBehaviour
 
 
         if (sceneController.inOffice && sceneController.humidityWarningDone && !officeByeMessageShown) {
-            // display bye messag 
+            // display bye message 
             if (firstExecutionOfficeByeMessage)  {
                 referencePoint = DateTime.Now;
                 firstExecutionOfficeByeMessage = false;

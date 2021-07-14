@@ -59,6 +59,7 @@ public class LabLightHandler : MonoBehaviour
                             // error in ontology, that's why a split is necessary
                             apiUpdateEndpoint = o.uri.Split('?')[0];
                             apiUpdateMethod = o.method;
+
                         } else if (o.actionDescription == "ligths status") {
                             apiStatusEndpoint = o.uri;
                             apiStatusMethod = o.method;

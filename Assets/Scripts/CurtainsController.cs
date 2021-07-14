@@ -112,10 +112,6 @@ public class CurtainsController : MonoBehaviour
             curtainDownEndpoint = apiEndpoint + "down";
             curtainStopEndpoint = apiEndpoint + "stop";
 
-           Debug.Log(curtainUpEndpoint);
-           Debug.Log(curtainDownEndpoint);
-           Debug.Log(curtainStopEndpoint);
-
         }
     }
 

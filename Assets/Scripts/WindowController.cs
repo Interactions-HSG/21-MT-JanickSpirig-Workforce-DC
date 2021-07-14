@@ -66,8 +66,8 @@ public class WindowController : MonoBehaviour
             DateTime currentDateTime = DateTime.Now;
             double diffMinutes = (currentDateTime - timeLastExecution).TotalSeconds;
            
-            // execute ceck 30 seconds after co2 warning was displayed
-            if ((DateTime.Now - timeLastExecution).TotalSeconds > 5.0)
+            // execute check 30 seconds after co2 warning was displayed
+            if ((DateTime.Now - timeLastExecution).TotalSeconds > 30.0)
             {
                 Debug.Log("Check if window is open..");
                 StartCoroutine(checkWindow());
@@ -80,7 +80,7 @@ public class WindowController : MonoBehaviour
         if (checkClosingNeeded && processRunning)
         {
             StartCoroutine(weatherChecker.getWeatherForecast());
-            // StartCoroutine(outsideAirQualityChecker.getAQData());
+            StartCoroutine(outsideAirQualityChecker.getAQData());
             checkClosingNeeded = false;
         }
 
