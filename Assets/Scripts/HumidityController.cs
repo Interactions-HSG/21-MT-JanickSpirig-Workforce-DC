@@ -20,6 +20,8 @@ public class HumidityController : MonoBehaviour
     private float humidityMinThreshold;
     private float humidityMaxThreshold;
     private bool measureDone;
+    private float currentHumidity;
+    private bool humiditySet;
 
     public OntologyReader ontologyReader;
     public SceneController sceneController;
@@ -35,6 +37,8 @@ public class HumidityController : MonoBehaviour
 
         humidityMinThreshold = (float)0.0;
         humidityMaxThreshold = (float)30.0; // should come from the onotlogy!
+
+        humiditySet = false;
     }
 
     void Update()
@@ -79,6 +83,23 @@ public class HumidityController : MonoBehaviour
                 measureDone = true; 
             }   
         }
+
+        if (humiditySet) {
+            Debug.Log(currentHumidity);
+            string warningText = "";
+            if (currentHumidity < humidityMinThreshold)
+            {
+                warningText = $"The current humidity of {Convert.ToString(currentHumidity)} is too low. I already adjusted the mechanical ventilation accordingly to achieve good humidity. You don't have to do anything else.";
+            }
+            else if (currentHumidity > humidityMaxThreshold)
+            {
+                warningText = $"The current humidity of {Convert.ToString(currentHumidity)} is too high. I already adjusted the mechanical ventilation accordingly to achieve good humidity. You don't have to do anything else.";
+            }
+
+            humidityWarning.transform.Find("DescriptionText").GetComponent<TextMeshPro>().text = warningText;
+            sceneController.showHumidityWarning = true;
+            humiditySet = false;
+        }
     }
     private IEnumerator getHumidity() {
 
@@ -90,16 +111,7 @@ public class HumidityController : MonoBehaviour
         JSONNode data = JSON.Parse(uwr.downloadHandler.text);
         
         // set the humidity value based on the JSON structure
-        float currentHumidity = (float)data["humidity"];
-        Debug.Log(currentHumidity);
-        string warningText = "";
-        if (currentHumidity < humidityMinThreshold) {
-            warningText = $"The current humidity of {Convert.ToString(currentHumidity)} is too low, please adjust the ventilation accordingly.";
-        } else if (currentHumidity > humidityMaxThreshold) {
-            warningText = $"The current temperature of {Convert.ToString(currentHumidity)} is too high, please adjust the ventilation accordingly.";
-        }
-
-        humidityWarning.transform.Find("DescriptionText").GetComponent<TextMeshPro>().text = warningText;
-        sceneController.showHumidityWarning = true;
+        currentHumidity = (float)data["humidity"];
+        humiditySet = true;
     }
 }

@@ -24,7 +24,6 @@ public class authenticator : MonoBehaviour {
     private MixedRealityKeyboard keyBoard;
     public DateTime timePwdCorrect {get; set; }
 
-    public TextMeshPro previewText;
     public GameObject dialogAuthenticate;
 
 
@@ -92,12 +91,14 @@ public class authenticator : MonoBehaviour {
             dialogAuthenticate.transform.Find("ButtonParent").gameObject.SetActive(false);
             // Instruct user to shake miro card.
             resultText.text = "PASSWORD CORRECT! I will shortly present you the commads to control the Robot.";
+            dialogAuthenticate.transform.Find("PwdResultText").gameObject.SetActive(true);
             timePwdCorrect = DateTime.Now; 
             loggedIn = true;
         } else {
             // PASSWORD IS NOT CORRECT
             resultText.text = "PASSWORD INCORRECT! Please click on the button below and try again!";
             // show the button again so user can start everything from beginning
+            dialogAuthenticate.transform.Find("PwdResultText").gameObject.SetActive(true);
             dialogAuthenticate.transform.Find("ButtonParent").gameObject.SetActive(true);
         }
     }

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Linq;
 using SimpleJSON;
+using Microsoft.MixedReality.Toolkit.UI;
 
 public class LabLightHandler : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class LabLightHandler : MonoBehaviour
     public OntologyReader ontologyReader;
     public NetworkHandler networkHandler;
     public SceneController sceneController;
+    public GameObject lightButton;
+
+    public bool processCeilingLightAppereance = false;
 
     private bool sendReminder;
     private bool labLightsChecked;
@@ -38,7 +42,7 @@ public class LabLightHandler : MonoBehaviour
 
             if ((DateTime.Now - sceneController.officeEntryTime).TotalSeconds > 5.0)
             {
-                StartCoroutine(getLightState());
+                StartCoroutine(getLightState(false));
                 labLightsChecked = true;
             }
             
@@ -49,6 +53,13 @@ public class LabLightHandler : MonoBehaviour
             Debug.Log("We are here!");
             sendReminder = false;
         }
+
+
+        if (processCeilingLightAppereance) {
+            StartCoroutine(getLightState(true));
+            processCeilingLightAppereance = false;
+        }
+
 
         // set here the endpoints
         if (apiUpdateEndpoint == "" && apiStatusEndpoint == "") {
@@ -94,7 +105,7 @@ public class LabLightHandler : MonoBehaviour
         }
     }
 
-    private IEnumerator getLightState() {
+    private IEnumerator getLightState(bool getDataOnly) {
         Debug.Log(apiStatusEndpoint);
         Debug.Log(apiStatusMethod);
         UnityWebRequest uwr = new UnityWebRequest(apiStatusEndpoint, apiStatusMethod);
@@ -103,12 +114,19 @@ public class LabLightHandler : MonoBehaviour
 
         JSONNode data = JSON.Parse(uwr.downloadHandler.text);
         Debug.Log(uwr.downloadHandler.text);
-
-        // if light is still on when user entered the office, we recommend the robot to turn off the light automatically
-        if (data["state"] == "on") {
-            sendReminder = true;
+        if (!getDataOnly) {
+            // if light is still on when user entered the office, we recommend the robot to turn off the light automatically
+            if (data["state"] == "on") {
+                sendReminder = true;
+            } else {
+                sceneController.labLightReminderDone = true;
+            }
         } else {
-            sceneController.labLightReminderDone = true;
+            if (data["state"] == "on") {
+                lightButton.GetComponent<Interactable>().IsToggled = true;
+            } else {
+                lightButton.GetComponent<Interactable>().IsToggled = false;
+            }
         }
     }
 

@@ -87,7 +87,7 @@ public class WindowController : MonoBehaviour
         if (weatherChecker.weatherForecastSet && outsideAirQualityChecker.aqSet && processRunning)
         {
             bool displayWarning = false;
-            string warningText = "I just recognized that it is going to rain very soon or the outside air quality is too bad so it could harm your health. Please close the windows again.";
+            string warningText = "I just recognized that it is going to rain very soon. Therefore, please close the windows again.";
             if (weatherChecker.goingToRain || !outsideAirQualityChecker.outsideAirQualityOkay)
             {
                 displayWarning = true;

@@ -30,6 +30,10 @@ public class SceneController : MonoBehaviour
     public GameObject humidityWarning;
     public GameObject deskBulbInfo;
     public GameObject deskLampInfo;
+    public GameObject cherrybotNextStep;
+    public GameObject leubotNextStep;
+    public GameObject hueNextStep;
+    public GameObject windowNextStep;
     
     public DateTime officeEntryTime;
     public DateTime labEntryTime;
@@ -59,6 +63,10 @@ public class SceneController : MonoBehaviour
     public bool showHumidityWarning {get; set; }
     public bool showDeskLampInfo {get; set; }
     public bool showDeskBulbInfo {get; set; }
+    public bool showCherrybotNextStep {get; set; }
+    public bool showLeubotNextStep {get; set; }
+    public bool showHueNextStep {get; set; }
+    public bool showWindowNextStep {get; set; }
 
     public bool blindInteractionDone {get; set; }
     public bool cherrybotInteractionDone {get; set; }
@@ -74,6 +82,8 @@ public class SceneController : MonoBehaviour
     public bool humidityWarningDone {get; set; }
     public bool deskBulbDone {get; set; }
     public bool deskLampDone {get; set; }
+
+    public bool cherrybotNextStepDone {get; set; }
 
     private DateTime commandReceived;
 
@@ -102,6 +112,10 @@ public class SceneController : MonoBehaviour
         showHumidityWarning = false;
         showDeskBulbInfo = false;
         showDeskLampInfo = false;
+        showCherrybotNextStep = false;
+        showLeubotNextStep = false;
+        showHueNextStep = false;
+        showWindowNextStep = false;
 
         // CONTROL PREVIOUS INTERACTIONS
         blindInteractionDone = false;
@@ -127,6 +141,42 @@ public class SceneController : MonoBehaviour
 	void Update ()
 	{
 
+        if (showHueNextStep)
+        {
+            hueNextStep.SetActive(true);
+        }
+        else
+        {
+            hueNextStep.SetActive(false);
+        }
+
+        if (showWindowNextStep)
+        {
+            windowNextStep.SetActive(true);
+        }
+        else
+        {
+            windowNextStep.SetActive(false);
+        }
+
+        if (showCherrybotNextStep)
+        {
+            cherrybotNextStep.SetActive(true);
+        }
+        else
+        {
+            cherrybotNextStep.SetActive(false);
+        }
+
+        if (showLeubotNextStep)
+        {
+            leubotNextStep.SetActive(true);
+        }
+        else
+        {
+            leubotNextStep.SetActive(false);
+        }
+
         if (showDeskBulbInfo)
         {
             deskBulbInfo.SetActive(true);
@@ -142,7 +192,7 @@ public class SceneController : MonoBehaviour
         }
         else
         {
-            humidityWarning.SetActive(false);
+            deskLampInfo.SetActive(false);
         }
         if (showHumidityWarning)
         {

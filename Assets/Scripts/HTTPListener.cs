@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Networking;
 using System;
 using System.IO;
@@ -14,6 +14,13 @@ public class HTTPListener : MonoBehaviour
 	public CurtainsController curtainsController;
 	public authenticator authenticator;
 	public RobotInSceneHandler robotInSceneHandler;
+	public LabLightHandler labLightHandler;
+
+	private bool cherryBotReceived = false;
+	private bool leubotReceived = false;
+	private bool hueReceived = false;
+	private bool ceilingLightReceived = false;
+	private bool windowDone = false;
 
 	void Start ()
 	{
@@ -22,7 +29,8 @@ public class HTTPListener : MonoBehaviour
 		// listener.Prefixes.Add ("http://localhost:5050/");
 		// listener.Prefixes.Add ("http://127.0.0.1:5050/");
 	 	// listener.Prefixes.Add("http://192.168.43.54:5050/"); // janick187 hotspot
-		listener.Prefixes.Add("http://10.2.1.85:5050/"); // labnet connection
+		// listener.Prefixes.Add("http://10.2.1.85:5050/"); // labnet lab
+		listener.Prefixes.Add("http://10.2.1.233:5050/"); // labnet office
 
 		listener.AuthenticationSchemes = AuthenticationSchemes.Anonymous;
 		listener.Start ();
@@ -30,6 +38,13 @@ public class HTTPListener : MonoBehaviour
 		listenerThread = new Thread (startListener);
 		listenerThread.Start ();
 		Debug.Log ("Server Started");
+
+
+		cherryBotReceived = false;
+		leubotReceived = false;
+		hueReceived = false;
+		ceilingLightReceived = false;
+		windowDone = false;
 	}
 
 	private void startListener ()
@@ -57,11 +72,11 @@ public class HTTPListener : MonoBehaviour
 						// 1 is equal to show and 0 is equal to hide
 						if (value == "1")
 						{
-							
 							// only show Cherrybot if interaction with blinds already happended
-							if (sceneController.temperatureWarningDone && sceneController.inLab && !sceneController.cherrybotInteractionDone) {
+							if (sceneController.cherrybotNextStepDone && sceneController.inLab && !cherryBotReceived) {
 								robotInSceneHandler.thing = "Cherrybot";
 								robotInSceneHandler.processRobot = true;
+								cherryBotReceived = true;
 							}
 							/*
 							if (sceneController.miroCardInfoDone && sceneController.inLab) {
@@ -78,11 +93,11 @@ public class HTTPListener : MonoBehaviour
 					case "Leubot":
 						if (value == "1")
 						{
-						
 							// only show Leubot it interaction with blinds already happened
-							if (sceneController.cherrybotInteractionDone && sceneController.inLab && !sceneController.leubotInteractionDone) {
+							if (sceneController.cherrybotInteractionDone && sceneController.inLab && !leubotReceived) {
 								robotInSceneHandler.thing = "Leubot";
 								robotInSceneHandler.processRobot = true;
+								leubotReceived = true;
 							}	
 							
 							/*
@@ -136,8 +151,13 @@ public class HTTPListener : MonoBehaviour
 						break;
 					case "ceiling-light":
 						if (value == "1")
-						{
-							sceneController.showCeilingLightControl = true;
+						{	
+							if (!ceilingLightReceived) {
+								labLightHandler.processCeilingLightAppereance = true;
+								sceneController.showCeilingLightControl = true;
+								ceilingLightReceived = true;
+							}
+							
 						}
 						else if (value == "0")
 						{
@@ -147,9 +167,9 @@ public class HTTPListener : MonoBehaviour
 					case "hue":
 						if (value == "1")
 						{
-							sceneController.showHueInformation = true; // testing
-							if (sceneController.inOffice && sceneController.blindInteractionDone){
+							if (sceneController.inOffice && sceneController.blindInteractionDone && !hueReceived){
 								hueController.showHueInfoBox = true;
+								hueReceived = true;
 							}
 						}
 						break;
@@ -232,8 +252,13 @@ public class HTTPListener : MonoBehaviour
 					case "window":
 						if (value == "1")
 						{
-							// display the curtains control button
-							curtainsController.processWindow = true;
+							if (!windowDone)
+							{
+								// display the curtains control button
+								curtainsController.processWindow = true;
+								windowDone = true;
+							}
+							
 						}
 						break;
 					case "smartcard":

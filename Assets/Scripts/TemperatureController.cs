@@ -62,7 +62,7 @@ public class TemperatureController : MonoBehaviour
         */
 
         // measure temperature if user is in lab, has interacted with the blinds and no measurement has been executed before
-        if (sceneController.blindInteractionDone && sceneController.inLab && !measureDone)
+        if ( /* sceneController.blindInteractionDone*/ sceneController.labLightTurnOnOffDone && sceneController.inLab && !measureDone)
         {
             if (firstExecution)
             {

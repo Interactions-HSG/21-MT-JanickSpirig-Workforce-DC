@@ -45,6 +45,8 @@ public class CherrybotButtonController : MonoBehaviour
 
         gripperOpenValue = 850;
         gripperCloseValue = 620;
+
+        statusText.GetComponent<TextMeshPro>().text = "Executing...";
         
         // safety stop to move robot back to tennis ball later
         positions.Add(new List<string> {"500", "-2.2034161e-14", "280", "2.4067882e-7", "-89.99999", "180.0"});
@@ -74,87 +76,119 @@ public class CherrybotButtonController : MonoBehaviour
         
         if (updateButtons) {
             if (difference > timeout) { 
-                
-                moveButton.SetActive(true);
-                statusText.SetActive(false);
 
                 switch (currentStep) {
                     // move robot into safety stop
                     case 0:
+                        moveButton.SetActive(true);
+                        statusText.SetActive(false);
+
                         helper.MainLabelText = "Move Cherrybot";
                         helper.SetQuadIconByName(moveIcon);
-                        timeout = 7.0;
+                        timeout = 8.0;
+                        updateButtons = false;
                         break;
                     // move robot into position just above the tennis ball
                     case 1:
-                        helper.MainLabelText = "Move Cherrybot";
-                        helper.SetQuadIconByName(moveIcon);
-                        timeout = 7.0;
+                        moveButton.SetActive(false);
+                        statusText.SetActive(true);
+                        updateButtons = false;
+                        // helper.MainLabelText = "Move Cherrybot";
+                        // helper.SetQuadIconByName(moveIcon);
+                        takeAction();
+                        
+                        timeout = 9.0;
                         break;
 
                     // move robot into position to grab tennis ball
                     case 2:
+
+                        moveButton.SetActive(true);
+                        statusText.SetActive(false);
+
                         helper.MainLabelText = "Move Cherrybot";
                         helper.SetQuadIconByName(moveIcon);
                         moveButton.SetActive(true);
                         timeout = 2.0;
+                        updateButtons = false;
                         break;
 
                     // close gripper to grab tennis ball
                     case 3:
+                        moveButton.SetActive(true);
+                        statusText.SetActive(false);
+
                         helper.MainLabelText = "Close Gripper";
                         helper.SetQuadIconByName(gripperIcon);
-                        moveButton.SetActive(true);
+                        
                         timeout = 1;
+                        updateButtons = false;
                         break;
 
                     // move robot into safety stop
                     case 4:
+
+                        moveButton.SetActive(true);
+                        statusText.SetActive(false);
+
                         helper.MainLabelText = "Move Cherrybot";
                         helper.SetQuadIconByName(moveIcon);
                         moveButton.SetActive(true);
                         timeout = 2.0;
+                        updateButtons = false;
                         break;
 
                     // move robot into temporary position to prevent any colission
                     case 5:
-                        helper.MainLabelText = "Move Cherrybot";
-                        helper.SetQuadIconByName(moveIcon);
-                        moveButton.SetActive(true);
+
+                        moveButton.SetActive(false);
+                        statusText.SetActive(true);
+                        updateButtons = false;
+                        takeAction();
+                        // helper.MainLabelText = "Move Cherrybot";
+                        // helper.SetQuadIconByName(moveIcon);
+                        // moveButton.SetActive(true);
                         timeout = 10.0;
                         break;
 
                     // move robot into position to release the tennis ball
                     case 6:
-                        helper.MainLabelText = "Move Cherrybot";
-                        helper.SetQuadIconByName(moveIcon);
-                        moveButton.SetActive(true);
+                        moveButton.SetActive(false);
+                        statusText.SetActive(true);
+
+                        takeAction();
+                        //helper.MainLabelText = "Move Cherrybot";
+                        //helper.SetQuadIconByName(moveIcon);
+                        //moveButton.SetActive(true);
                         timeout = 7.0;
                         break;
                     
                     // release the tennis ball
                     case 7:
-                        helper.MainLabelText = "Open Gripper";
-                        helper.SetQuadIconByName(gripperIcon);
+
                         moveButton.SetActive(true);
+                        statusText.SetActive(false);
+
+                        helper.MainLabelText = "Release tennis ball";
+                        helper.SetQuadIconByName(gripperIcon);
                         timeout = 1.0;
+                        updateButtons = false;
                         break;
 
-                    // reset robot --> move it back into initial position
                     case 8:
                         statusText.SetActive(true);
                         moveButton.SetActive(false);
                         statusText.GetComponent<TextMeshPro>().text = "Very well done!";
                         // helper.SetQuadIconByName(resetIcon);
                         // helper.MainLabelText = "Reset Robot";
+                        updateButtons = false;
                         break;
                 }
-                updateButtons = false;
+                
             } else {
                 moveButton.SetActive(false);
                 statusText.SetActive(true);
-                statusText.GetComponent<TextMeshPro>().text = "Executing...";
-            
+                
                 // moveButton.GetComponent<Interactable>().enabled = false;
                 // helper.MainLabelText = "Executing...";
             }
@@ -172,7 +206,7 @@ public class CherrybotButtonController : MonoBehaviour
         string label = helper.MainLabelText;
         
         if (label.Contains("Move") || label.Contains("Reset")) { moveRobot();}
-        else if (label.Contains("Gripper")) {moveGripper();}
+        else if (label.Contains("Gripper") || label.Contains("Release")) {moveGripper();}
     }
 
     public void moveRobot() {
@@ -203,7 +237,6 @@ public class CherrybotButtonController : MonoBehaviour
             case 7 : result = true;
             break;
         }
-        Debug.Log(result);
         return result;
     }
 

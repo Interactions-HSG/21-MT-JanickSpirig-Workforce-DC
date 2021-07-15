@@ -34,7 +34,7 @@ public class RobotInSceneHandler : MonoBehaviour
         { 
             if ((DateTime.Now - authenticator.timePwdCorrect).TotalSeconds > 3.0) {
 
-                // reset the dialogauthenticate firs 
+                // reset the dialog authenticate first
                 authenticator.resetDialog();
                 sceneController.showDialogAuthenticate = false;
                 
@@ -47,7 +47,6 @@ public class RobotInSceneHandler : MonoBehaviour
                     sceneController.showLeubotControl = true;
                 }
                 authenticator.loggedIn = false;
-                tbProcessFinished = false;
             }
         }
     }

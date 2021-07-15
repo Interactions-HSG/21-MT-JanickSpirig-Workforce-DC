@@ -86,7 +86,7 @@ public class CurtainsController : MonoBehaviour
                 // display curtain control with only two buttons and set endpoints accordingly
                 setEndpoints("lab");
                 stopButton.SetActive(false);
-                sceneController.showCurtainsControl = true;
+                // sceneController.showCurtainsControl = true;
                 
                 processWindow = false;
             }

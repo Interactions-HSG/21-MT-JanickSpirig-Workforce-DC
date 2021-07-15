@@ -112,22 +112,22 @@ public class CO2LevelController : MonoBehaviour
             // OUTSIDE AIR QUALITY OKAY AND NOT GOING TO RAIN -> OPEN WINDOW
             if (outsideAirQualityChecker.outsideAirQualityOkay && !weatherChecker.goingToRain)
             {
-                warningText = $"The current CO2 pollution in the office exceeds currently the maximum limit. Please open the windows to achieve better air quality and productivity. Don't worry, it is not going to start raining in the next few minutes and the outdoor air quality is also fine.";
+                warningText = $"The current CO2 pollution in the office exceeds the maximum limit. Please open the windows to achieve better air quality and productivity. Don't worry, the outdoor air quality is fine.";
             }
             // OUTSIDE AIR QUALITY OKAY BUT IT IS GOING TO RAIN -> DO NOT OPEN WINDOW
             else if (outsideAirQualityChecker.outsideAirQualityOkay && weatherChecker.goingToRain)
             {
-                warningText = $"The current CO2 pollution in the office exceeds currently the maximum limit. As it is going to rain with a probability of more than {Convert.ToString(weatherChecker.rainProbabilityThreshold)} percent, please do not open the windows. Instead, consider increase the mechanical ventilation to achieve better air quality and productivity."; 
+                warningText = $"The current CO2 pollution in the office exceeds the maximum limit. As it is going to rain with a probability of more than {Convert.ToString(weatherChecker.rainProbabilityThreshold)} percent, please do not open the windows. Instead, consider increase the mechanical ventilation to achieve better air quality and productivity."; 
             }
             // OUTSIDE AIR QUALITY NOT OKAY AND IT IS NOT GOING TO RAIN -> DO NOT OPEN WINDOW
             else if (!outsideAirQualityChecker.outsideAirQualityOkay && !weatherChecker.goingToRain)
             {
-                warningText = $"The current CO2 pollution in the office exceeds currently the maximum. As the outside air quality is not okay and could harm you health, please do not open the windows. Instead, consider increase the mechanical ventilation to achieve better air quality and productivity."; 
+                warningText = $"The current CO2 pollution in the office exceeds the maximum. As the outside air quality is not okay and could harm you health, please do not open the windows. Instead, consider increase the mechanical ventilation to achieve better air quality and productivity."; 
             }
             // OUTSIDE AIR QUALITY NOT OKAY AND IT IS GOINT TO RAIN -> DO NOT OPEN WINDOW
             else if (!outsideAirQualityChecker.outsideAirQualityOkay && weatherChecker.goingToRain)
             {
-                warningText = $"The current CO2 pollution in the office exceeds currently the maximum limit. As the outside air quality is not okay and it is very likely going to rain, please do not open the windows. Instead, consider increase the mechanical ventilation to achieve better air quality and productivity."; 
+                warningText = $"The current CO2 pollution in the office exceeds the maximum limit. As the outside air quality is not okay and it is very likely going to rain, please do not open the windows. Instead, consider increase the mechanical ventilation to achieve better air quality and productivity."; 
             }
 
             co2Warning.transform.Find("DescriptionText").GetComponent<TextMeshPro>().text = warningText;

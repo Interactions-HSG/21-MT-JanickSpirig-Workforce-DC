@@ -18,10 +18,23 @@ public class LabLightQuestionHandler : MonoBehaviour
     private bool firstExecutionLabByeMessage;
     private bool firstExecutionOfficeByeMessage;
     private bool firstExecutionLightConfirmMessage;
+    private bool firstExecutionWindowsNextStep;
+    private bool firstExecutionHueNextStep;
     private DateTime referencePoint;
     private double secondsAfterEntry;
     private double secondsUntilByeMessage;
     private double scecondsUntilLightConfirmMessage;
+    private double secondsUntilCherryBotNextStep;
+    private bool firstExecutionCherrybotNextStep;
+    private bool cherrybotNextStepShown;
+    private double secondsUntilHueNextStep;
+    private double secondsUntilWindowsNextStep;
+    private bool windowsNextStepShown;
+    private bool hueNextStepShown;
+
+    private double secondsUntilLeubotNextStep;
+    private bool firstExecutionLeubotNextStep;
+    private bool leubotNextStepShown;
     
     public bool questionAnswered {get; set; }
     public string answer {get; set; }
@@ -29,20 +42,71 @@ public class LabLightQuestionHandler : MonoBehaviour
 
     void Start()
     {
-        secondsAfterEntry = 2.0;
+        secondsAfterEntry = 5.0;
         secondsUntilByeMessage = 5.0;
-        scecondsUntilLightConfirmMessage = 1.5;
+        scecondsUntilLightConfirmMessage = 1.0;
+        secondsUntilCherryBotNextStep = 12.0;
+        secondsUntilLeubotNextStep = 3.0;
+        secondsUntilHueNextStep = 3.0;
+        secondsUntilWindowsNextStep = 3.0;
+
         questionAsked = false;  
         officeByeMessageShown = false;
         labByeMessageShown = false;
+        firstExecutionCherrybotNextStep = true;
+
+        cherrybotNextStepShown = false;
+
+        firstExecutionLeubotNextStep = true;
+        leubotNextStepShown = false;
+        hueNextStepShown = false;
+        windowsNextStepShown = false;
+
         firstExecutionLabByeMessage = true;
         firstExecutionOfficeByeMessage = true;
         firstExecutionLightConfirmMessage = true;
+        firstExecutionWindowsNextStep = true;
+        firstExecutionHueNextStep = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (sceneController.inLab && sceneController.temperatureWarningDone && !cherrybotNextStepShown)
+        {
+
+            if (firstExecutionCherrybotNextStep)
+            {
+                referencePoint = DateTime.Now;
+                firstExecutionCherrybotNextStep = false;
+            }
+
+            if ((DateTime.Now - referencePoint).TotalSeconds > secondsUntilCherryBotNextStep)
+            {
+                // display next message
+                sceneController.showCherrybotNextStep = true;
+                cherrybotNextStepShown = true;
+            }
+        }
+
+        if (sceneController.inLab && sceneController.cherrybotInteractionDone && !leubotNextStepShown)
+        {
+
+            if (firstExecutionLeubotNextStep)
+            {
+                referencePoint = DateTime.Now;
+                firstExecutionLeubotNextStep = false;
+            }
+
+            if ((DateTime.Now - referencePoint).TotalSeconds > secondsUntilLeubotNextStep)
+            {
+                // display next message
+                sceneController.showLeubotNextStep = true;
+                leubotNextStepShown = true;
+            }
+        }
+
         if (sceneController.inLab && !questionAsked) {
             double difference = (DateTime.Now - sceneController.labEntryTime).TotalSeconds;
            
@@ -67,6 +131,35 @@ public class LabLightQuestionHandler : MonoBehaviour
             }
     
         }
+
+        if (sceneController.labLightReminderDone && sceneController.inOffice && !windowsNextStepShown) {
+            if (firstExecutionWindowsNextStep)  {
+                referencePoint = DateTime.Now;
+                firstExecutionWindowsNextStep = false;
+            }
+
+            double difference = (DateTime.Now - referencePoint).TotalSeconds;
+
+            if (difference > secondsUntilWindowsNextStep) {
+                sceneController.showWindowNextStep = true;
+                windowsNextStepShown = true;
+            }
+        }
+
+        if (sceneController.blindInteractionDone && sceneController.inOffice && !hueNextStepShown) {
+            if (firstExecutionHueNextStep)  {
+                referencePoint = DateTime.Now;
+                firstExecutionHueNextStep = false;
+            }
+
+            double difference = (DateTime.Now - referencePoint).TotalSeconds;
+
+            if (difference > secondsUntilHueNextStep) {
+                sceneController.showHueNextStep = true;
+                hueNextStepShown = true;
+            }
+        }
+
 
 
         if (sceneController.inOffice && sceneController.humidityWarningDone && !officeByeMessageShown) {
@@ -109,7 +202,7 @@ public class LabLightQuestionHandler : MonoBehaviour
                 }
 
                 if (answer == "Yes") {
-                    text = "Perfect, I turned it on for you.";
+                    text = "Perfect, I turned it on for you. Now just keep experiencing and simply be yourself.";
                 }
 
                 // update description text
