@@ -31,7 +31,7 @@ public class authenticator : MonoBehaviour {
     void Start()
     {
         loggedIn = false;
-        password = "hsg1234";
+        password = "Hsg1234";
         miroCardEndpoint = "some endpoint"; // the MiroCard IP Adress
         keyBoard = dialogAuthenticate.GetComponent<MixedRealityKeyboard>();
         // previewText = dialogAuthenticate.transform.Find("PasswordField").Find("PreviewText").gameObject.GetComponent<TextMeshPro>();

@@ -28,6 +28,8 @@ public class SceneController : MonoBehaviour
     public GameObject labByeMessage;
     public GameObject officeByeMessage;
     public GameObject humidityWarning;
+    public GameObject deskBulbInfo;
+    public GameObject deskLampInfo;
     
     public DateTime officeEntryTime;
     public DateTime labEntryTime;
@@ -55,6 +57,8 @@ public class SceneController : MonoBehaviour
     public bool showLabByeMessage {get; set; }
     public bool showOfficeByeMessage {get; set; }
     public bool showHumidityWarning {get; set; }
+    public bool showDeskLampInfo {get; set; }
+    public bool showDeskBulbInfo {get; set; }
 
     public bool blindInteractionDone {get; set; }
     public bool cherrybotInteractionDone {get; set; }
@@ -68,6 +72,8 @@ public class SceneController : MonoBehaviour
     public bool co2WarningDone {get; set; }
     public bool rainWarningDone {get; set; }
     public bool humidityWarningDone {get; set; }
+    public bool deskBulbDone {get; set; }
+    public bool deskLampDone {get; set; }
 
     private DateTime commandReceived;
 
@@ -94,6 +100,8 @@ public class SceneController : MonoBehaviour
         showLabByeMessage = false;
         showOfficeByeMessage = false;
         showHumidityWarning = false;
+        showDeskBulbInfo = false;
+        showDeskLampInfo = false;
 
         // CONTROL PREVIOUS INTERACTIONS
         blindInteractionDone = false;
@@ -107,6 +115,8 @@ public class SceneController : MonoBehaviour
         co2WarningDone = false; // teting
         rainWarningDone = false;
         humidityWarningDone = false;
+        deskBulbDone = false;
+        deskLampDone = false;
 
         // USER LOCATION AT START
         locationUndefined = true;
@@ -116,6 +126,24 @@ public class SceneController : MonoBehaviour
 
 	void Update ()
 	{
+
+        if (showDeskBulbInfo)
+        {
+            deskBulbInfo.SetActive(true);
+        }
+        else
+        {
+            deskBulbInfo.SetActive(false);
+        }
+
+        if (showDeskLampInfo)
+        {
+            deskLampInfo.SetActive(true);
+        }
+        else
+        {
+            humidityWarning.SetActive(false);
+        }
         if (showHumidityWarning)
         {
             humidityWarning.SetActive(true);
@@ -339,5 +367,6 @@ public class SceneController : MonoBehaviour
         showLabWelcomeBox = false;
       
         labEntryTime = DateTime.Now;
+
     }
 }

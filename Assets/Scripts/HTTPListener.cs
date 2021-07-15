@@ -59,7 +59,7 @@ public class HTTPListener : MonoBehaviour
 						{
 							
 							// only show Cherrybot if interaction with blinds already happended
-							if (sceneController.miroCardInfoDone && sceneController.inLab) {
+							if (sceneController.temperatureWarningDone && sceneController.inLab && !sceneController.cherrybotInteractionDone) {
 								robotInSceneHandler.thing = "Cherrybot";
 								robotInSceneHandler.processRobot = true;
 							}
@@ -80,7 +80,7 @@ public class HTTPListener : MonoBehaviour
 						{
 						
 							// only show Leubot it interaction with blinds already happened
-							if (sceneController.cherrybotInteractionDone && sceneController.inLab) {
+							if (sceneController.cherrybotInteractionDone && sceneController.inLab && !sceneController.leubotInteractionDone) {
 								robotInSceneHandler.thing = "Leubot";
 								robotInSceneHandler.processRobot = true;
 							}	
@@ -94,6 +94,22 @@ public class HTTPListener : MonoBehaviour
 						else if (value == "0")
 						{
 							sceneController.showLeubotControl = false;
+						}
+						break;
+					case "desk-bulb":
+						if (value == "1")
+						{
+							if (!sceneController.deskBulbDone) {
+								sceneController.showDeskBulbInfo = true;
+							}
+						}
+						break;
+					case "desk-lamp":
+						if (value == "1")
+						{
+							if (!sceneController.deskLampDone) {
+								sceneController.showDeskLampInfo = true;
+							}
 						}
 						break;
 					case "lab":
@@ -224,7 +240,7 @@ public class HTTPListener : MonoBehaviour
 						if (value == "1")
 						{
 							// display the info boy only after temperature warning has been done
-							if (sceneController.temperatureWarningDone && sceneController.inLab) {
+							if (sceneController.temperatureWarningDone && sceneController.inLab && !sceneController.miroCardInfoDone) {
 								sceneController.showMiroCardInfo = true;
 							}
 						}
