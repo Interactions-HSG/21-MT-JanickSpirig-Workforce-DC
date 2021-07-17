@@ -67,7 +67,7 @@ public class WindowController : MonoBehaviour
             double diffMinutes = (currentDateTime - timeLastExecution).TotalSeconds;
            
             // execute check 30 seconds after co2 warning was displayed
-            if ((DateTime.Now - timeLastExecution).TotalSeconds > 30.0)
+            if ((DateTime.Now - timeLastExecution).TotalSeconds > 25.0)
             {
                 Debug.Log("Check if window is open..");
                 StartCoroutine(checkWindow());

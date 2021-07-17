@@ -42,7 +42,7 @@ public class LabLightQuestionHandler : MonoBehaviour
 
     void Start()
     {
-        secondsAfterEntry = 5.0;
+        secondsAfterEntry = 7.0;
         secondsUntilByeMessage = 5.0;
         scecondsUntilLightConfirmMessage = 1.0;
         secondsUntilCherryBotNextStep = 12.0;

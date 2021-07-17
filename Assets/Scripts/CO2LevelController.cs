@@ -87,7 +87,7 @@ public class CO2LevelController : MonoBehaviour
             }
             
             // execute CO2 check after 30s seconds
-            if ((DateTime.Now - timeLastExecution).TotalSeconds > 30.0) {
+            if ((DateTime.Now - timeLastExecution).TotalSeconds > 20.0) {
                 Debug.Log("Check CO2 concentration in office.");
                 StartCoroutine(getCo2Data(false));
                 processRunning = true;

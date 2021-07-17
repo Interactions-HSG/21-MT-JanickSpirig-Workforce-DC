@@ -80,6 +80,6 @@ public class RobotInSceneHandler : MonoBehaviour
         sceneController.showDialogAuthenticate = true;
 
         dialogBox.transform.Find("TitleText").GetComponent<TextMeshPro>().text = $"Let's play!";
-        dialogBox.transform.Find("DescriptionText").GetComponent<TextMeshPro>().text = $"To control the {thing} yourself, click on the button and enter this password: {masterPwd}";
+        dialogBox.transform.Find("DescriptionText").GetComponent<TextMeshPro>().text = $"To control the {thing} yourself, click on the button, enter the password {masterPwd} and hit enter.";
     }
 }

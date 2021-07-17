@@ -76,7 +76,7 @@ public class HumidityController : MonoBehaviour
                 firstExecution = false;
             }
             
-            if ((DateTime.Now - timeLastExecution).TotalSeconds > 30.0) {
+            if ((DateTime.Now - timeLastExecution).TotalSeconds > 20.0) {
                 Debug.Log("Check humidity concentration in office.");
                 StartCoroutine(getHumidity());
                 // timeLastExecution = currentDateTime;
