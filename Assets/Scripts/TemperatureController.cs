@@ -39,7 +39,7 @@ public class TemperatureController : MonoBehaviour
         endpointSet = false;
         measureDone = false;
         // we want to have the warning displayed after x seconds of blind interaction
-        frequencyOfCheckInSeconds = 5.0;
+        frequencyOfCheckInSeconds = 4.0;
         firstExecution = true;
 
         apiEndpoint = "http://10.2.1.88:8080/temperature";

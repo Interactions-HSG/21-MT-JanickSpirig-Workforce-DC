@@ -835,6 +835,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &36043709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36043701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!114 &36043712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1480,6 +1496,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1055609442}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &121378303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121378302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!114 &121378304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2710,6 +2742,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTetherWhenManipulating: 1
   IsBoundsHandles: 0
+--- !u!114 &130226374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 130226364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!114 &130226375 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6568561198318305950, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
@@ -3398,6 +3446,22 @@ MeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 141494896}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &141494902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 141494900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!23 &141494903 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1976614401038049864, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
@@ -3584,7 +3648,7 @@ MonoBehaviour:
         m_MethodName: set_material
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 2100000, guid: 16526572b35ecaa4ba781a0bff18ab12,
+          m_ObjectArgument: {fileID: 2100000, guid: a79e11d47f08a9245843161b98f97dd5,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
           m_IntArgument: 0
@@ -3608,7 +3672,7 @@ MonoBehaviour:
         m_MethodName: set_material
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 2100000, guid: 16526572b35ecaa4ba781a0bff18ab12,
+          m_ObjectArgument: {fileID: 2100000, guid: a79e11d47f08a9245843161b98f97dd5,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
           m_IntArgument: 0
@@ -5907,6 +5971,22 @@ MonoBehaviour:
   angularClampMode: 2
   tetherAngleSteps: 6
   boundsScaler: 4
+--- !u!114 &299144515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299144507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!114 &299144518 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6568561198318305950, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
@@ -6910,6 +6990,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 495665750}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &393607673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 393607672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!114 &393607674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8853,7 +8949,7 @@ MonoBehaviour:
         m_MethodName: set_material
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 2100000, guid: 16526572b35ecaa4ba781a0bff18ab12,
+          m_ObjectArgument: {fileID: 2100000, guid: a79e11d47f08a9245843161b98f97dd5,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
           m_IntArgument: 0
@@ -8877,7 +8973,7 @@ MonoBehaviour:
         m_MethodName: set_material
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 2100000, guid: 16526572b35ecaa4ba781a0bff18ab12,
+          m_ObjectArgument: {fileID: 2100000, guid: a79e11d47f08a9245843161b98f97dd5,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
           m_IntArgument: 0
@@ -9008,6 +9104,22 @@ MonoBehaviour:
   angularClampMode: 2
   tetherAngleSteps: 6
   boundsScaler: 4
+--- !u!114 &527522113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 527522105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!114 &527522114 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6568561198318305950, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
@@ -9290,6 +9402,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1968406817}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &552489381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552489380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!114 &552489382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9558,6 +9686,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1804387956}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &569103859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569103858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!114 &569103860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10810,6 +10954,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 270440928}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &666402208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666402207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!114 &666402209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10876,7 +11036,7 @@ MonoBehaviour:
         m_MethodName: set_material
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 2100000, guid: 16526572b35ecaa4ba781a0bff18ab12,
+          m_ObjectArgument: {fileID: 2100000, guid: a79e11d47f08a9245843161b98f97dd5,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
           m_IntArgument: 0
@@ -10900,7 +11060,7 @@ MonoBehaviour:
         m_MethodName: set_material
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 2100000, guid: 16526572b35ecaa4ba781a0bff18ab12,
+          m_ObjectArgument: {fileID: 2100000, guid: a79e11d47f08a9245843161b98f97dd5,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
           m_IntArgument: 0
@@ -14272,6 +14432,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4215703321146718182}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &924409862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924409861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!65 &924409865
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14691,7 +14867,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 938824887}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.063, y: 0.0458, z: 0}
+  m_LocalPosition: {x: 0.0616, y: 0.0467, z: 0}
   m_LocalScale: {x: 0.79999995, y: 0.79999995, z: 1}
   m_Children:
   - {fileID: 1411053705}
@@ -15820,7 +15996,7 @@ MonoBehaviour:
         m_MethodName: set_material
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 2100000, guid: 16526572b35ecaa4ba781a0bff18ab12,
+          m_ObjectArgument: {fileID: 2100000, guid: a79e11d47f08a9245843161b98f97dd5,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
           m_IntArgument: 0
@@ -15844,7 +16020,7 @@ MonoBehaviour:
         m_MethodName: set_material
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 2100000, guid: 16526572b35ecaa4ba781a0bff18ab12,
+          m_ObjectArgument: {fileID: 2100000, guid: a79e11d47f08a9245843161b98f97dd5,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
           m_IntArgument: 0
@@ -15975,6 +16151,22 @@ MonoBehaviour:
   angularClampMode: 2
   tetherAngleSteps: 6
   boundsScaler: 4
+--- !u!114 &973642788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973642780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!114 &973642789 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6568561198318305950, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
@@ -16024,6 +16216,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1104724728}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1001712056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001712055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!114 &1001712057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19950,14 +20158,16 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1106317599}
+  m_GameObject: {fileID: 1106317602}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2547b4dd088644d6aaf64f45df657c79, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pivotAxis: 0
-  targetTransform: {fileID: 1409450571}
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!114 &1106317607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20374,7 +20584,7 @@ PrefabInstance:
     - target: {fileID: 3691605400661216942, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
       propertyPath: m_text
-      value: Let's move on to the HUE lamp on the desk on the left hand side from
+      value: Let's move on to the hue-lamp on the desk on the left hand side from
         you to see if it can further help us to improve the lightning conditions
         in the office.
       objectReference: {fileID: 0}
@@ -21093,6 +21303,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTetherWhenManipulating: 1
   IsBoundsHandles: 0
+--- !u!114 &1112974023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1112974013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!114 &1112974024 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6568561198318305950, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
@@ -21755,6 +21981,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 861576691}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1161693126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161693125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!114 &1161693127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23267,6 +23509,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1052959739}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1298602219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298602218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!114 &1298602220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24690,6 +24948,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 716824474}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1387493629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1387493628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!114 &1387493630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28173,6 +28447,7 @@ GameObject:
   - component: {fileID: 1807604959}
   - component: {fileID: 1807604958}
   - component: {fileID: 1807604962}
+  - component: {fileID: 1807604963}
   m_Layer: 0
   m_Name: DialogAuthenticate
   m_TagString: Untagged
@@ -28386,6 +28661,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1807604963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807604957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!1001 &1807816295
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28922,14 +29213,16 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1807816296}
+  m_GameObject: {fileID: 1807816299}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2547b4dd088644d6aaf64f45df657c79, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pivotAxis: 0
-  targetTransform: {fileID: 1409450571}
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!114 &1807816304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29237,6 +29530,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1799722945729165894}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1813126055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813126054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!23 &1813126057 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1976614401038049864, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
@@ -33034,6 +33343,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1771019974}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2087863076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2087863075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!114 &2087863077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33100,7 +33425,7 @@ MonoBehaviour:
         m_MethodName: set_material
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 2100000, guid: 16526572b35ecaa4ba781a0bff18ab12,
+          m_ObjectArgument: {fileID: 2100000, guid: a79e11d47f08a9245843161b98f97dd5,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
           m_IntArgument: 0
@@ -33124,7 +33449,7 @@ MonoBehaviour:
         m_MethodName: set_material
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 2100000, guid: 16526572b35ecaa4ba781a0bff18ab12,
+          m_ObjectArgument: {fileID: 2100000, guid: a79e11d47f08a9245843161b98f97dd5,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
           m_IntArgument: 0
@@ -34669,6 +34994,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: Let's start
+      objectReference: {fileID: 0}
+    - target: {fileID: 6568561198318305950, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
+        type: 3}
+      propertyPath: trackedTargetType
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6568561198318305950, guid: dd83a14aaabbfc841b2ca3ec1f819b74,
         type: 3}
@@ -53620,6 +53950,7 @@ GameObject:
   - component: {fileID: 8847686356817583634}
   - component: {fileID: 2776468340518599758}
   - component: {fileID: 3748683864473849234}
+  - component: {fileID: 9105662527514686015}
   m_Layer: 0
   m_Name: Quad
   m_TagString: Untagged
@@ -53627,6 +53958,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &9105662527514686015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9105662527514686014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 3
+  proximityType: 3
+  constraintOnRotation: 5
+  useLocalSpaceForConstraint: 0
 --- !u!1 &9138759698222329221
 GameObject:
   m_ObjectHideFlags: 0

@@ -219,7 +219,7 @@ public class HueController : MonoBehaviour {
                 break;
         }
 
-        hueInfoDescripton.text = $"This ist the smart hue-lamp. Its color indicates how well the air-quality currently is. The current color {currentColor} indicates a {airQuality} Airquality as the current co2 level is at {cO2LevelController.co2Value}. Click the button below to control the lamp yourself.";
+        hueInfoDescripton.text = $"This ist the smart hue-lamp. Its color indicates how well the air-quality currently is. The current color {currentColor} indicates a {airQuality} airquality as the current CO2 level is at {cO2LevelController.co2Value}. Click the button below to control the lamp yourself.";
         sceneController.showHueInformation = true; 
     }
 }
