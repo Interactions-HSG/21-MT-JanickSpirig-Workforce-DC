@@ -1,3 +1,4 @@
+// largely based on https://gist.github.com/amimaro/10e879ccb54b2cacae4b81abea455b10
 using UnityEngine;
 using UnityEngine.Networking;
 using System;
