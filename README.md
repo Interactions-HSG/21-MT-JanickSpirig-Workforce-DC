@@ -15,9 +15,31 @@ To work properly the Digital Companion depends on [its backend](https://github.c
 
 ### 3 Clone this repository
 
-### 4 Build & Deploy Unity Project
+### 4 Setup MiroCard & RPi
+In the shopfloor environment, the current room temperature is measured with the help of a [MiroCard](https://mirocard.swiss). The MiroCard sends the current temperature and humidity value as BLE advertisment which can be received by any device like a Rasperry Pi. On the Rasperry Pi a simple flask web-server is executed which provides an endpoint over which the Digital Companion can access the current temperature value.
+1. Get an RPi and [set it up](https://community.wia.io/d/11-how-to-set-up-a-raspberry-pi-without-an-external-monitor-or-keyboard). **IMPORTANT:** The RPi has to be connected to the same network as the Hololens (`labnet`). Remember the IP address of your RPi.
+2. Open a terminal and connect with the RPi using `ssh pi@<IP>`
+3. Once you have successfully established an ssh session to your RPi, [install Git](https://www.atlassian.com/git/tutorials/install-git#linux).
+4. Clone the MiroCard repository with `git clone https://github.com/janick187/mirocard-scanner-python
+5. Place the MiroCard close to the RPi and [follow the instructions](https://github.com/janick187/mirocard-scanner-python) in the readme to run the MiroCard reader as well as the Flask web server. **NOTE:** You need two seperate ssh sessions, one for running the reader and the second one for running the web server.
+6. You should now be able to access te current temperature value with `HTTP GET http://{RPi_IP}:8080/temperature`.
+
+### 5 Modify endpoint
+As a different RPi is used then during deployment and testing of the Digital Companion. Thus, in file *Assets/Scripts/TemperatureController.cs* in *line 45* change the value of the variable `apiEndpoint` to `http://{RPi_IP}:8080/temperature`.
+
+### 5 Build & Deploy Unity Project
 1. [Open](https://docs.unity3d.com/Manual/GettingStartedOpeningProjects.html) the Unity project, i.e. this repository.
 2. [Switch](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/unity/tutorials/mr-learning-base-02?tabs=openxr#switching-the-build-platform) the build plattform in Unity
 3. [Build](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/unity/tutorials/mr-learning-base-02?tabs=openxr#1-build-the-unity-project) the Unity Project (only execute the first step)
 4. [Deploy](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/platform-capabilities-and-apis/using-visual-studio?tabs=hl2#deploying-a-hololens-app-over-wi-fi) the UWP solution (over WIFI)
+
+### 5 Modify endpoint
+In the office and the shopfloor the Hololens has a different IP address. Therefore, it is necessary to build and deploy two Unity applications: One to use in the shopfloor and another one to use in the office. Before the application for the shopfloor environment has been deployed. Now we need to do the same for the office environment.
+1. In file *Assets/Scripts/HTTPListener.cs* add `//` in line 33 (before the variable) and remove `//` in line 34. This is necessary as the Hololens has a different IP address in the office environment, thus requiring the HTTPListener to run and receive requests on this address.
+2. Build the Unity application (step 3 in Build & [Deploy Unity Project](### 5 Build & Deploy Unity Project)
+
+
+
+
+
 
