@@ -36,10 +36,16 @@ As a different RPi is used then during deployment and testing of the Digital Com
 ### 5 Modify endpoint
 In the office and the shopfloor the Hololens has a different IP address. Therefore, it is necessary to build and deploy two Unity applications: One to use in the shopfloor and another one to use in the office. Before the application for the shopfloor environment has been deployed. Now we need to do the same for the office environment.
 1. In file *Assets/Scripts/HTTPListener.cs* add `//` in line 33 (before the variable) and remove `//` in line 34. This is necessary as the Hololens has a different IP address in the office environment, thus requiring the HTTPListener to run and receive requests on this address.
-2. Build the Unity application (step 3 in Build & [Deploy Unity Project](### 5 Build & Deploy Unity Project)
+2. Build the Unity application (step 3 in section 5). Before pressing on Build button, do following adjustments:
 
+SCREENSHOT ON HOW TO CHANGE THE NAME OF THE APP AND PACKAGE
 
+3. Deploy the Visual Studio Solution to Hololens
 
-
-
+### 5 Run the Digital Companion
+Now when both Unity applications (lab & office are deployed on the Hololens) we can run everything together. To do so, follow the steps below.
+1. Start up the Hololens and sign in.
+2. Start up the [backend](https://github.com/Interactions-HSG/21-MT-JanickSpirig-DC-Holo). Make sure that in the [config file](https://github.com/Interactions-HSG/21-MT-JanickSpirig-DC-Holo/blob/master/modules/YoloModule/app/config.yml) the value for `VIDEO_SOURCE` is correct (depends on the Hololens IP address, i.e. whether you are in the lab or the office).
+3. Under *All Apps* start either the `DC lab` or `DC office` application.
+4. Explore and get inspired by --> link to youtube videos!
 
