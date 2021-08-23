@@ -100,7 +100,7 @@ public class CO2LevelController : MonoBehaviour
             StartCoroutine(outsideAirQualityChecker.getAQData());
 
             // CHECK IF IT OS GOING TO RAIN
-            // for simulation we disable this check
+            // for te user study we disable this check as the SRF API is quite unstable
             //StartCoroutine(weatherChecker.getWeatherForecast());
             checkOpeningWindowsOkay = false;
         }
