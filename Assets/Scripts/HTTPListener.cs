@@ -27,9 +27,6 @@ public class HTTPListener : MonoBehaviour
 	{
 		listener = new HttpListener ();
 		
-		// listener.Prefixes.Add ("http://localhost:5050/");
-		// listener.Prefixes.Add ("http://127.0.0.1:5050/");
-		// listener.Prefixes.Add("http://192.168.43.54:5050/"); // janick187 hotspot
 		listener.Prefixes.Add("http://10.2.1.85:5050/"); // labnet lab
 		// listener.Prefixes.Add("http://10.2.1.233:5050/"); // labnet office
 
@@ -39,7 +36,6 @@ public class HTTPListener : MonoBehaviour
 		listenerThread = new Thread (startListener);
 		listenerThread.Start ();
 		Debug.Log ("Server Started");
-
 
 		cherryBotReceived = false;
 		leubotReceived = false;
@@ -79,11 +75,6 @@ public class HTTPListener : MonoBehaviour
 								robotInSceneHandler.processRobot = true;
 								cherryBotReceived = true;
 							}
-							/*
-							if (sceneController.miroCardInfoDone && sceneController.inLab) {
-								sceneController.showCherrybotControl = true;
-							}
-							*/
 							
 						}
 						else if (value == "0")
@@ -101,11 +92,6 @@ public class HTTPListener : MonoBehaviour
 								leubotReceived = true;
 							}	
 							
-							/*
-							if (sceneController.cherrybotInteractionDone && sceneController.inLab) {
-								sceneController.showLeubotControl = true;
-							}
-							*/	
 						}
 						else if (value == "0")
 						{
