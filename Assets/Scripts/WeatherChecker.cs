@@ -29,8 +29,8 @@ public class WeatherChecker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        consumerKey = "lBpHXNlMxvKAjVtT4bX8vitdD1IZjOX9";
-        consumerSecret = "OHAHQ6EC2gSUzvxF";
+        consumerKey = "";
+        consumerSecret = "";
         geoLocationId = "47.4238,9.3739";
 
         apiAuthEndpoint = "https://api.srgssr.ch/oauth/v1/accesstoken?grant_type=client_credentials";
